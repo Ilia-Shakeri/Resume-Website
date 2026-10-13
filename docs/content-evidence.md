@@ -126,9 +126,10 @@ Sources:
 | --- | --- | --- |
 | B.Sc. Computer Science, in progress since Oct 2026, no institution shown | Confirmed by Ilia, 13 Oct 2026 | ✅ (self-reported) |
 | Doctor of Veterinary Medicine (DVM), Islamic Azad University | CV | ❌ removed from site and résumé at Ilia's request |
-| LPIC-2 certification, Linux Professional Institute, Jun 2025 (trained with TOSINSO) | CV; exam pass confirmed by Ilia, 13 Oct 2026 | ✅ status confirmed; ⏳ date and certificate ID to be checked against certificate images |
-| LPIC-1 certification, Linux Professional Institute, Jan 2025 (trained with CanDo) | CV; exam pass confirmed by Ilia | ✅ / ⏳ same as above |
-| DevOps for Beginners & Intermediate, CanDo, 2025 | CV | 📄 |
+| DevOps for Intermediates, CanDo IT Academy, issued 23 Feb 2026 (course 12 Jun 2025 – 1 Jan 2026), Cert ID 04/30289 | `references/DevOps For Intermediates.jpg` | ✅ certificate file; published at `/certificates/cando-devops-intermediates.webp` |
+| DevOps for Beginners, CanDo IT Academy, issued 20 Jul 2025 (course 10 Jan – 10 Jun 2025), Cert ID 02/20889 | `references/DevOps For Beginners.jpg` | ✅ certificate file; published |
+| LPIC-1 training course, CanDo IT Academy, issued 29 Jan 2025 (course 22 Oct 2024 – 21 Jan 2025), Cert ID 03/17758 | `references/LPIC1.pdf` — a CanDo "Certificate of Excellence" for completing the requirements for "Linux Professional Institute Certification 1" | ✅ as a **course**. The document is issued by CanDo, not LPI (no LPI ID or verification code), so it is not presented as an LPI certification. Ilia chose this labelling on 13 Oct 2026. |
+| LPIC-2 training course, TOSINSO, Jun 2025 | CV only; no certificate file | 📄 shown as a course, without a certificate link |
 | "Security-focused DevOps Engineer (Certified)" | CV summary | ❌ excluded — no certification identified |
 
 ## Ranking of project candidates

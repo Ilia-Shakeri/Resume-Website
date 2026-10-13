@@ -141,7 +141,7 @@ export default function ResumePage() {
           </dl>
         </section>
 
-        <section className="mt-5 grid break-inside-avoid gap-5 sm:grid-cols-2" aria-label="Education, certifications, and languages">
+        <section className="mt-5 grid break-inside-avoid gap-5 sm:grid-cols-2" aria-label="Education, training, and languages">
           <div>
             <Heading>Education</Heading>
             <p className="mt-2 font-semibold">{education.degree}</p>
@@ -152,11 +152,12 @@ export default function ResumePage() {
             </div>
           </div>
           <div>
-            <Heading>Certifications & training</Heading>
+            <Heading>Training</Heading>
             <ul className="mt-2 space-y-1">
               {qualifications.map((item) => (
                 <li key={item.title}>
                   <span className="font-semibold">{item.title}</span> · {item.issuer}, {item.date}
+                  {item.certId ? ` · ID ${item.certId}` : ""}
                 </li>
               ))}
             </ul>

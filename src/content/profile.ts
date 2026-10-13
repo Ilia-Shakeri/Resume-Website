@@ -89,29 +89,39 @@ export const education: Education = {
   note: "Studying the computer science fundamentals behind the infrastructure work I do every day.",
 };
 
-// LPIC exam status confirmed by Ilia (Oct 2026). Dates and training providers
-// are from the résumé; certificate IDs are pending (see TODO_CONTENT.md).
+// Training-course certificates. Dates, IDs, and course periods are read from
+// the certificate files in references/ (LPIC-2 has no certificate; its date
+// comes from the résumé). None of these are LPI-issued exam certifications.
 export const qualifications: Qualification[] = [
   {
-    title: "LPIC-2 certification",
-    issuer: "Linux Professional Institute",
+    title: "DevOps for Intermediates",
+    issuer: "CanDo IT Academy",
+    date: "Feb 2026",
+    note: "Course completed Jun 2025 – Jan 2026.",
+    certId: "04/30289",
+    href: "/certificates/cando-devops-intermediates.webp",
+  },
+  {
+    title: "DevOps for Beginners",
+    issuer: "CanDo IT Academy",
+    date: "Jul 2025",
+    note: "Course completed Jan – Jun 2025.",
+    certId: "02/20889",
+    href: "/certificates/cando-devops-beginners.webp",
+  },
+  {
+    title: "LPIC-2 training course",
+    issuer: "TOSINSO",
     date: "Jun 2025",
-    kind: "Certification",
-    note: "Advanced Linux administration: kernel, storage, networking, and system services. Trained with TOSINSO.",
+    note: "Linux administration course following the LPIC-2 curriculum.",
   },
   {
-    title: "LPIC-1 certification",
-    issuer: "Linux Professional Institute",
+    title: "LPIC-1 training course",
+    issuer: "CanDo IT Academy",
     date: "Jan 2025",
-    kind: "Certification",
-    note: "Linux system administration fundamentals. Trained with CanDo.",
-  },
-  {
-    title: "DevOps for Beginners & Intermediate",
-    issuer: "CanDo",
-    date: "2025",
-    kind: "Course completion",
-    note: "Two-part DevOps course covering containers, CI/CD, and automation.",
+    note: "Linux administration course following the LPIC-1 curriculum, Oct 2024 – Jan 2025.",
+    certId: "03/17758",
+    href: "/certificates/cando-lpic-1.webp",
   },
 ];
 

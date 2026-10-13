@@ -86,9 +86,12 @@ export type ApproachStep = {
 export type Qualification = {
   title: string;
   issuer: string;
+  /** Issue date of the certificate, or completion date when there is none. */
   date: string;
-  kind: "Certification" | "Course completion";
   note: string;
+  certId?: string;
+  /** Published copy of the certificate, under public/certificates/. */
+  href?: string;
 };
 
 export type Education = {

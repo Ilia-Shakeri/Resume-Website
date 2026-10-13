@@ -14,7 +14,7 @@ Run on **13 Oct 2026** in a Claude Code cloud session (Linux, Node.js 22.22.0, n
 
 ## Browser checks — `npm run qa:screens`
 
-Served the `out/` export locally and drove headless Chromium. All 22 checks passed:
+Served the `out/` export locally and drove headless Chromium. All 25 checks passed (22 originally, plus one per published certificate file):
 
 | Area | Result |
 | --- | --- |

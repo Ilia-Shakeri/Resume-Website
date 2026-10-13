@@ -1,3 +1,4 @@
+import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
 import { education, qualifications } from "@/content/profile";
 
@@ -5,7 +6,7 @@ export function Education() {
   return (
     <section aria-labelledby="education-title" id="education" className="scroll-mt-24 bg-surface py-20 lg:py-[120px]">
       <div className="container-site">
-        <p className="eyebrow">06 / Education & certifications</p>
+        <p className="eyebrow">06 / Education & training</p>
         <h2 id="education-title" className="mt-4 text-[2.5rem] leading-[1.05] sm:text-5xl lg:text-[4rem]">
           Always in learning mode.
         </h2>
@@ -27,13 +28,24 @@ export function Education() {
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-mint-tint text-mint">
                   <Icon name="badge" size={20} />
                 </span>
-                <div>
+                <div className="min-w-0 flex-1">
                   <h3 className="text-2xl leading-tight">{item.title}</h3>
                   <p className="meta mt-2">
-                    {item.issuer} · {item.date} · {item.kind}
+                    {item.issuer} · {item.date}
+                    {item.certId ? ` · Cert ID ${item.certId}` : ""}
                   </p>
                   <p className="mt-2 text-sm text-text">{item.note}</p>
                 </div>
+                {item.href ? (
+                  <ExternalLink
+                    href={item.href}
+                    className="link-row -mt-1 inline-flex h-11 shrink-0 items-start gap-2 pt-1 text-sm text-mint"
+                  >
+                    <span className="max-sm:sr-only">View certificate</span>
+                    <span className="sr-only">: {item.title}</span>
+                    <Icon name="arrow-up-right" />
+                  </ExternalLink>
+                ) : null}
               </li>
             ))}
           </ul>

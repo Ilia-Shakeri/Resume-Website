@@ -64,6 +64,10 @@ try {
       `résumé download ${new URL(href).pathname} → ${response.status()} ${response.headers()["content-type"]}`,
     );
   }
+  for (const href of await page.$$eval("a[href^='/certificates/']", (links) => links.map((a) => a.href))) {
+    const response = await page.request.get(href);
+    check(response.ok() && response.headers()["content-type"] === "image/webp", `certificate ${new URL(href).pathname} → ${response.status()}`);
+  }
   for (const path of ["/resume/", "/robots.txt", "/sitemap.xml", "/og-image.png", "/favicon.svg"]) {
     const response = await page.request.get(`${url}${path}`);
     check(response.ok(), `${path} → ${response.status()}`);

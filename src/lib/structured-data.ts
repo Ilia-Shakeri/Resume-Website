@@ -13,12 +13,14 @@ export function personJsonLd(): string {
     sameAs: [profile.github.href, profile.linkedin.href],
     address: { "@type": "PostalAddress", addressLocality: "Tehran", addressCountry: "IR" },
     hasCredential: qualifications
-      .filter((item) => item.kind === "Certification")
+      .filter((item) => item.certId)
       .map((item) => ({
         "@type": "EducationalOccupationalCredential",
         name: item.title,
-        credentialCategory: "certification",
+        credentialCategory: "certificate",
+        identifier: item.certId,
         recognizedBy: { "@type": "Organization", name: item.issuer },
+        ...(item.href ? { url: `${site.url}${item.href}` } : {}),
       })),
     knowsLanguage: ["fa", "en"],
     knowsAbout: ["Linux", "DevOps", "Docker", "Kubernetes", "Ansible", "CI/CD", "Prometheus", "Grafana", "PostgreSQL", "Nginx"],
