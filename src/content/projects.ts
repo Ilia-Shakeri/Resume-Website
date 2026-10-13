@@ -13,9 +13,9 @@ export const featuredProjects: FeaturedProject[] = [
     name: "Dolphin CRM",
     period: "2026",
     role: "Sole engineer",
-    title: "One codebase. A locked-down deployment per customer.",
+    title: "One codebase. Locked-down, repeatable deployments.",
     summary:
-      "A Persian-first CRM/ERP for sales, billing, inventory, telephony, and after-sales. I built the application and the delivery around it: every customer runs an isolated Compose stack whose features are switched by a signed manifest, behind an Nginx edge, with least-privilege PostgreSQL roles.",
+      "A Persian-first CRM/ERP for sales, billing, inventory, telephony, and after-sales. I built the application and the delivery around it: each installation runs as an isolated Compose stack whose features are switched by a signed manifest, behind an Nginx edge, with least-privilege PostgreSQL roles.",
     tags: ["Django", "PostgreSQL", "Docker Compose", "Nginx", "Ed25519"],
     outcomeLabel: "Delivery",
     outcome:
@@ -24,7 +24,7 @@ export const featuredProjects: FeaturedProject[] = [
     links: [{ label: "View source", href: `${GH}/Dolphin` }],
     caseStudy: {
       problem:
-        "Several customers need the same CRM, but each must keep its own database, secrets, and feature set, and a customer administrator on their own host must not be able to change what is licensed.",
+        "The same CRM has to run as separate installations, each with its own database, secrets, and feature set, and an administrator on the host must not be able to change which features are enabled.",
       role:
         "Sole author of the repository: application, PostgreSQL bootstrap, Compose topology, Nginx edge, deployment scripts, and the operations runbook.",
       approach: [

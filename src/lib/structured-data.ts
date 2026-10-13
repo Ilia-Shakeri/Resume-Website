@@ -1,4 +1,4 @@
-import { education, profile } from "@/content/profile";
+import { profile, qualifications } from "@/content/profile";
 import { site } from "@/lib/site";
 
 /** schema.org Person built only from verified profile fields. */
@@ -12,7 +12,14 @@ export function personJsonLd(): string {
     email: `mailto:${profile.email}`,
     sameAs: [profile.github.href, profile.linkedin.href],
     address: { "@type": "PostalAddress", addressLocality: "Tehran", addressCountry: "IR" },
-    alumniOf: { "@type": "CollegeOrUniversity", name: education.institution },
+    hasCredential: qualifications
+      .filter((item) => item.kind === "Certification")
+      .map((item) => ({
+        "@type": "EducationalOccupationalCredential",
+        name: item.title,
+        credentialCategory: "certification",
+        recognizedBy: { "@type": "Organization", name: item.issuer },
+      })),
     knowsLanguage: ["fa", "en"],
     knowsAbout: ["Linux", "DevOps", "Docker", "Kubernetes", "Ansible", "CI/CD", "Prometheus", "Grafana", "PostgreSQL", "Nginx"],
   };

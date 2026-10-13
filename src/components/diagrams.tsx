@@ -31,7 +31,7 @@ function Pill({ children }: { children: ReactNode }) {
 function DolphinStack() {
   return (
     <figure className="relative h-full p-6 sm:p-10" aria-label="Dolphin CRM deployment architecture">
-      <figcaption className="meta">Deployment blueprint / one stack per customer</figcaption>
+      <figcaption className="meta">Deployment blueprint / isolated Compose stack</figcaption>
       <div className="relative mt-8 grid grid-cols-2 gap-3 sm:grid-cols-[1fr_1.15fr_1fr] sm:gap-5">
         <div className="flex flex-col gap-3 sm:gap-16">
           <Node title="Nginx edge" detail="TLS · rate limits · write-stop" />

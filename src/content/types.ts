@@ -87,11 +87,14 @@ export type Qualification = {
   title: string;
   issuer: string;
   date: string;
+  kind: "Certification" | "Course completion";
   note: string;
 };
 
 export type Education = {
   degree: string;
-  institution: string;
+  /** Omitted when the institution is not to be published. */
+  institution?: string;
+  status: string;
   note: string;
 };

@@ -17,7 +17,7 @@ Sources:
 | Name Ilia Shakeri | CV, GH profile | ✅ |
 | Email iliashkr@gmail.com | CV, GH profile, commit author email | ✅ |
 | GitHub `Ilia-Shakeri`, LinkedIn `ilia-shakeri` | CV, prompt | ✅ (LinkedIn URL not fetched) |
-| Tehran, Iran; open to remote roles | CV header | ⏳ |
+| Tehran, Iran; open to remote roles | CV header; confirmed by Ilia, 13 Oct 2026 | ✅ |
 | Time zone IRST, UTC+03:30 | Derived from location (Iran has no DST since 2022) | ⏳ (follows location) |
 | Persian native, English professional working | CV | 📄 |
 | Piano, 10+ years; open-source interest | CV "Interests" | 📄 |
@@ -27,7 +27,7 @@ Sources:
 
 | Claim | Source | Status |
 | --- | --- | --- |
-| DevOps Engineer, OTICAMP, Jun 2025 — Present, Tehran | CV | ⏳ current status not confirmed. A private repo named `OTIC-Clockwork-OrangeHRM` was pushed 2026-07-15, which is consistent with but does not prove continued employment. |
+| DevOps Engineer, OTICAMP, Jun 2025 — Present, Tehran | CV; current employment confirmed by Ilia, 13 Oct 2026 | ✅ |
 | Provisioned/hardened Linux VPS; Ansible playbooks | CV | 📄 |
 | Prometheus, Grafana, Loki stack | CV | 📄 |
 | ChatOps with n8n linking Jira, Prometheus, Matrix | CV; workflows published in GH:n8n-prometheus-matrix-bridge, GH:jira2matrix-notifier-n8n | ✅ workflows exist; 📄 employer context |
@@ -36,7 +36,7 @@ Sources:
 | "99.9% uptime" | CV | ❌ excluded — no monitoring data available |
 | Freelance DevOps & Linux Administrator, Dec 2024 — Jun 2025, remote | CV | 📄 |
 | Freelance: Bash maintenance/backup/log-rotation scripts, security audits, firewall + TLS, Nginx/Apache tuning | CV; related public scripts (Automated-Backup-Script, LinSecGuard, EasyCert, SysTrack) | 📄 / partially ✅ |
-| "Product & Platform Engineering — Independent projects, 2026 — Present" | Commit history of Dolphin (from 2026-08-09) and Nerkhbaan (from 2026-05-11), sole author | ✅ authorship; ⏳ **framing** — if these were built for an employer or client, rename the entry (see TODO_CONTENT.md) |
+| "Product & Platform Engineering — Independent projects, 2026 — Present" | Commit history of Dolphin and Nerkhbaan (sole author); framing confirmed by Ilia, 13 Oct 2026 | ✅ |
 
 ## Featured projects
 
@@ -45,7 +45,7 @@ Sources:
 | Claim | Source | Status |
 | --- | --- | --- |
 | Persian-first CRM/ERP: sales, billing, inventory, telephony, after-sales | GH:Dolphin/README.md | ✅ |
-| One codebase, deployed separately per customer | GH:Dolphin/README.md "Why it's built this way" | ✅ |
+| One codebase; each installation an isolated Compose stack | GH:Dolphin/README.md "Why it's built this way" | ✅ — per-customer framing toned down at Ilia's request (13 Oct 2026) |
 | Sole engineer | `git log` — 400/400 commits by Ilia Shakeri | ✅ (authorship; tooling assistance not distinguished) |
 | Signed Ed25519 manifest; production refuses to start without a verifying manifest | GH:Dolphin/common/deployment/manifest.py; compose.yml comments | ✅ |
 | Four PostgreSQL logins; db-bootstrap → migrate → db-finalize before web | GH:Dolphin/docs/ops/DOLPHIN_DEPLOYMENT_RUNBOOK.md "PostgreSQL role split"; compose.yml | ✅ |
@@ -124,9 +124,10 @@ Sources:
 
 | Claim | Source | Status |
 | --- | --- | --- |
-| Doctor of Veterinary Medicine (DVM), Islamic Azad University | CV | 📄; dates not on CV, so none shown |
-| "LPIC-2 training course", TOSINSO, Jun 2025 | CV lists "Linux Professional Institute Certification (LPIC-2), TOSINSO" | ⏳ shown as a **training course**, not an LPI-issued certification, until LPI exam status is confirmed |
-| "LPIC-1 training course", CanDo, Jan 2025 | CV | ⏳ same as above |
+| B.Sc. Computer Science, in progress since Oct 2026, no institution shown | Confirmed by Ilia, 13 Oct 2026 | ✅ (self-reported) |
+| Doctor of Veterinary Medicine (DVM), Islamic Azad University | CV | ❌ removed from site and résumé at Ilia's request |
+| LPIC-2 certification, Linux Professional Institute, Jun 2025 (trained with TOSINSO) | CV; exam pass confirmed by Ilia, 13 Oct 2026 | ✅ status confirmed; ⏳ date and certificate ID to be checked against certificate images |
+| LPIC-1 certification, Linux Professional Institute, Jan 2025 (trained with CanDo) | CV; exam pass confirmed by Ilia | ✅ / ⏳ same as above |
 | DevOps for Beginners & Intermediate, CanDo, 2025 | CV | 📄 |
 | "Security-focused DevOps Engineer (Certified)" | CV summary | ❌ excluded — no certification identified |
 

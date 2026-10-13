@@ -6,7 +6,7 @@ The site is a fully static Next.js export (`output: "export"`). `npm run build` 
 
 | Variable | When | Purpose |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | build time | Public origin, e.g. `https://iliashakeri.dev` (no trailing slash). Enables canonical tags and absolute URLs in Open Graph, `sitemap.xml`, and `robots.txt`. Leave unset until the domain is decided; the site still works. |
+| `NEXT_PUBLIC_SITE_URL` | build time | Optional. Public origin without a trailing slash. Defaults to `https://iliashakeri.ir` (set in `src/lib/site.ts`); override only for previews on another host. Drives canonical tags, Open Graph URLs, `sitemap.xml`, and `robots.txt`. |
 
 Copy `.env.example` to `.env.local` for local builds. Nothing secret is required.
 
@@ -14,7 +14,7 @@ Copy `.env.example` to `.env.local` for local builds. Nothing secret is required
 
 1. Import `Ilia-Shakeri/Resume-Website` in Vercel. Framework preset: **Next.js** (auto-detected).
 2. Build command `npm run build`; output is detected automatically for static export.
-3. Add `NEXT_PUBLIC_SITE_URL` under *Settings → Environment Variables* once the domain is attached.
+3. Attach `iliashakeri.ir` under *Settings → Domains* and add the DNS records Vercel shows (an `A` record for the apex, a `CNAME` for `www`).
 4. Every push to `main` deploys; pull requests get preview URLs.
 
 The free Hobby tier is enough. Nothing has been deployed or configured on any platform yet.
@@ -23,14 +23,14 @@ The free Hobby tier is enough. Nothing has been deployed or configured on any pl
 
 ```bash
 npm ci
-NEXT_PUBLIC_SITE_URL=https://example.com npm run build
+npm run build
 rsync -a --delete out/ deploy@server:/var/www/portfolio/
 ```
 
 ```nginx
 server {
     listen 443 ssl http2;
-    server_name example.com;
+    server_name iliashakeri.ir www.iliashakeri.ir;
     root /var/www/portfolio;
 
     # TLS: ssl_certificate / ssl_certificate_key from certbot or your CA.

@@ -20,7 +20,7 @@ export const profile: Profile = {
   languages: ["Persian (native)", "English (professional working)"],
   bio: [
     "I work where code meets servers: hardening Linux hosts, packaging services into containers, wiring CI pipelines, and putting Prometheus, Grafana, and Loki in front of what runs in production. Most of my day-to-day tooling is Bash, Python, Ansible, Docker Compose, and n8n.",
-    "I came to infrastructure from a scientific background, and it shows in how I work: write the runbook, test the restore, record what was actually verified. Outside the terminal, I follow open-source DevOps tooling and have played the piano for more than ten years.",
+    "I work from evidence: write the runbook, test the restore, record what was actually verified. Outside the terminal, I follow open-source DevOps tooling and have played the piano for more than ten years.",
   ],
   principles: [
     { title: "Automate the repeatable.", detail: "Scripts, playbooks, and workflows over manual steps." },
@@ -84,30 +84,33 @@ export const experience: ExperienceItem[] = [
 ];
 
 export const education: Education = {
-  degree: "Doctor of Veterinary Medicine (DVM)",
-  institution: "Islamic Azad University",
-  note: "Clinical training in structured diagnosis: observe, form a hypothesis, test it, and document the result. I apply the same discipline to troubleshooting and incident work.",
+  degree: "B.Sc. Computer Science",
+  status: "In progress · since Oct 2026",
+  note: "Studying the computer science fundamentals behind the infrastructure work I do every day.",
 };
 
-// These are training courses as listed on the résumé. They are deliberately
-// not presented as LPI-issued exam certifications (see TODO_CONTENT.md).
+// LPIC exam status confirmed by Ilia (Oct 2026). Dates and training providers
+// are from the résumé; certificate IDs are pending (see TODO_CONTENT.md).
 export const qualifications: Qualification[] = [
   {
-    title: "LPIC-2 training course",
-    issuer: "TOSINSO",
+    title: "LPIC-2 certification",
+    issuer: "Linux Professional Institute",
     date: "Jun 2025",
-    note: "Advanced Linux administration aligned with the LPIC-2 curriculum.",
+    kind: "Certification",
+    note: "Advanced Linux administration: kernel, storage, networking, and system services. Trained with TOSINSO.",
   },
   {
-    title: "LPIC-1 training course",
-    issuer: "CanDo",
+    title: "LPIC-1 certification",
+    issuer: "Linux Professional Institute",
     date: "Jan 2025",
-    note: "Linux system administration fundamentals aligned with the LPIC-1 curriculum.",
+    kind: "Certification",
+    note: "Linux system administration fundamentals. Trained with CanDo.",
   },
   {
     title: "DevOps for Beginners & Intermediate",
     issuer: "CanDo",
     date: "2025",
+    kind: "Course completion",
     note: "Two-part DevOps course covering containers, CI/CD, and automation.",
   },
 ];

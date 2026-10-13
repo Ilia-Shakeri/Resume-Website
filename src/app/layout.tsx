@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: site.description,
   authors: [{ name: profile.name, url: profile.github.href }],
   creator: profile.name,
-  alternates: site.hasCanonicalUrl ? { canonical: "/" } : undefined,
+  alternates: { canonical: "/" },
   openGraph: {
     type: "profile",
     title: site.title,

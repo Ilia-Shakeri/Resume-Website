@@ -1,15 +1,14 @@
 import { profile } from "@/content/profile";
 
 /**
- * Public origin of the deployed site. Set NEXT_PUBLIC_SITE_URL at build time
- * once the final domain is known; until then canonical tags are omitted and
- * absolute URLs fall back to localhost.
+ * Public origin of the deployed site. NEXT_PUBLIC_SITE_URL overrides it at
+ * build time, e.g. for a preview deployment.
  */
-const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/+$/, "") || "";
+const DEFAULT_SITE_URL = "https://iliashakeri.ir";
+const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/+$/, "") || DEFAULT_SITE_URL;
 
 export const site = {
-  url: configuredUrl || "http://localhost:3000",
-  hasCanonicalUrl: configuredUrl.length > 0,
+  url: configuredUrl,
   title: `${profile.name} — DevOps Engineer`,
   description:
     "DevOps engineer working on Linux infrastructure, container delivery, CI/CD, monitoring, and security hardening. Case studies: Dolphin CRM, Nerkhbaan, and ChatOps alerting.",

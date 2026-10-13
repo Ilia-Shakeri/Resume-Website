@@ -23,7 +23,7 @@ Audit date: **13 Oct 2026**. Account: [`Ilia-Shakeri`](https://github.com/Ilia-S
 
 | Repo | Vis. | Primary language | Created → last push | Commits | Fork / archived | Description and purpose | Engineering themes | Relevance |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [Dolphin](https://github.com/Ilia-Shakeri/Dolphin) | public | HTML (Django/Python) | 2026-08-09 → 2026-10-13 | 400 | no / no | Persian-first, RTL CRM/ERP (sales, billing, inventory, telephony, after-sales), one codebase deployed per customer. v2.40.42. | Compose topology, signed Ed25519 feature manifest, four-role PostgreSQL least privilege, scripted deploy/rollback, Nginx write-stop, checksummed and restore-verified backups, ~3,510 tests | ★★★ |
+| [Dolphin](https://github.com/Ilia-Shakeri/Dolphin) | public | HTML (Django/Python) | 2026-08-09 → 2026-10-13 | 400 | no / no | Persian-first, RTL CRM/ERP (sales, billing, inventory, telephony, after-sales), one codebase, each installation an isolated stack. v2.40.42. | Compose topology, signed Ed25519 feature manifest, four-role PostgreSQL least privilege, scripted deploy/rollback, Nginx write-stop, checksummed and restore-verified backups, ~3,510 tests | ★★★ |
 | [Nerkhbaan](https://github.com/Ilia-Shakeri/Nerkhbaan) | public | Python | 2026-05-11 → 2026-10-13 | 200 | no / no | Gold/currency/crypto pricing platform; FastAPI, PostgreSQL+TimescaleDB, Redis; web, admin, Electron desktop; live at nerkhbaan.ir (per repo records). v2.8.1. | 9-job GitHub Actions CI, Trivy image gates, pip-audit, hash-locked deps, Prometheus/Alertmanager/Grafana, readiness probes, signed external workers, Go sidecar | ★★★ |
 | [n8n-prometheus-matrix-bridge](https://github.com/Ilia-Shakeri/n8n-prometheus-matrix-bridge) | public | n8n JSON | 2025-12-07 | 5 | no / no | Alertmanager → n8n → Matrix with HTML formatting | Token check/renew, exponential backoff + jitter, ChatOps | ★★★ (combined card) |
 | [jira2matrix-notifier-n8n](https://github.com/Ilia-Shakeri/jira2matrix-notifier-n8n) | public | n8n JSON | 2025-11-02 → 2025-12-07 | 9 | no / no | Jira assignments and @mentions → Matrix DMs | Webhook routing, cached DM rooms, self-healing auth | ★★★ (combined card) |
@@ -61,7 +61,7 @@ Audit date: **13 Oct 2026**. Account: [`Ilia-Shakeri`](https://github.com/Ilia-S
 ## Deep-dive notes (strongest candidates)
 
 ### Dolphin CRM — featured
-- **Problem:** one CRM for many customers; isolated data/secrets per deployment; feature licensing that a customer admin cannot alter.
+- **Problem:** one CRM run as separate installations; isolated data/secrets per installation; feature switches a host administrator cannot alter.
 - **Architecture:** `compose.yml` services `db`, `db-bootstrap`, `migrate`, `db-finalize`, `web`, `realtime`, `nginx`, plus profile-gated `backup`, `session-cleanup`, `scheduled-sms`, `score-recalculation`, `integrations-worker`, `backup-agent`. Internal `backend` network.
 - **Decisions:** signed manifest (`common/deployment/manifest.py`, Ed25519); four PostgreSQL roles (`docs/ops/DOLPHIN_DEPLOYMENT_RUNBOOK.md` → "PostgreSQL role split"); image refs required to be `repository@sha256:digest`; `read_only`, `cap_drop: ALL`, `no-new-privileges`; Nginx rate limits and write-stop (`nginx/write-stop-on.conf`).
 - **Operations:** `scripts/deploy.sh` (ordered upgrade, `--status`, `--rollback`), `compose.restore-verify.yml` (`network_mode: none`), `scripts/verify-postgres-restore.sh` (sha256 checks), 5,446-line runbook.

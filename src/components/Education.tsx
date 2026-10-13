@@ -5,7 +5,7 @@ export function Education() {
   return (
     <section aria-labelledby="education-title" id="education" className="scroll-mt-24 bg-surface py-20 lg:py-[120px]">
       <div className="container-site">
-        <p className="eyebrow">06 / Education & training</p>
+        <p className="eyebrow">06 / Education & certifications</p>
         <h2 id="education-title" className="mt-4 text-[2.5rem] leading-[1.05] sm:text-5xl lg:text-[4rem]">
           Always in learning mode.
         </h2>
@@ -16,7 +16,8 @@ export function Education() {
               Education
             </p>
             <h3 className="mt-7 text-[1.875rem] leading-tight">{education.degree}</h3>
-            <p className="mt-4 text-lg text-text">{education.institution}</p>
+            {education.institution ? <p className="mt-4 text-lg text-text">{education.institution}</p> : null}
+            <p className="meta mt-4">{education.status}</p>
             <p className="mt-6 border-t border-line pt-6 text-[0.9375rem] leading-[1.7] text-text">{education.note}</p>
           </div>
 
@@ -29,7 +30,7 @@ export function Education() {
                 <div>
                   <h3 className="text-2xl leading-tight">{item.title}</h3>
                   <p className="meta mt-2">
-                    {item.issuer} · {item.date} · Course completion
+                    {item.issuer} · {item.date} · {item.kind}
                   </p>
                   <p className="mt-2 text-sm text-text">{item.note}</p>
                 </div>

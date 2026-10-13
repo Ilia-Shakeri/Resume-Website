@@ -10,7 +10,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Résumé",
   description: `Printable résumé of ${profile.name}, DevOps Engineer.`,
-  alternates: site.hasCanonicalUrl ? { canonical: site.resume.printPath } : undefined,
+  alternates: { canonical: site.resume.printPath },
 };
 
 function Heading({ children }: { children: React.ReactNode }) {
@@ -141,18 +141,18 @@ export default function ResumePage() {
           </dl>
         </section>
 
-        <section className="mt-5 grid break-inside-avoid gap-5 sm:grid-cols-2" aria-label="Education, training, and languages">
+        <section className="mt-5 grid break-inside-avoid gap-5 sm:grid-cols-2" aria-label="Education, certifications, and languages">
           <div>
             <Heading>Education</Heading>
             <p className="mt-2 font-semibold">{education.degree}</p>
-            <p>{education.institution}</p>
+            <p>{education.institution ? `${education.institution} · ` : ""}{education.status}</p>
             <div className="mt-4">
               <Heading>Languages</Heading>
               <p className="mt-2">{profile.languages.join(" · ")}</p>
             </div>
           </div>
           <div>
-            <Heading>Training</Heading>
+            <Heading>Certifications & training</Heading>
             <ul className="mt-2 space-y-1">
               {qualifications.map((item) => (
                 <li key={item.title}>
