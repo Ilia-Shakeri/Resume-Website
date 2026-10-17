@@ -9,6 +9,7 @@ export function personJsonLd(): string {
     name: profile.name,
     jobTitle: profile.role,
     url: site.url,
+    image: `${site.url}/images/ilia-shakeri.webp`,
     email: `mailto:${profile.email}`,
     sameAs: [profile.github.href, profile.linkedin.href],
     address: { "@type": "PostalAddress", addressLocality: "Tehran", addressCountry: "IR" },

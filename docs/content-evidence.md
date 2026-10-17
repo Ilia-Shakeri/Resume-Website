@@ -153,3 +153,7 @@ Stackplore ties with the ChatOps bridges on total but was placed in the secondar
 ## Unresolved questions
 
 See `TODO_CONTENT.md`.
+
+## Portrait
+
+`public/images/ilia-shakeri.webp`: a photo Ilia supplied and approved for the site on 17 Oct 2026. It is cropped to 640×640 and re-encoded as WebP with no EXIF, GPS or XMP metadata (21 KB), and it is referenced in the JSON-LD `image`. It is shown as a mint duotone that turns to full colour on hover.

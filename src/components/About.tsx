@@ -14,7 +14,22 @@ export function About() {
       <div className="container-site grid gap-12 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-[92px]">
         <div>
           <p className="eyebrow">01 / The human layer</p>
-          <div className="mt-10" data-reveal>
+          <figure data-reveal className="portrait group relative mt-10 overflow-hidden rounded-lg border border-line-strong bg-card">
+            {/* eslint-disable-next-line @next/next/no-img-element -- static export; pre-sized WebP */}
+            <img
+              src="/images/ilia-shakeri.webp"
+              alt={`Portrait of ${profile.name}, smiling, outdoors`}
+              width={640}
+              height={640}
+              loading="lazy"
+              decoding="async"
+              className="aspect-square h-auto w-full object-cover"
+            />
+            <figcaption className="absolute bottom-3 left-3 rounded-sm bg-bg/75 px-2 py-1 font-mono text-[0.625rem] tracking-[0.06em] text-text uppercase backdrop-blur-sm">
+              ~/ilia-shakeri.webp
+            </figcaption>
+          </figure>
+          <div className="mt-6" data-reveal>
             <WhoamiPanel rows={rows} />
           </div>
           <p className="mt-10 font-mono text-[0.6875rem] leading-[1.7] text-muted">
