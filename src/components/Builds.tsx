@@ -62,7 +62,7 @@ export function Builds({ content }: { content: Content }) {
                         <li
                           key={tool.name}
                           dir="ltr"
-                          className="inline-flex items-center gap-1.5 rounded border border-line px-2 py-1 text-[0.6875rem] text-text"
+                          className="inline-flex items-center gap-1.5 rounded border border-line px-2 py-1 text-xs text-text"
                         >
                           <TechIcon tool={tool} size={12} />
                           {tool.name}

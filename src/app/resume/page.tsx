@@ -5,7 +5,7 @@ import { PrintButton } from "@/components/PrintButton";
 import { getContent } from "@/content";
 import { site } from "@/lib/site";
 
-const { toolkit, education, experience, profile, qualifications, resumeSummary, ventures, projects } =
+const { toolkit, education, experience, profile, qualifications, resumeSummary, featured, projects } =
   getContent("en");
 const [chatops, ...others] = projects;
 
@@ -93,6 +93,7 @@ export default function ResumePage() {
               <div className="flex flex-wrap items-baseline justify-between gap-x-4">
                 <h3 className="text-[0.9375rem] font-semibold">
                   {item.title} · <span className="font-normal">{item.organization}</span>
+                  <span className="font-normal text-[#4b5753]"> ({item.type})</span>
                 </h3>
                 <p className="font-mono text-[0.6875rem] text-[#4b5753]">
                   {item.period} · {item.location}
@@ -111,20 +112,22 @@ export default function ResumePage() {
           <Heading>
             <span id="r-projects">Selected projects</span>
           </Heading>
-          {ventures.map((venture) => (
-            <article key={venture.slug} className="mt-3 break-inside-avoid">
+          {featured.map((project) => (
+            <article key={project.slug} className="mt-3 break-inside-avoid">
               <div className="flex flex-wrap items-baseline justify-between gap-x-4">
                 <h3 className="text-[0.9375rem] font-semibold">
-                  {venture.name} · <span className="font-normal">{venture.role}</span>
+                  {project.name} · <span className="font-normal">{project.role}</span>
                 </h3>
-                <a href={venture.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
-                  {venture.links[0].href.replace("https://", "").replace(/\/$/, "")}
+                <a href={project.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
+                  {project.links[0].href.replace("https://", "").replace(/\/$/, "")}
                 </a>
               </div>
-              <p className="mt-0.5">{venture.description}</p>
-              <p className="mt-0.5 text-[#4b5753]">{venture.highlights[0]}</p>
+              <p className="mt-0.5">
+                {project.summary} <span className="text-[#4b5753]">Status: {project.status}.</span>
+              </p>
+              <p className="mt-0.5 text-[#4b5753]">{project.highlights[0]}</p>
               <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">
-                {venture.tools.map((tool) => tool.name).join(" · ")}
+                {project.tools.map((tool) => tool.name).join(" · ")}
               </p>
             </article>
           ))}

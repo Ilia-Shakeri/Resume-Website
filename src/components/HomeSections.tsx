@@ -1,59 +1,58 @@
 import type { CSSProperties } from "react";
+import { ProjectLogo, StagePill } from "@/components/FeaturedProjects";
 import { Icon } from "@/components/Icon";
 import { SectionHeader } from "@/components/SectionHeader";
 import { pagePath, type Content, type Locale } from "@/content";
 
-/** Home: short cards for the two ventures, linking to their full entries on /projects/. */
-export function FeaturedProjects({ content, locale }: { content: Content; locale: Locale }) {
-  const { ventures, ui } = content;
+/** Home: one short card per featured project, linking to its case study on /projects/. */
+export function FeaturedTeasers({ content, locale }: { content: Content; locale: Locale }) {
+  const { featured, ui } = content;
   const projectsPath = pagePath(locale, "projects");
 
   return (
-    <section aria-labelledby="featured-title" className="py-14 lg:py-20">
+    <section aria-labelledby="featured-title" className="py-12 lg:py-16">
       <div className="container-site">
         <SectionHeader
           id="featured-title"
           title={ui.home.featured}
           action={
-            <a href={projectsPath} className="link-row inline-flex min-h-10 items-center gap-2 text-sm text-mint">
+            <a href={projectsPath} className="link-row inline-flex min-h-11 items-center gap-2 text-sm text-mint">
               {ui.home.allProjects}
               <Icon name="arrow-right" size={16} className="rtl-flip" />
             </a>
           }
         />
-        <div data-reveal data-stagger className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
-          {ventures.map((venture) => (
+        <div data-reveal data-stagger className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {featured.map((project) => (
             <article
-              key={venture.slug}
-              style={{ "--accent": venture.accent } as CSSProperties}
-              className="spotlight group relative flex flex-col rounded-2xl border border-line-strong bg-card p-6 transition duration-300 hover:-translate-y-1 hover:border-mint/40 sm:p-7"
+              key={project.slug}
+              style={{ "--accent": project.accent } as CSSProperties}
+              className="spotlight group relative flex flex-col rounded-2xl border border-line-strong bg-card p-5 transition duration-300 hover:-translate-y-0.5 hover:border-mint/40 sm:p-6"
             >
-              <div className="flex items-center gap-4">
-                <span className="venture-logo flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border bg-bg p-1.5">
-                  {/* eslint-disable-next-line @next/next/no-img-element -- static export; small pre-sized WebP */}
-                  <img src={venture.logo.src} alt="" width={venture.logo.width} height={venture.logo.height} loading="lazy" className="h-full w-full object-contain" />
-                </span>
+              <div className="flex items-start gap-3.5">
+                <ProjectLogo project={project} size="sm" />
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-xl leading-tight">
-                    <a href={`${projectsPath}#${venture.slug}`} className="after:absolute after:inset-0 after:rounded-2xl">
-                      {venture.name}
+                  <h3 className="text-lg leading-tight">
+                    <a href={`${projectsPath}#${project.slug}`} className="stretched-link after:absolute after:inset-0 after:rounded-2xl">
+                      {project.name}
                     </a>
                   </h3>
-                  <p className="mt-1 text-sm text-muted">
-                    <span className="venture-role-text">{venture.role}</span> · <bdi>{venture.period}</bdi>
+                  <p className="mt-1 text-sm">
+                    <span className="venture-role-text">{project.role}</span>
                   </p>
                 </div>
-                <Icon name="arrow-up-right" className="rtl-flip shrink-0 text-muted transition group-hover:text-mint" />
+                <Icon name="arrow-up-right" className="rtl-flip mt-1 shrink-0 text-muted transition group-hover:text-mint" />
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-text">{venture.description}</p>
-              <dl className="mt-5 grid grid-cols-2 gap-3 border-t border-line pt-4 sm:grid-cols-4">
-                {venture.stats.map((stat) => (
-                  <div key={stat.label} className="flex min-w-0 flex-col-reverse">
-                    <dt className="mt-1 truncate text-[0.6875rem] text-muted">{stat.label}</dt>
-                    <dd className="font-display text-lg leading-none text-ink">
-                      <bdi dir="ltr" data-count={stat.value}>
-                        {stat.value}
-                      </bdi>
+              <div className="mt-3">
+                <StagePill stage={project.stage} labels={ui.ventures.stage} />
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-text">{project.summary}</p>
+              <dl className="mt-auto grid grid-cols-2 gap-x-4 gap-y-3 border-t border-line pt-4">
+                {project.facts.map((fact) => (
+                  <div key={fact.label} className="flex min-w-0 flex-col-reverse">
+                    <dt className="mt-1 text-xs text-muted">{fact.label}</dt>
+                    <dd className="font-display text-base leading-none text-ink tabular-nums">
+                      <bdi dir="ltr">{fact.value}</bdi>
                     </dd>
                   </div>
                 ))}

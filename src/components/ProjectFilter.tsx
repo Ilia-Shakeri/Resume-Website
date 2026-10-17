@@ -36,7 +36,7 @@ export function ProjectFilter({ filters, label, children }: { filters: Filter[];
               }`}
             >
               {filter.label}
-              <span className={`font-mono text-[0.6875rem] ${pressed ? "text-on-mint/70" : "text-muted"}`}>{filter.count}</span>
+              <span className={`font-mono text-xs ${pressed ? "text-on-mint/70" : "text-muted"}`}>{filter.count}</span>
             </button>
           );
         })}

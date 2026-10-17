@@ -39,7 +39,10 @@ export function About({ content }: { content: Content }) {
               </div>
             ))}
           </div>
-          <LiveTerminal title="iliashakeri.ir ~ prod" lines={terminal} rows={4} className="mt-8" />
+          <figure className="mt-8">
+            <LiveTerminal title="iliashakeri.ir · deploy check" badge={ui.about.terminalBadge} lines={terminal} rows={4} />
+            <figcaption className="mt-2 text-xs leading-relaxed text-muted">{ui.about.terminalCaption}</figcaption>
+          </figure>
         </div>
         <div data-reveal className="lg:col-start-2 lg:row-start-1">
           <WhoamiPanel rows={rows} localTimeLabel={labels.localTime} />

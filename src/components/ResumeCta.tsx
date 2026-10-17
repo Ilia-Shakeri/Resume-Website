@@ -10,7 +10,7 @@ function ResumePreview({ sections }: { sections: readonly string[] }) {
     <div dir="ltr" className="relative hidden w-[238px] shrink-0 lg:block" aria-hidden="true">
       <div className="rounded-sm bg-[#b3c4ba] px-6 pt-7 pb-6 text-[#151b18] shadow-[0_24px_48px_rgba(0,0,0,0.18)]">
         <p className="font-display text-xl">{profile.name}</p>
-        <p className="mt-2 font-mono text-[0.5rem] tracking-[0.08em] uppercase opacity-70">{profile.role}</p>
+        <p className="mt-2 font-mono text-[0.5rem] tracking-[0.08em] uppercase opacity-70">{profile.headline}</p>
         <div className="mt-3 h-0.5 bg-[#151b18]" />
         {sections.map((label) => (
           <div key={label} className="mt-4">
@@ -56,7 +56,7 @@ export function ResumeCta({ content, locale }: { content: Content; locale: Local
                 {ui.resume.printable}
                 <Icon name="printer" />
               </a>
-              <p className="font-mono text-[0.6875rem] leading-[1.7] tracking-[0.04em] uppercase">
+              <p className="font-mono text-xs leading-[1.7] tracking-[0.04em] uppercase">
                 PDF{size ? ` · ${size}` : ""}
                 <br />
                 {ui.resume.updated} {site.resume.updated[locale]}

@@ -22,7 +22,7 @@ export function Approach({ content }: { content: Content }) {
               <h3 className="mt-4 text-lg">{step.title}</h3>
               <p className="mt-2 text-sm leading-[1.65] text-text">{step.description}</p>
               <p className="mt-2 text-[0.8125rem] leading-[1.6] text-muted">{step.practice}</p>
-              <p className="mt-3 font-mono text-[0.6875rem] tracking-[0.06em] text-mint uppercase">{ui.approach.output} / {step.output}</p>
+              <p className="mt-3 font-mono text-xs tracking-[0.06em] text-mint uppercase">{ui.approach.output} / {step.output}</p>
             </li>
           ))}
         </ol>

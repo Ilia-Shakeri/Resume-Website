@@ -178,3 +178,40 @@ The site is now five pages per language: Home, About, Projects, Experience, Cont
 - The About page skipped from h1 to h3; the principle titles are now h2.
 
 The résumé PDF is still 2 pages. The OG image was regenerated.
+
+## Recruiter-readiness pass — 17 Oct 2026
+
+**Baseline, before the changes, on the 0098f7d build.**
+- Counter bug: with JavaScript on and no scrolling, the home page showed the project figures as `2.8.1 0 15/15 0 0 0 0 0`. The count-up set below-the-fold figures to 0 until they were scrolled into view. On `/projects/`, a figure was captured mid-animation as "3,508" instead of 3,510.
+- Small text: labels were 10–11 px.
+- Small targets: footer links were 17 px tall, under WCAG 2.2's 24 px minimum.
+- Mobile Lighthouse, lab, gzip: perf 66–78, LCP 5.5–6.8 s. The load-in animation held the LCP text at opacity 0.
+- No overflow or console errors at the 8 viewports; axe reported 0 violations.
+
+**Fixes**
+- The count-up was removed. Figures are plain server-rendered text, identical with and without JavaScript.
+- The opacity load-in was removed from page text.
+- Labels are at least 12 px.
+- Footer and certificate links are at least 44 px tall.
+- The "LIVE" terminal is relabelled "REPLAY", with a caption.
+
+**Checks run**
+- `npm run lint` and `npm run typecheck`: clean.
+- `npm run build`: 10 pages and `/resume/`.
+- `npm run qa:screens`: 161 checks passed.
+  - 10 pages × 8 viewports: no overflow, clipping, small targets, or console errors.
+  - axe WCAG 2.2 AA at 375 and 1440 px: 0 violations on every page.
+  - Figures match the static HTML and are never zero.
+  - No-JS rendering complete.
+  - Keyboard: logical tab order, visible 2 px focus outline, Enter opens a case study, Escape closes the mobile menu and returns focus.
+
+**Lighthouse 12.6.1** (local gzip server mirroring production nginx; lab values):
+
+| | Performance | Accessibility | Best practices | SEO | LCP |
+| --- | --- | --- | --- | --- | --- |
+| Mobile, 10 pages | 90–97 | 100 | 100 | 100 | 2.0–3.4 s |
+| Desktop, 10 pages | 99–100 | 100 | 100 | 100 | 0.6–0.8 s |
+
+CLS is ≤0.074 on every page. Mobile LCP meets 2.5 s on `/contact/` and `/fa/contact/` only. The rest is the simulated slow-4G download of the CSS and the framework JavaScript. Preloading fonts with `next/font` was tried and measured worse on Persian pages, so it was reverted. INP was not measured; Lighthouse lab runs cannot.
+
+**Résumé PDF:** regenerated, 2 pages, 242 KB. Text is selectable (checked with `pdftotext`), and the contact details are current.

@@ -8,6 +8,8 @@ export type Profile = {
   role: string;
   /** Professional title shown under the name in the hero. */
   headline: string;
+  /** Core technologies, shown as one line under the headline. */
+  stack: string[];
   intro: string;
   /** Current studies, shown in the hero facts. */
   study: string;
@@ -23,14 +25,6 @@ export type Profile = {
   bio: string[];
   principles: { title: string; detail: string }[];
   contactMessage: string;
-};
-
-export type CaseStudy = {
-  problem: string;
-  role: string;
-  approach: string[];
-  reliability: string[];
-  outcome: string[];
 };
 
 export type Locale = "en" | "fa";
@@ -52,26 +46,38 @@ export type Project = {
   links: LinkRef[];
 };
 
-/** A product Ilia founded or co-founded ("Projects I'm proud of"). */
-export type Venture = {
+/** One box in an architecture flow; steps are drawn in order with arrows between them. */
+export type FlowStep = { name: string; detail: string };
+
+/** A titled block of the engineering case study. */
+export type CaseSection = { title: string; items: string[] };
+
+/** A featured project on /projects/ with its full engineering case study. */
+export type FeaturedProject = {
   slug: string;
   name: string;
   /** Name in the other script, shown next to the name. */
-  localName: string;
-  logo: { src: string; width: number; height: number };
+  localName?: string;
+  logo?: { src: string; width: number; height: number };
   /** Brand colour for the logo ring and role badge. */
   accent: string;
   role: string;
+  category: string;
   period: string;
-  /** Current state, e.g. where it is live or the latest release. */
+  /** "production" is used only when the live deployment is documented. */
+  stage: "production" | "development";
   status: string;
-  description: string;
+  summary: string;
   /** "My part": three short points. */
   highlights: string[];
-  stats: { value: string; label: string }[];
+  facts: { value: string; label: string }[];
+  /** Where the figures come from, with a date. */
+  factsSource: string;
   tools: Tool[];
   links: (LinkRef & { primary?: boolean })[];
-  caseStudy: CaseStudy;
+  architecture: { caption: string; steps: FlowStep[] };
+  caseStudy: CaseSection[];
+  limitations: string[];
 };
 
 export type ToolkitIcon = "server" | "boxes" | "branch" | "pulse" | "terminal" | "shield" | "database" | "code" | "chat";
@@ -86,6 +92,9 @@ export type Tool = {
   fallback?: ToolkitIcon;
 };
 
+/** A core area of expertise with the work that demonstrates it. */
+export type Expertise = { title: string; detail: string; evidence: string };
+
 export type ToolkitGroup = {
   title: string;
   icon: ToolkitIcon;
@@ -95,6 +104,8 @@ export type ToolkitGroup = {
 
 export type ExperienceItem = {
   title: string;
+  /** Kind of engagement, e.g. "Employment" or "Own product". */
+  type: string;
   organization: string;
   location: string;
   period: string;

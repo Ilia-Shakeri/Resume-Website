@@ -1,12 +1,8 @@
-import type { CSSProperties } from "react";
 import { DevOpsLoop } from "@/components/DevOpsLoop";
 import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
 import { pagePath, type Content, type Locale } from "@/content";
 import { site } from "@/lib/site";
-
-/** Stagger index for the load-in animation (.enter in globals.css). */
-const step = (i: number) => ({ "--i": i }) as CSSProperties;
 
 export function Hero({ content, locale }: { content: Content; locale: Locale }) {
   const { profile, capabilities, ui } = content;
@@ -20,13 +16,12 @@ export function Hero({ content, locale }: { content: Content; locale: Locale }) 
     <section aria-labelledby="hero-title" className="relative overflow-hidden">
       <div aria-hidden="true" className="hero-backdrop">
         <span className="hero-grid" />
-        <span className="hero-blob hero-blob-1" />
-        <span className="hero-blob hero-blob-2" />
+        <span className="hero-blob" />
       </div>
 
       {/* Phones: photo, then intro, then the loop. Desktop: intro beside photo and loop. */}
-      <div className="relative container-site grid grid-cols-1 gap-x-16 gap-y-8 pt-6 pb-10 [grid-template-areas:'photo'_'text'_'loop'] lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-y-4 lg:pt-8 lg:pb-10 lg:[grid-template-areas:'text_photo'_'text_loop'] xl:grid-cols-[minmax(0,1fr)_minmax(0,480px)]">
-        <figure className="enter relative w-fit [grid-area:photo] lg:mx-auto lg:w-full lg:max-w-[320px]" style={step(1)}>
+      <div className="relative container-site grid grid-cols-1 gap-x-16 gap-y-8 pt-6 pb-10 [grid-template-areas:'text'_'loop'] lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:gap-y-4 lg:pt-8 lg:pb-10 lg:[grid-template-areas:'text_photo'_'text_loop'] xl:grid-cols-[minmax(0,1fr)_minmax(0,480px)]">
+        <figure className="relative hidden [grid-area:photo] lg:mx-auto lg:block lg:w-full lg:max-w-[320px]">
           <div className="portrait-ring rounded-full p-[3px] lg:rounded-[2rem]">
             {/* eslint-disable-next-line @next/next/no-img-element -- static export; pre-sized WebP */}
             <img
@@ -36,32 +31,38 @@ export function Hero({ content, locale }: { content: Content; locale: Locale }) 
               height={640}
               fetchPriority="high"
               decoding="async"
-              className="aspect-square h-32 w-32 rounded-full bg-card object-cover sm:h-40 sm:w-40 lg:h-auto lg:w-full lg:rounded-[calc(2rem-3px)]"
+              className="aspect-square h-auto w-full rounded-[calc(2rem-3px)] bg-card object-cover"
             />
           </div>
         </figure>
 
         <div className="relative z-10 [grid-area:text]">
-          <p
-            className="enter inline-flex items-center gap-2.5 rounded-full border border-mint/30 bg-mint-tint px-3.5 py-1.5 text-xs text-mint"
-            style={step(0)}
-          >
-            <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="absolute inset-0 animate-ping rounded-full bg-mint opacity-60" />
-              <span className="relative h-2 w-2 rounded-full bg-mint" />
-            </span>
+          <p className="flex items-center gap-2 text-sm text-mint">
+            <span className="h-2 w-2 rounded-full bg-mint" aria-hidden="true" />
             {ui.hero.available}
           </p>
-          <h1 id="hero-title" className="enter mt-5 text-[2.5rem] leading-[1.05] tracking-[-0.03em] sm:text-[3.25rem] xl:text-[3.75rem]" style={step(1)}>
-            {profile.name}
-          </h1>
-          <p className="enter mt-3 font-display text-lg leading-snug sm:text-xl xl:text-[1.375rem]" style={step(2)}>
-            <span className="text-gradient">{profile.headline}</span>
+          <div className="mt-4 flex items-center gap-4">
+            {/* Phones show the portrait beside the name; larger screens show the big one. */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- static export; pre-sized WebP */}
+            <img
+              src="/images/ilia-shakeri.webp"
+              alt=""
+              width={640}
+              height={640}
+              decoding="async"
+              className="h-16 w-16 shrink-0 rounded-full border border-line-strong object-cover sm:h-20 sm:w-20 lg:hidden"
+            />
+            <h1 id="hero-title" className="text-[2.25rem] leading-[1.05] tracking-[-0.03em] sm:text-[3.25rem] xl:text-[3.75rem]">
+              {profile.name}
+            </h1>
+          </div>
+          <p className="mt-4 font-display text-xl leading-snug text-ink sm:text-2xl">{profile.headline}</p>
+          <p className="mt-2 font-mono text-sm text-muted">
+            <span className="sr-only">{ui.hero.stackLabel}: </span>
+            <bdi dir="ltr">{profile.stack.join(" · ")}</bdi>
           </p>
-          <p className="enter mt-5 max-w-[580px] text-[0.9375rem] leading-[1.75] text-text sm:text-base" style={step(3)}>
-            {profile.intro}
-          </p>
-          <ul className="enter mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted" style={step(4)}>
+          <p className="mt-5 max-w-[580px] text-base leading-[1.75] text-text">{profile.intro}</p>
+          <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
             <li className="inline-flex items-center gap-2">
               <Icon name="cap" size={16} className="text-mint" />
               {profile.study}
@@ -71,7 +72,7 @@ export function Hero({ content, locale }: { content: Content; locale: Locale }) 
               {profile.location}
             </li>
           </ul>
-          <div className="enter mt-7 flex flex-wrap gap-3" style={step(5)}>
+          <div className="mt-7 flex flex-wrap gap-3">
             <a href={pagePath(locale, "projects")} className="btn btn-primary">
               {ui.hero.explore}
               <Icon name="arrow-right" className="rtl-flip" />
@@ -80,8 +81,12 @@ export function Hero({ content, locale }: { content: Content; locale: Locale }) 
               {ui.hero.resume}
               <Icon name="download" className="text-mint" />
             </a>
+            <a href={pagePath(locale, "contact")} className="btn btn-outline">
+              {ui.hero.contact}
+              <Icon name="mail" className="text-mint" />
+            </a>
           </div>
-          <ul className="enter mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm" style={step(6)} aria-label={ui.hero.links}>
+          <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm" aria-label={ui.hero.links}>
             {links.map((link) => (
               <li key={link.label}>
                 <ExternalLink
@@ -103,7 +108,7 @@ export function Hero({ content, locale }: { content: Content; locale: Locale }) 
           </ul>
         </div>
 
-        <div className="enter [grid-area:loop]" style={step(4)}>
+        <div className="mx-auto w-full max-w-[380px] [grid-area:loop] lg:max-w-none">
           <DevOpsLoop title={ui.hero.loopTitle} />
         </div>
       </div>
