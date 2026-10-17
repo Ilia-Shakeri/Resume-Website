@@ -5,8 +5,9 @@ import { PrintButton } from "@/components/PrintButton";
 import { getContent } from "@/content";
 import { site } from "@/lib/site";
 
-const { toolkit, education, experience, profile, qualifications, resumeSummary, ventures, featuredBuild, secondaryProjects } =
+const { toolkit, education, experience, profile, qualifications, resumeSummary, ventures, projects } =
   getContent("en");
+const [chatops, ...others] = projects;
 
 export const metadata: Metadata = {
   title: "Résumé",
@@ -124,19 +125,23 @@ export default function ResumePage() {
           ))}
           <article className="mt-3 break-inside-avoid">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-              <h3 className="text-[0.9375rem] font-semibold">{featuredBuild.name}</h3>
-              <a href={featuredBuild.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
-                {featuredBuild.links[0].href.replace("https://", "")}
+              <h3 className="text-[0.9375rem] font-semibold">{chatops.name}</h3>
+              <a href={chatops.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
+                {chatops.links[0].href.replace("https://", "")}
               </a>
             </div>
-            <p className="mt-0.5">{featuredBuild.summary}</p>
-            <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">{featuredBuild.tags.join(" · ")}</p>
+            <p className="mt-0.5">
+              {chatops.summary} {chatops.highlights[0]}
+            </p>
+            <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">
+              {chatops.tools.map((tool) => tool.name).join(" · ")}
+            </p>
           </article>
           <p className="mt-3 break-inside-avoid">
             <span className="font-semibold">Also: </span>
-            {secondaryProjects.map((project, index) => (
+            {others.map((project, index) => (
               <span key={project.name}>
-                {project.name} ({project.tools[0]?.name}){index < secondaryProjects.length - 1 ? ", " : "."}
+                {project.name} ({project.tools[0]?.name}){index < others.length - 1 ? ", " : "."}
               </span>
             ))}
           </p>

@@ -122,3 +122,25 @@ Checked with `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run 
 **Visual review:** `/fa/` was reviewed at 1440 px (hero, about, projects, builds, experience, education) and at 375 px. The English projects and builds were reviewed at 1440 px. The Persian hero headline holds two lines at 320–1920 px.
 
 The résumé PDF was regenerated and is still 2 pages.
+
+## Personal hero and compact projects — 17 Oct 2026
+
+The hero now shows the portrait, a first-person intro, and the DevOps loop. The deploy terminal moved to About. Project cards are compact: key facts, "my part", stack, links, and collapsible engineering notes.
+
+Checked with `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run qa:screens`. All browser checks passed, including:
+- hero portrait loaded;
+- about terminal typing;
+- both venture cards;
+- filter: 9 projects → 3 Security;
+- no clipping on `/` and `/fa/` at 375, 768, and 1440 px.
+
+**Visual review:**
+- Hero at 375, 768, 1024, and 1440 px in both languages.
+- Projects and More projects at 375 and 1440 px.
+- About at 375 and 1440 px.
+
+**Fixed during review:**
+- The About grid had the same implicit-track problem as the hero once it held the terminal: the page grew to 417 px at 375 px. Fixed with `grid-cols-1`; the clipping check catches it.
+- Persian stat values now sit at the start of each cell.
+
+The résumé PDF was regenerated and is still 2 pages (212 KB).

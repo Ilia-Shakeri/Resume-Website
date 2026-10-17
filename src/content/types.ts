@@ -29,56 +29,43 @@ export type CaseStudy = {
   outcome: string[];
 };
 
-/** Which illustration a featured project card renders. */
-export type DiagramKind = "dolphin-stack" | "nerkhbaan-ci" | "chatops-flow";
-
 export type Locale = "en" | "fa";
-
-export type FeaturedProject = {
-  slug: string;
-  category: string;
-  name: string;
-  period: string;
-  role: string;
-  title: string;
-  summary: string;
-  tags: string[];
-  outcomeLabel: string;
-  outcome: string;
-  diagram: DiagramKind;
-  links: LinkRef[];
-  caseStudy: CaseStudy;
-};
 
 export type ProjectCategory = "ops" | "security" | "monitoring" | "apps";
 
-export type SecondaryProject = {
+/** A repository card in "More projects". */
+export type Project = {
   name: string;
   year: string;
-  summary: string;
+  /** What it is, e.g. "Bash CLI" or "n8n workflows". */
+  kind: string;
   category: ProjectCategory;
+  /** One sentence. */
+  summary: string;
+  /** Two or three short, verified points. */
+  highlights: string[];
   tools: Tool[];
-  href: string;
+  links: LinkRef[];
 };
 
 /** A product Ilia founded or co-founded ("Projects I'm proud of"). */
 export type Venture = {
   slug: string;
   name: string;
-  /** Name as written in Persian, shown next to the Latin name. */
+  /** Name in the other script, shown next to the name. */
   localName: string;
   logo: { src: string; width: number; height: number };
-  /** Brand accent used for the card's glow and logo ring. */
+  /** Brand colour for the logo ring and role badge. */
   accent: string;
   role: string;
   period: string;
+  /** Current state, e.g. where it is live or the latest release. */
   status: string;
-  tagline: string;
   description: string;
+  /** "My part": three short points. */
   highlights: string[];
   stats: { value: string; label: string }[];
   tools: Tool[];
-  diagram: DiagramKind;
   links: (LinkRef & { primary?: boolean })[];
   caseStudy: CaseStudy;
 };

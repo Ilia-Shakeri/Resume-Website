@@ -105,7 +105,9 @@ The venture cards show four figures per product. Each is the repository's own re
 | Token whoami validation, renew on 401, backoff + jitter on 429 | Both READMEs | ✅ |
 | Résumé's "enterprise-grade" / "self-healing" wording | READMEs, CV | Toned down on the site to concrete mechanisms |
 
-## Secondary projects
+## More projects
+
+Cards show a kind (for example "Bash CLI"), a one-sentence summary, and two or three points, all taken from the claims below. The ChatOps bridges card uses the claims in the section above. Clockwork links both public repositories (CLI and desktop).
 
 | Project | Claims used | Source | Status |
 | --- | --- | --- | --- |

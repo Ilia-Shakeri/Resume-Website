@@ -21,7 +21,7 @@ export function personJsonLd(locale: Locale): string {
       "@type": "Organization",
       name: venture.name,
       ...(venture.links[0]?.href.startsWith("https://github.com") ? {} : { url: venture.links[0]?.href }),
-      description: ventures[index].tagline,
+      description: ventures[index].description,
     })),
     hasCredential: qualifications
       .filter((item) => item.certId)

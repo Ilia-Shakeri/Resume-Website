@@ -7,9 +7,9 @@ import type { Education, ExperienceItem, Profile, Qualification } from "../types
 export const profile: Profile = {
   name: "Ilia Shakeri",
   role: "DevOps Engineer",
-  headline: ["Built to ship.", "Built to stay up."],
+  headline: ["Hi, I’m", "Ilia Shakeri."],
   intro:
-    "I’m Ilia Shakeri, a DevOps engineer working across Linux, containers, delivery pipelines, and monitoring. I build systems that deploy the same way every time, and that tell you when something is wrong.",
+    "A DevOps engineer in Tehran. I work across Linux, containers, delivery pipelines, and monitoring, and I like building systems that deploy the same way every time and tell you when something is wrong. I also founded Nerkhbaan and co-founded Dolphin CRM.",
   location: "Tehran, Iran",
   timeZone: "IRST · UTC+03:30",
   availability: "Open to remote DevOps & platform roles",

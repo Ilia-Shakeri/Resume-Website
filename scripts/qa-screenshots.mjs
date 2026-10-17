@@ -54,7 +54,7 @@ try {
   const [lang, dir] = await fa.evaluate(() => [document.documentElement.lang, document.documentElement.dir]);
   check(lang === "fa" && dir === "rtl", `/fa/: <html lang="${lang}" dir="${dir}">`);
   const faHeading = await fa.locator("#ventures-title").innerText();
-  check(/محصولاتی/.test(faHeading), `/fa/: Persian content rendered ("${faHeading.split("\n")[0]}")`);
+  check(/شروع کردم/.test(faHeading), `/fa/: Persian content rendered ("${faHeading.split("\n")[0]}")`);
   const hreflang = await fa.$$eval("link[rel='alternate'][hreflang]", (links) => links.map((l) => l.hreflang).sort().join(","));
   check(hreflang.includes("en") && hreflang.includes("fa"), `/fa/: hreflang alternates (${hreflang})`);
   await fa.close();
@@ -149,16 +149,19 @@ try {
   // Motion features (normal motion).
   const live = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await live.goto(`${url}/`, { waitUntil: "networkidle" });
-  const terminal = live.locator("section#top .terminal-live");
-  const before = await terminal.innerText();
-  await live.waitForTimeout(1800);
-  const after = await terminal.innerText();
-  check(before !== after, "hero terminal is typing");
+  const portrait = await live.$eval("section#top img", (img) => img.complete && img.naturalWidth);
+  check(portrait > 0, `hero portrait loaded (${portrait}px)`);
   const loop = live.locator("svg[aria-labelledby='devops-loop-title']");
   const t1 = await loop.evaluate((svg) => svg.getCurrentTime());
   await live.waitForTimeout(600);
   const t2 = await loop.evaluate((svg) => svg.getCurrentTime());
   check(t2 > t1 && !(await loop.evaluate((svg) => svg.animationsPaused())), `DevOps loop running (${t1.toFixed(2)}s → ${t2.toFixed(2)}s)`);
+  const terminal = live.locator("#about .terminal-live");
+  await terminal.scrollIntoViewIfNeeded();
+  const before = await terminal.innerText();
+  await live.waitForTimeout(1800);
+  const after = await terminal.innerText();
+  check(before !== after, "about terminal is typing");
   const farBelow = await live.$eval("#contact [data-reveal]", (el) => getComputedStyle(el).opacity);
   check(farBelow === "0", `off-screen section hidden before scrolling (opacity ${farBelow})`);
   await live.locator("#toolkit").scrollIntoViewIfNeeded();
