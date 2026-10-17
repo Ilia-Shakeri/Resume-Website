@@ -33,7 +33,7 @@ export function ResumeCta() {
   return (
     <section aria-labelledby="resume-title" id="resume" className="scroll-mt-24 py-20 lg:py-[92px]">
       <div className="container-site">
-        <div className="flex flex-col justify-between gap-12 rounded-2xl bg-mint px-6 py-12 text-on-mint sm:px-12 sm:py-14 lg:flex-row lg:items-center lg:pr-[90px]">
+        <div data-reveal className="flex flex-col justify-between gap-12 rounded-2xl bg-mint px-6 py-12 text-on-mint sm:px-12 sm:py-14 lg:flex-row lg:items-center lg:pr-[90px]">
           <div>
             <p className="font-mono text-xs tracking-[0.06em] uppercase">07 / The takeaway</p>
             <h2 id="resume-title" className="mt-6 text-[2.5rem] leading-[1.08] !text-on-mint sm:text-5xl lg:text-[4rem]">

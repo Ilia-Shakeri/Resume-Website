@@ -82,3 +82,23 @@ All pairs meet AA for normal text.
 - **External URLs:** GitHub repository links come from the authenticated repository listing. `nerkhbaan.ir`, LinkedIn, and the Actions run page could not be opened from this environment (network policy).
 - **Real devices and screen readers:** testing used headless Chromium only. No Safari/iOS, Firefox, or VoiceOver/NVDA run.
 - **Lighthouse:** not run.
+
+## Site upgrade — 17 Oct 2026
+
+Checked with `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run qa:screens`. All 30 browser checks passed, including these new ones:
+
+| Check | Result |
+| --- | --- |
+| Hero terminal types (text changes over 1.8 s) | ✅ |
+| DevOps loop SMIL timeline advances, and is not paused, while on screen | ✅ |
+| Off-screen sections start hidden and fade in when scrolled to (opacity 0 → 1) | ✅ |
+| Reduced motion: loop paused, CSS animations ~0, no section hidden | ✅ |
+| Toolkit renders 73 tools, 64 with brand icons | ✅ |
+| Hovering a certificate row shows its image (opacity 1, image loaded) | ✅ |
+| `whoami` clock shows HH:MM:SS IRST | ✅ |
+
+Page weight: ~183 KB gzipped JS (was ~180 KB; icons are inlined at build time, not shipped as a library), ~125 KB gzipped HTML (was ~33 KB, mostly inlined icon paths).
+
+Visual checks: hero at 1440 px mid-animation, toolkit, certificate hover, and the `whoami` panel at 1440 px; hero at 375 px. Loop stage labels were enlarged on small screens after the 375 px review. The résumé PDF stays at 2 pages (213 KB).
+
+Without JavaScript the site shows the static terminal transcript and every section; `html.js` (set by an inline script before first paint) switches to the animated versions.

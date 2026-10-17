@@ -5,6 +5,7 @@ import { Education } from "@/components/Education";
 import { Experience } from "@/components/Experience";
 import { Hero } from "@/components/Hero";
 import { ResumeCta } from "@/components/ResumeCta";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { SelectedWork } from "@/components/SelectedWork";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -28,6 +29,7 @@ export default function HomePage() {
         <Contact />
       </main>
       <SiteFooter />
+      <ScrollReveal />
     </>
   );
 }

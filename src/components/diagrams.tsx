@@ -82,8 +82,12 @@ function NerkhbaanCi() {
         <span className="text-mint">✓ 2.8.1 · all jobs passed</span>
       </figcaption>
       <ol className="mt-6 grid grid-cols-3 gap-2 sm:grid-cols-5">
-        {ciStages.map((stage) => (
-          <li key={stage.label} className="flex flex-col items-center rounded-md border border-line-strong bg-bg px-1 py-5 text-center">
+        {ciStages.map((stage, index) => (
+          <li
+            key={stage.label}
+            style={{ "--stage": index } as React.CSSProperties}
+            className="ci-stage flex flex-col items-center rounded-md border border-line-strong bg-bg px-1 py-5 text-center"
+          >
             <Icon name={stage.icon} className="text-mint" />
             <span className="mt-3 font-mono text-[0.6875rem] text-ink">{stage.label}</span>
             <span className="mt-1 font-mono text-[0.5625rem] leading-tight text-muted">{stage.detail}</span>

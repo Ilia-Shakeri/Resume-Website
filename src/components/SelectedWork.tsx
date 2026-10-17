@@ -116,6 +116,7 @@ export function SelectedWork() {
         />
 
         <article
+          data-reveal
           aria-labelledby={`${lead.slug}-title`}
           className="mt-14 grid overflow-hidden rounded-2xl border border-line-strong bg-card lg:mt-16 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]"
         >
@@ -129,6 +130,7 @@ export function SelectedWork() {
           {rest.map((project) => (
             <article
               key={project.slug}
+              data-reveal
               aria-labelledby={`${project.slug}-title`}
               className="flex flex-col overflow-hidden rounded-2xl border border-line-strong bg-card"
             >
@@ -144,7 +146,7 @@ export function SelectedWork() {
           <h3 className="eyebrow">More from GitHub</h3>
           <ul className="mt-6 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
             {secondaryProjects.map((project) => (
-              <li key={project.name} className="bg-surface">
+              <li key={project.name} data-reveal className="bg-surface">
                 <ExternalLink href={project.href} className="group flex h-full flex-col p-6 transition-colors hover:bg-card">
                   <span className="flex items-start justify-between gap-4">
                     <span className="font-display text-xl text-ink">{project.name}</span>

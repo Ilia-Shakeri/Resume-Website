@@ -11,7 +11,7 @@ type SectionHeaderProps = {
 /** Numbered eyebrow + large display heading with an optional right-hand note. */
 export function SectionHeader({ id, index, label, title, aside }: SectionHeaderProps) {
   return (
-    <div className="grid gap-6 xl:grid-cols-[1fr_minmax(0,390px)] xl:items-end xl:gap-16">
+    <div data-reveal className="grid gap-6 xl:grid-cols-[1fr_minmax(0,390px)] xl:items-end xl:gap-16">
       <div>
         <p className="eyebrow">
           {index} / {label}

@@ -9,7 +9,7 @@ export function Approach() {
         <SectionHeader id="approach-title" index="05" label="How I work" title="Built in loops, not silos." aside={approachIntro} />
         <ol className="mt-14 grid gap-10 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4 lg:gap-8">
           {approach.map((step, index) => (
-            <li key={step.title}>
+            <li key={step.title} data-reveal style={{ "--reveal-delay": `${index * 90}ms` } as React.CSSProperties}>
               <div className="flex items-center justify-between border-b border-line pb-6">
                 <span className="flex h-[54px] w-[54px] items-center justify-center rounded-md bg-mint-tint text-mint">
                   <Icon name={step.icon} size={22} />
@@ -25,7 +25,7 @@ export function Approach() {
             </li>
           ))}
         </ol>
-        <div className="mt-10 flex flex-col gap-4 rounded-lg bg-card px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div data-reveal className="mt-10 flex flex-col gap-4 rounded-lg bg-card px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
           <p className="flex items-start gap-4 text-[0.9375rem] text-ink sm:items-center">
             <Icon name="repeat" size={20} className="mt-0.5 shrink-0 text-mint sm:mt-0" />
             Reliability is never “done.” Every deploy, alert, and restore test feeds the next improvement.

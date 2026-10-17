@@ -4,7 +4,7 @@ export function Experience() {
   return (
     <section aria-labelledby="experience-title" id="experience" className="scroll-mt-24 bg-surface py-20 lg:py-[120px]">
       <div className="container-site grid gap-12 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-[92px]">
-        <div>
+        <div data-reveal>
           <p className="eyebrow">04 / Experience</p>
           <h2 id="experience-title" className="mt-6 text-[2.5rem] leading-[1.08] sm:text-5xl lg:text-[3.75rem]">
             A career in building better.
@@ -19,7 +19,7 @@ export function Experience() {
 
         <ol className="border-t border-line">
           {experience.map((item) => (
-            <li key={`${item.organization}-${item.title}`} className="relative border-b border-line py-9 pl-9 last:border-b-0">
+            <li key={`${item.organization}-${item.title}`} data-reveal className="relative border-b border-line py-9 pl-9 last:border-b-0">
               <span className="absolute top-[3.05rem] left-0 h-2 w-2 rounded-full bg-mint" aria-hidden="true" />
               <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
                 <h3 className="text-[1.75rem] leading-tight lg:text-[2rem]">{item.title}</h3>

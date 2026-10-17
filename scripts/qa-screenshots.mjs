@@ -19,7 +19,8 @@ const { server, url } = await startStaticServer("out");
 const browser = await launchBrowser();
 try {
   for (const width of widths) {
-    const page = await browser.newPage({ viewport: { width, height: 900 } });
+    // Full-page captures use reduced motion so scroll-revealed sections are all visible.
+    const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: "reduce" });
     const errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
     page.on("console", (msg) => msg.type() === "error" && errors.push(msg.text()));
@@ -97,10 +98,53 @@ try {
 
   const reduced = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
   await reduced.goto(`${url}/`, { waitUntil: "networkidle" });
-  const duration = await reduced.$eval(".orbit-float", (el) => getComputedStyle(el).animationDuration);
+  await reduced.waitForTimeout(500);
+  const duration = await reduced.$eval(".loop-flow", (el) => getComputedStyle(el).animationDuration);
   const scroll = await reduced.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior);
-  check(parseFloat(duration) < 0.1 && scroll === "auto", `reduced motion: animation ${duration}, scroll-behavior ${scroll}`);
+  const loopPaused = await reduced.$eval("svg[aria-labelledby='devops-loop-title']", (svg) => svg.animationsPaused());
+  const hidden = await reduced.$$eval("[data-reveal]", (els) => els.filter((el) => getComputedStyle(el).opacity !== "1").length);
+  check(
+    parseFloat(duration) < 0.1 && scroll === "auto" && loopPaused && hidden === 0,
+    `reduced motion: css ${duration}, scroll ${scroll}, loop paused ${loopPaused}, hidden sections ${hidden}`,
+  );
   await reduced.close();
+
+  // Motion features (normal motion).
+  const live = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await live.goto(`${url}/`, { waitUntil: "networkidle" });
+  const terminal = live.locator("section#top .terminal-live");
+  const before = await terminal.innerText();
+  await live.waitForTimeout(1800);
+  const after = await terminal.innerText();
+  check(before !== after, "hero terminal is typing");
+  const loop = live.locator("svg[aria-labelledby='devops-loop-title']");
+  const t1 = await loop.evaluate((svg) => svg.getCurrentTime());
+  await live.waitForTimeout(600);
+  const t2 = await loop.evaluate((svg) => svg.getCurrentTime());
+  check(t2 > t1 && !(await loop.evaluate((svg) => svg.animationsPaused())), `DevOps loop running (${t1.toFixed(2)}s → ${t2.toFixed(2)}s)`);
+  const farBelow = await live.$eval("#contact [data-reveal]", (el) => getComputedStyle(el).opacity);
+  check(farBelow === "0", `off-screen section hidden before scrolling (opacity ${farBelow})`);
+  await live.locator("#toolkit").scrollIntoViewIfNeeded();
+  await live.waitForTimeout(1200);
+  const revealed = await live.$eval("#toolkit li[data-reveal]", (el) => [el.classList.contains("is-visible"), getComputedStyle(el).opacity]);
+  check(revealed[0] && revealed[1] === "1", `section fades in on scroll (opacity ${revealed[1]})`);
+  const icons = await live.$$eval("#toolkit svg[role='img']", (els) => els.length);
+  const chips = await live.$$eval("#toolkit li li", (els) => els.length);
+  check(icons >= 50, `toolkit: ${chips} tools, ${icons} brand icons`);
+  await live.locator("#education").scrollIntoViewIfNeeded();
+  await live.waitForTimeout(1000);
+  const row = live.locator("#education li.group").first();
+  await row.hover();
+  await live.waitForTimeout(450);
+  const preview = await row.locator("figure").evaluate((el) => [getComputedStyle(el).opacity, el.querySelector("img").naturalWidth]);
+  check(preview[0] === "1" && preview[1] > 0, `certificate preview on hover (opacity ${preview[0]}, image ${preview[1]}px)`);
+  await live.screenshot({ path: `${outDir}/certificate-hover.png` });
+  await live.locator("#about").scrollIntoViewIfNeeded();
+  await live.waitForTimeout(2600);
+  await live.screenshot({ path: `${outDir}/about-live.png` });
+  const clock = await live.locator("#about dd .tabular-nums").innerText();
+  check(/\d{2}:\d{2}:\d{2}/.test(clock), `whoami local clock ticking (${clock})`);
+  await live.close();
 
   const resume = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await resume.goto(`${url}/resume/`, { waitUntil: "networkidle" });

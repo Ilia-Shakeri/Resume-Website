@@ -56,12 +56,22 @@ export type SecondaryProject = {
   href: string;
 };
 
-export type ToolkitIcon = "server" | "boxes" | "branch" | "pulse" | "terminal" | "shield";
+export type ToolkitIcon = "server" | "boxes" | "branch" | "pulse" | "terminal" | "shield" | "database" | "code" | "chat";
+
+export type Tool = {
+  name: string;
+  /**
+   * Simple Icons export name (e.g. "siDocker"). Omit for tools without a
+   * brand icon; they get `fallback` from the site's own icon set instead.
+   */
+  brand?: string;
+  fallback?: ToolkitIcon;
+};
 
 export type ToolkitGroup = {
   title: string;
   icon: ToolkitIcon;
-  tools: string[][];
+  tools: Tool[];
   practices: string[];
 };
 

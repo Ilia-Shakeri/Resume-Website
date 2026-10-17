@@ -1,38 +1,23 @@
+import { DevOpsLoop } from "@/components/DevOpsLoop";
 import { Icon } from "@/components/Icon";
+import { LiveTerminal, type TerminalLine } from "@/components/LiveTerminal";
+import { buildSha } from "@/lib/build-info";
 import { capabilities, profile } from "@/content/profile";
 import { site } from "@/lib/site";
 
-function HeroIllustration() {
-  return (
-    <div className="relative mx-auto aspect-square w-full max-w-[440px] lg:max-w-[520px]" aria-hidden="true">
-      {/* Orbit rings, drawn in SVG so they stay crisp at every size. */}
-      <svg viewBox="0 0 520 520" className="absolute inset-0 h-full w-full" fill="none">
-        <g className="orbit-spin" style={{ animationDuration: "90s" }}>
-          <ellipse cx="290" cy="215" rx="230" ry="96" transform="rotate(-20 290 215)" stroke="#84bc9c" strokeOpacity="0.28" />
-        </g>
-        <ellipse cx="250" cy="330" rx="240" ry="118" transform="rotate(26 250 330)" stroke="#84bc9c" strokeOpacity="0.32" />
-      </svg>
-
-      {/* eslint-disable-next-line @next/next/no-img-element -- static export; asset is pre-sized WebP */}
-      <img
-        src="/images/hero-server.webp"
-        alt=""
-        width={560}
-        height={622}
-        fetchPriority="high"
-        className="orbit-float absolute top-[-2%] left-[26%] w-[48%] drop-shadow-[0_30px_60px_rgba(132,188,156,0.10)]"
-      />
-
-      <span className="pulse-dot absolute top-[14%] left-[5%] h-6 w-6 rounded-full bg-mint-bright shadow-[0_0_24px_rgba(168,240,200,0.45)]" />
-
-      <span className="absolute right-[6%] bottom-[18%] flex h-16 w-16 rotate-[-14deg] items-center justify-center rounded-xl border border-mint/70 bg-bg text-mint-bright">
-        <Icon name="layers" size={26} />
-      </span>
-    </div>
-  );
-}
-
 export function Hero() {
+  // Commands from the real deployment of this site (see docs/deployment.md).
+  const terminal: TerminalLine[] = [
+    { kind: "cmd", text: "curl -s https://iliashakeri.ir/build.txt" },
+    { kind: "out", text: buildSha() },
+    { kind: "cmd", text: "docker compose ps --format '{{.Name}} {{.Status}}'" },
+    { kind: "out", text: "iliashakeri-web-1 Up (healthy)" },
+    { kind: "cmd", text: "systemctl is-active iliashakeri-update.timer" },
+    { kind: "ok", text: "active · pulls new builds every 2 min" },
+    { kind: "cmd", text: 'echo "$MOTTO"' },
+    { kind: "ok", text: "Built to ship. Built to stay up." },
+  ];
+
   return (
     <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden">
       <div className="container-site grid gap-10 pt-14 pb-12 md:pt-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,40%)] min-[87.5rem]:grid-cols-[minmax(0,1fr)_minmax(0,500px)] lg:gap-6 lg:pt-[84px] lg:pb-14">
@@ -67,25 +52,13 @@ export function Hero() {
           </a>
         </div>
 
-        <div className="relative flex flex-col">
-          <HeroIllustration />
-          <p className="meta -mt-6 flex items-center gap-3 lg:-mt-10">
+        <div className="relative flex flex-col justify-center gap-6">
+          <DevOpsLoop />
+          <p className="meta flex items-center gap-3">
             <span className="h-px w-9 bg-mint" aria-hidden="true" />
-            Systems in orbit / v.01
+            Continuous delivery / ∞
           </p>
-          <div className="mt-6 rounded-lg border border-line-strong bg-card-2 px-5 py-4 font-mono text-[0.8125rem] lg:ml-16">
-            <div className="flex items-center justify-between text-[0.6875rem] text-muted">
-              <span>portfolio ~ main</span>
-              <span className="flex items-center gap-2 text-mint">
-                <span className="h-1.5 w-1.5 rounded-full bg-mint" aria-hidden="true" />
-                READY
-              </span>
-            </div>
-            <p className="mt-3 text-text">
-              <span className="text-muted">$</span> ./deploy.sh --status
-            </p>
-            <p className="mt-1.5 text-mint">✓ Built to ship. Built to stay up.</p>
-          </div>
+          <LiveTerminal title="iliashakeri.ir ~ prod" lines={terminal} rows={4} className="lg:ml-16" />
         </div>
       </div>
 

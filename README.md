@@ -2,7 +2,7 @@
 
 Personal portfolio of Ilia Shakeri, DevOps Engineer. A static, content-driven Next.js site built from the Figma reference in `references/`.
 
-**Sections:** hero · capability ribbon · about (`whoami` panel) · selected work (Dolphin CRM, Nerkhbaan, ChatOps bridges + six secondary repos) · technical toolkit · experience timeline · engineering approach · education & training · résumé download · contact. A printable résumé lives at `/resume/` and as a PDF.
+**Sections:** hero (animated DevOps loop and live terminal) · capability ribbon · about (`whoami` panel) · selected work (Dolphin CRM, Nerkhbaan, ChatOps bridges + six secondary repos) · technical toolkit · experience timeline · engineering approach · education & training · résumé download · contact. A printable résumé lives at `/resume/` and as a PDF.
 
 ## Stack
 
