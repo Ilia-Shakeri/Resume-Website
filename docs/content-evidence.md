@@ -157,8 +157,8 @@ At Ilia's request the project cards no longer show repository counters (CI jobs,
 | --- | --- | --- |
 | `nerkhbaan-dashboard*.webp` | Gold and silver price cards with charts | None needed (public market prices) |
 | `nerkhbaan-login*.webp` | Sign-in page | None needed (empty form) |
-| `dolphin-dashboard*.webp` | Platform admin dashboard (light) | Aggregate tiles only; no names. ⏳ Ilia to confirm these are demo, not customer, figures |
-| `dolphin-leads*.webp` | Leads board by status (dark) | Card contents (lead names) blurred before publishing |
+| `dolphin-dashboard*.webp` | Platform admin dashboard (light) | None needed: demo data, confirmed by Ilia on 17 Oct 2026 |
+| `dolphin-leads*.webp` | Leads board by status (dark) | None needed: demo data, confirmed by Ilia on 17 Oct 2026 (an earlier version was blurred) |
 
 ### Persian version (`/fa/`)
 
