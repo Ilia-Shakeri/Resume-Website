@@ -1,5 +1,4 @@
 import { About } from "@/components/About";
-import { Approach } from "@/components/Approach";
 import { Builds } from "@/components/Builds";
 import { Contact } from "@/components/Contact";
 import { ContactCta, FeaturedTeasers } from "@/components/HomeSections";
@@ -9,7 +8,7 @@ import { Hero } from "@/components/Hero";
 import { PageHeader } from "@/components/PageHeader";
 import { ResumeCta } from "@/components/ResumeCta";
 import { SiteShell } from "@/components/SiteShell";
-import { Expertise, Toolkit } from "@/components/Toolkit";
+import { Expertise } from "@/components/Toolkit";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { getContent, type Locale } from "@/content";
 
@@ -33,8 +32,6 @@ export function AboutView({ locale }: { locale: Locale }) {
       <PageHeader title={content.ui.pages.about.title} lead={content.ui.pages.about.lead} />
       <About content={content} />
       <Expertise content={content} />
-      <Toolkit content={content} />
-      <Approach content={content} />
     </SiteShell>
   );
 }

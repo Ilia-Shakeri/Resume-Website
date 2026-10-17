@@ -1,6 +1,7 @@
 import { CopyButton } from "@/components/CopyButton";
 import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
+import { TechIcon } from "@/components/TechIcon";
 import type { Content } from "@/content";
 
 function ContactOrbit() {
@@ -17,9 +18,9 @@ function ContactOrbit() {
 export function Contact({ content }: { content: Content }) {
   const { profile, ui } = content;
   const links = [
-    { name: "LinkedIn", ...profile.linkedin },
-    { name: "GitHub", ...profile.github },
-    { name: "Telegram", ...profile.telegram },
+    { name: "LinkedIn", brand: "siLinkedin", ...profile.linkedin },
+    { name: "GitHub", brand: "siGithub", ...profile.github },
+    { name: "Telegram", brand: "siTelegram", ...profile.telegram },
   ];
 
   return (
@@ -30,8 +31,11 @@ export function Contact({ content }: { content: Content }) {
           <a
             href={`mailto:${profile.email}`}
             dir="ltr"
-            className="link-row mt-2 inline-flex max-w-full items-center gap-3 font-display text-[1.5rem] break-all text-mint sm:text-[2rem]"
+            className="link-row mt-2 inline-flex max-w-full items-center gap-3 font-display text-[1.25rem] break-all text-mint min-[400px]:text-[1.5rem] sm:text-[2rem]"
           >
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-card-2 sm:h-12 sm:w-12" aria-hidden="true">
+              <TechIcon tool={{ name: "Gmail", brand: "siGmail" }} size={22} />
+            </span>
             {profile.email}
             <Icon name="arrow-up-right" size={20} className="shrink-0" />
           </a>
@@ -66,7 +70,10 @@ export function Contact({ content }: { content: Content }) {
                   newTabLabel={ui.external}
                   className="spotlight link-row flex items-center justify-between gap-4 rounded-xl border border-line bg-card-2 px-5 py-4 transition hover:border-mint/40"
                 >
-                  <span>
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line bg-card" aria-hidden="true">
+                    <TechIcon tool={{ name: link.name, brand: link.brand }} size={20} />
+                  </span>
+                  <span className="min-w-0 flex-1">
                     <span className="block text-ink">{link.name}</span>
                     <span dir="ltr" className="mt-0.5 block font-mono text-xs text-muted">
                       {link.label}

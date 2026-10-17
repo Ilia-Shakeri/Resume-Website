@@ -100,14 +100,14 @@ export type Tool = {
   fallback?: ToolkitIcon;
 };
 
-/** A core area of expertise with the work that demonstrates it. */
-export type Expertise = { title: string; detail: string; evidence: string };
-
 export type ToolkitGroup = {
   title: string;
   icon: ToolkitIcon;
+  /** What the work in this area covers. */
+  detail: string;
+  /** Where it can be checked (projects, roles). */
+  evidence: string;
   tools: Tool[];
-  practices: string[];
 };
 
 export type ExperienceItem = {
@@ -120,14 +120,6 @@ export type ExperienceItem = {
   scope: string;
   highlights: string[];
   tags: string[];
-};
-
-export type ApproachStep = {
-  title: string;
-  icon: "search" | "code" | "rocket" | "pulse";
-  description: string;
-  practice: string;
-  output: string;
 };
 
 export type Qualification = {
