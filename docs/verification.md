@@ -144,3 +144,11 @@ Checked with `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run 
 - Persian stat values now sit at the start of each cell.
 
 The résumé PDF was regenerated and is still 2 pages (212 KB).
+
+## Professional hero — 17 Oct 2026
+
+The hero now leads with the name, the title "DevOps Engineer & Full-Stack Developer", a mostly-backend intro, the study and location facts, and links (GitHub, LinkedIn, Telegram, email). Text sizes were reduced: the name is 76 px at 1440 and the intro is 18 px. Telegram was also added to Contact, the JSON-LD `sameAs`, and the résumé header.
+
+- **Checks:** `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run qa:screens` all passed.
+- **Visual review:** the hero in both languages at 375, 1024, and 1440 px, plus the OG image.
+- **Résumé PDF:** still 2 pages. The header contact lines no longer wrap mid-link.

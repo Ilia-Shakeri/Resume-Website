@@ -7,19 +7,21 @@ import type { Education, ExperienceItem, Profile, Qualification } from "../types
 export const profile: Profile = {
   name: "Ilia Shakeri",
   role: "DevOps Engineer",
-  headline: ["Hi, I’m", "Ilia Shakeri."],
+  headline: "DevOps Engineer & Full-Stack Developer",
   intro:
-    "A DevOps engineer in Tehran. I work across Linux, containers, delivery pipelines, and monitoring, and I like building systems that deploy the same way every time and tell you when something is wrong. I also founded Nerkhbaan and co-founded Dolphin CRM.",
+    "I build software end to end and run it in production. Most of my development is backend work in Python (FastAPI, Django) and Go, with React or Next.js frontends when a product needs one. I deploy it on Linux, containers, CI/CD, and monitoring that I set up myself. Founder of Nerkhbaan and co-founder of Dolphin CRM.",
+  study: "Computer Science student (B.Sc.)",
   location: "Tehran, Iran",
   timeZone: "IRST · UTC+03:30",
-  availability: "Open to remote DevOps & platform roles",
+  availability: "Open to remote DevOps, backend & full-stack roles",
   email: "iliashkr@gmail.com",
   github: { label: "github.com/Ilia-Shakeri", href: "https://github.com/Ilia-Shakeri" },
   linkedin: { label: "linkedin.com/in/ilia-shakeri", href: "https://www.linkedin.com/in/ilia-shakeri/" },
-  focus: "Linux · Automation · Reliability",
+  telegram: { label: "@ilia_ssh", href: "https://t.me/ilia_ssh" },
+  focus: "Backend · Infrastructure · Automation",
   languages: ["Persian (native)", "English (professional working)"],
   bio: [
-    "I work where code meets servers: hardening Linux hosts, packaging services into containers, wiring CI pipelines, and putting Prometheus, Grafana, and Loki in front of what runs in production. Most of my day-to-day tooling is Bash, Python, Ansible, Docker Compose, and n8n.",
+    "I work on both sides of shipping software. On the development side, I write backend services in Python (FastAPI, Django) and Go, and build React or Next.js frontends when a product needs one. On the operations side, I harden Linux hosts, package services into containers, wire CI pipelines, and put Prometheus, Grafana, and Loki in front of what runs in production.",
     "I work from evidence: write the runbook, test the restore, record what was actually verified. Outside the terminal, I follow open-source DevOps tooling and have played the piano for more than ten years.",
   ],
   principles: [
@@ -27,10 +29,11 @@ export const profile: Profile = {
     { title: "Make reliability visible.", detail: "Health checks, alerts, and evidence you can read." },
   ],
   contactMessage:
-    "Looking for a DevOps engineer who treats deployments, backups, and alerts as engineering work? I’d like to hear about the systems you’re running.",
+    "Looking for a DevOps engineer or backend developer who treats deployments, backups, and alerts as engineering work? I’d like to hear about what you’re building.",
 };
 
 export const capabilities = [
+  "Backend & full-stack",
   "Linux & hardening",
   "Delivery automation",
   "Reliability & observability",
@@ -137,4 +140,4 @@ export const qualifications: Qualification[] = [
 ];
 
 export const resumeSummary: string =
-  "DevOps engineer focused on Linux infrastructure, container delivery, and monitoring. I provision and harden servers, package services with Docker Compose, build CI pipelines with security gates, and route Prometheus alerts to the people who act on them. Founder of Nerkhbaan and co-founder of Dolphin CRM: two products I built and run with least-privilege databases, scripted rollbacks, and restore-tested backups.";
+  "DevOps engineer and full-stack developer (mostly backend), studying for a B.Sc. in Computer Science. I build services in Python (FastAPI, Django) and Go, with React or Next.js frontends when needed, and run them on hardened Linux servers with Docker Compose, CI pipelines with security gates, and Prometheus alerting. Founder of Nerkhbaan and co-founder of Dolphin CRM: two products I built and run with least-privilege databases, scripted rollbacks, and restore-tested backups.";

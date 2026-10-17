@@ -48,16 +48,20 @@ export default function ResumePage() {
           <div>
             <h1 className="font-display text-[2rem] leading-none font-medium tracking-[-0.02em]">{profile.name}</h1>
             <p className="mt-2 font-mono text-[0.6875rem] tracking-[0.1em] text-[#2f6b4d] uppercase">
-              {profile.role} · Linux · Automation · Observability
+              {profile.headline} · {profile.study}
             </p>
           </div>
-          <ul className="space-y-0.5 text-[0.75rem] sm:text-right">
+          <ul className="space-y-0.5 text-[0.75rem] sm:shrink-0 sm:text-right sm:whitespace-nowrap">
             <li>
               {profile.location} · {profile.availability}
             </li>
             <li>
               <a href={`mailto:${profile.email}`} className="underline-offset-2 hover:underline">
                 {profile.email}
+              </a>
+              {" · "}
+              <a href={profile.telegram.href} className="underline-offset-2 hover:underline">
+                Telegram {profile.telegram.label}
               </a>
             </li>
             <li>
@@ -68,6 +72,7 @@ export default function ResumePage() {
               <a href={profile.linkedin.href} className="underline-offset-2 hover:underline">
                 {profile.linkedin.label}
               </a>
+
             </li>
           </ul>
         </header>

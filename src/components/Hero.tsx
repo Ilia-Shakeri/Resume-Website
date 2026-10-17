@@ -9,6 +9,7 @@ export function Hero({ content }: { content: Content }) {
   const links = [
     { label: "GitHub", href: profile.github.href },
     { label: "LinkedIn", href: profile.linkedin.href },
+    { label: "Telegram", href: profile.telegram.href },
   ];
 
   return (
@@ -30,21 +31,26 @@ export function Hero({ content }: { content: Content }) {
         </figure>
 
         <div className="relative z-10 [grid-area:text] lg:self-center">
-          <p className="eyebrow flex items-center gap-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-mint" aria-hidden="true" />
-            {profile.role} / {profile.location}
+          <p className="inline-flex items-center gap-2.5 rounded-full border border-mint/30 bg-mint-tint px-3.5 py-1.5 text-xs text-mint">
+            <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-mint" aria-hidden="true" />
+            {ui.hero.available}
           </p>
-          <h1
-            id="hero-title"
-            className="mt-6 text-[2.75rem] leading-[1.05] tracking-[-0.03em] min-[400px]:text-5xl sm:text-7xl lg:mt-8 lg:text-[4.25rem] xl:text-[5.25rem] min-[87.5rem]:text-[5.75rem]"
-          >
-            <span className="block text-muted">{profile.headline[0]}</span>
-            <span className="block">{profile.headline[1]}</span>
+          <h1 id="hero-title" className="mt-6 text-[2.75rem] leading-[1.02] tracking-[-0.03em] sm:text-6xl lg:mt-7 lg:text-[4rem] xl:text-[4.75rem]">
+            {profile.name}
           </h1>
-          <p className="mt-6 max-w-[580px] text-lg leading-relaxed text-text lg:mt-8 lg:text-xl lg:leading-[1.65]">
-            {profile.intro}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3 sm:gap-4 lg:mt-10">
+          <p className="mt-4 font-display text-xl leading-snug text-ink/85 sm:text-2xl xl:text-[1.75rem]">{profile.headline}</p>
+          <p className="mt-6 max-w-[600px] text-base leading-[1.75] text-text sm:text-[1.0625rem] xl:text-lg">{profile.intro}</p>
+          <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
+            <li className="inline-flex items-center gap-2">
+              <Icon name="cap" size={16} className="text-mint" />
+              {profile.study}
+            </li>
+            <li className="inline-flex items-center gap-2">
+              <Icon name="pin" size={16} className="text-mint" />
+              {profile.location}
+            </li>
+          </ul>
+          <div className="mt-8 flex flex-wrap gap-3 sm:gap-4">
             <a href="#projects" className="btn btn-primary">
               {ui.hero.explore}
               <Icon name="arrow-down" />
@@ -54,7 +60,7 @@ export function Hero({ content }: { content: Content }) {
               <Icon name="download" className="text-mint" />
             </a>
           </div>
-          <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm" aria-label={ui.hero.links}>
+          <ul className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm" aria-label={ui.hero.links}>
             {links.map((link) => (
               <li key={link.label}>
                 <ExternalLink
@@ -87,7 +93,7 @@ export function Hero({ content }: { content: Content }) {
 
       <div className="border-t border-line">
         <div className="container-site">
-          <ul className="grid gap-x-8 gap-y-3 py-6 sm:grid-cols-2 lg:grid-cols-4" aria-label={ui.hero.capabilitiesLabel}>
+          <ul className="grid gap-x-8 gap-y-3 py-6 sm:grid-cols-2 lg:grid-cols-5" aria-label={ui.hero.capabilitiesLabel}>
             <li className="meta">{ui.hero.capabilitiesLabel}</li>
             {capabilities.map((item) => (
               <li key={item} className="flex items-center gap-3 font-mono text-xs tracking-[0.06em] text-ink uppercase lg:justify-end">

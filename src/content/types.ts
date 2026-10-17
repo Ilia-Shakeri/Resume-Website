@@ -6,14 +6,18 @@ export type LinkRef = {
 export type Profile = {
   name: string;
   role: string;
-  headline: [string, string];
+  /** Professional title shown under the name in the hero. */
+  headline: string;
   intro: string;
+  /** Current studies, shown in the hero facts. */
+  study: string;
   location: string;
   timeZone: string;
   availability: string;
   email: string;
   github: LinkRef;
   linkedin: LinkRef;
+  telegram: LinkRef;
   focus: string;
   languages: string[];
   bio: string[];
