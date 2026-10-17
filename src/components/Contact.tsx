@@ -19,6 +19,7 @@ export function Contact({ content }: { content: Content }) {
   const links = [
     { name: "GitHub", ...profile.github },
     { name: "LinkedIn", ...profile.linkedin },
+    { name: "Telegram", ...profile.telegram },
   ];
 
   return (

@@ -9,7 +9,7 @@ export function About({ content }: { content: Content }) {
   const labels = ui.about.labels;
   const rows = [
     { label: labels.name, value: profile.name },
-    { label: labels.role, value: profile.role },
+    { label: labels.role, value: profile.headline },
     { label: labels.basedIn, value: profile.location },
     { label: labels.focus, value: profile.focus },
   ];

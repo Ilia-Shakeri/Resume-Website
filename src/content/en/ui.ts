@@ -2,9 +2,9 @@
 
 export const ui = {
   meta: {
-    title: "Ilia Shakeri — DevOps Engineer",
+    title: "Ilia Shakeri — DevOps Engineer & Full-Stack Developer",
     description:
-      "DevOps engineer working on Linux infrastructure, container delivery, CI/CD, monitoring, and security hardening. Founder of Nerkhbaan, co-founder of Dolphin CRM.",
+      "DevOps engineer and full-stack developer (mostly backend) in Tehran, studying Computer Science. Linux, containers, CI/CD, monitoring, Python, and Go. Founder of Nerkhbaan, co-founder of Dolphin CRM.",
     ogLocale: "en_US",
   },
   skipLink: "Skip to content",
@@ -26,6 +26,7 @@ export const ui = {
     fa: "فارسی",
   },
   hero: {
+    available: "Open to remote roles",
     explore: "Explore my projects",
     resume: "Download résumé",
     loopCaption: "Continuous delivery / ∞",

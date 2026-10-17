@@ -22,6 +22,10 @@ Sources:
 | Persian native, English professional working | CV | 📄 |
 | Piano, 10+ years; open-source interest | CV "Interests" | 📄 |
 | Phone number | CV | ❌ deliberately not published |
+| Telegram `@ilia_ssh` | Given by Ilia for publication, 17 Oct 2026 | ✅ (t.me not reachable from this environment) |
+| "DevOps Engineer & Full-Stack Developer"; development mostly backend (Python/FastAPI/Django, Go), sometimes frontend (React, Next.js) | Stated by Ilia, 17 Oct 2026; matches repos: FastAPI and React in Nerkhbaan, Django in Dolphin, Go in Stackplore and the Nerkhbaan sidecar, Next.js in ZoodSub/keshepool | ✅ |
+| Computer Science student (B.Sc.) | Confirmed by Ilia, 13 Oct 2026 (see Education) | ✅ |
+| Open to remote DevOps, backend & full-stack roles | Remote availability confirmed 13 Oct 2026; role types widened with the full-stack title, 17 Oct 2026 | ✅ |
 
 ## Experience
 
