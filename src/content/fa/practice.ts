@@ -4,9 +4,6 @@ import type { ApproachStep, ToolkitGroup } from "../types";
 // نسخهٔ فارسی src/content/en/practice.ts. نام ابزارها و آیکن‌ها از نسخهٔ
 // انگلیسی می‌آیند؛ فقط عنوان گروه‌ها و توضیحات ترجمه شده‌اند.
 
-export const toolkitIntro: string =
-  "دسته‌بندی بر اساس کاربرد، نه نمودار سطح مهارت. همهٔ این ابزارها در سوابق کاری یا مخزن‌های گیت‌هاب من دیده می‌شوند.";
-
 const groupText: { title: string; practices: string[] }[] = [
   { title: "لینوکس و زیرساخت", practices: ["راه‌اندازی", "امن‌سازی", "مدیریت پیکربندی"] },
   { title: "کانتینر و ارکستراسیون", practices: ["ایمیج", "استک Compose", "چارت Helm"] },
@@ -19,8 +16,6 @@ const groupText: { title: string; practices: string[] }[] = [
 ];
 
 export const toolkit: ToolkitGroup[] = en.toolkit.map((group, index) => ({ ...group, ...groupText[index] }));
-
-export const approachIntro: string = "تغییرهای کوچک و قابل بازبینی، عملیات مستند و بازخوردی که به بیلد بعدی می‌رسد.";
 
 export const approach: ApproachStep[] = [
   {

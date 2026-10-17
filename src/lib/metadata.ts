@@ -1,21 +1,31 @@
 import type { Metadata } from "next";
-import { getContent, homePath, type Locale } from "@/content";
+import { getContent, pagePath, type Locale, type PageKey } from "@/content";
 
-/** Page metadata for the home page in one language, with hreflang alternates. */
-export function homeMetadata(locale: Locale): Metadata {
-  const { ui, profile } = getContent(locale);
-  const path = homePath(locale);
+/** Metadata for one page in one language, with hreflang alternates. */
+export function pageMetadata(locale: Locale, page: PageKey): Metadata {
+  const { ui, profile, experienceSummary } = getContent(locale);
+  const path = pagePath(locale, page);
+  const leads: Record<PageKey, string> = {
+    home: ui.meta.description,
+    about: ui.pages.about.lead,
+    projects: ui.pages.projects.lead,
+    experience: experienceSummary,
+    contact: profile.contactMessage,
+  };
+  const title = page === "home" ? ui.meta.title : `${ui.pages[page].title} · ${profile.name}`;
+  const description = leads[page];
+
   return {
-    title: { absolute: ui.meta.title },
-    description: ui.meta.description,
+    title: { absolute: title },
+    description,
     alternates: {
       canonical: path,
-      languages: { en: "/", fa: "/fa/", "x-default": "/" },
+      languages: { en: pagePath("en", page), fa: pagePath("fa", page), "x-default": pagePath("en", page) },
     },
     openGraph: {
       type: "profile",
-      title: ui.meta.title,
-      description: ui.meta.description,
+      title,
+      description,
       siteName: profile.name,
       locale: ui.meta.ogLocale,
       alternateLocale: locale === "fa" ? ["en_US"] : ["fa_IR"],
@@ -24,8 +34,8 @@ export function homeMetadata(locale: Locale): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title: ui.meta.title,
-      description: ui.meta.description,
+      title,
+      description,
       images: ["/og-image.png"],
     },
   };

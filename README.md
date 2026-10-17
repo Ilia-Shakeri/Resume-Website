@@ -2,9 +2,21 @@
 
 Personal portfolio of Ilia Shakeri, DevOps Engineer. A static, content-driven Next.js site built from the Figma reference in `references/`.
 
-**Sections:** hero (portrait, personal intro, animated DevOps loop) · capability ribbon · about (`whoami` panel and a live deploy terminal) · projects I'm proud of (Nerkhbaan and Dolphin CRM) · more projects (a filterable grid of nine repos) · technical toolkit · experience timeline · engineering approach · education & training · résumé download · contact. A printable résumé lives at `/resume/` and as a PDF (English only).
+**Pages:**
 
-**Languages:** English at `/` and Persian (RTL, Vazirmatn) at `/fa/`, switched from the header. Both are static pages with `hreflang` alternates.
+| Path | Contents |
+| --- | --- |
+| `/` | Hero (portrait, title, intro, DevOps loop), capability strip, two featured projects, contact call to action |
+| `/about/` | Bio, `whoami` panel, live deploy terminal, toolkit, how I work |
+| `/projects/` | Projects I'm proud of (Nerkhbaan, Dolphin CRM) and a filterable grid of nine repos |
+| `/experience/` | Experience timeline, education and training (certificate previews), résumé download |
+| `/contact/` | Email, availability, GitHub, LinkedIn, Telegram |
+
+A printable résumé lives at `/resume/` and as a PDF (English only).
+
+**Languages:** every page exists in English and Persian (RTL, Vazirmatn) under `/fa/`, for example `/fa/projects/`. The header switch opens the same page in the other language, and each page carries `hreflang` alternates.
+
+**Motion:** entrance animations on load, scroll reveals with staggered children, cross-document page transitions (View Transitions API), a sweeping ring on the portrait, drifting hero glows, pointer-following card highlights, counting stats, and a reading-progress bar. Every effect is CSS or a small client component, and all of them turn off under `prefers-reduced-motion`. Without JavaScript, all content is visible.
 
 ## Stack
 
@@ -38,7 +50,7 @@ Browser QA (needs Chrome/Chromium; set `CHROMIUM_PATH` if not auto-detected):
 npm run build && npm run qa:screens
 ```
 
-This takes full-page screenshots of `/` and `/fa/` at 375, 768, and 1440 px into `qa-artifacts/`. It checks overflow and clipping, anchors, external-link safety, heading order, the mobile menu, the skip link, reduced motion, the language switch, the project filter, and the résumé download.
+This takes full-page screenshots of every page in both languages at 375, 768, and 1440 px into `qa-artifacts/`. It checks overflow and clipping, console errors, heading order, anchors and internal links, external-link safety, and the sitemap. It also checks the language switch, the mobile menu, the skip link, reduced motion, the animations (load-in, page transitions, count-up, spotlight, progress bar), the project filter, and the downloads.
 
 ## Editing content
 
@@ -71,8 +83,8 @@ npm run assets
 ## Repository layout
 
 ```text
-src/app/          routes: / and /fa (both render HomePage), /resume, sitemap, robots, 404
-src/components/   section components, diagrams, icons
+src/app/          routes: /, /about, /projects, /experience, /contact and their /fa twins (thin files rendering views.tsx), /resume, sitemap, robots, 404
+src/components/   page views and shell, section components, motion helpers (ScrollReveal, Spotlight, CountUp), icons
 src/content/      typed content data: en/, fa/, index.ts (getContent)
 src/lib/          site config, structured data, build-time helpers
 scripts/          résumé PDF, OG image, and browser QA scripts (Playwright core)

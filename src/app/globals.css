@@ -239,23 +239,379 @@
 /* ---- Scroll reveal (ScrollReveal.tsx). Only active once JS adds .reveal-ready. */
 html.reveal-ready [data-reveal] {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(24px) scale(0.985);
+  filter: blur(6px);
   transition:
     opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 700ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
 html.reveal-ready [data-reveal].is-visible {
   opacity: 1;
   transform: none;
+  filter: none;
+}
+
+/* A [data-stagger] container stays put; its children rise in one after another. */
+html.reveal-ready [data-reveal][data-stagger] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+html.reveal-ready [data-stagger] > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--n, 0) * 55ms);
+}
+
+html.reveal-ready .is-visible[data-stagger] > *,
+html.reveal-ready .is-visible [data-stagger] > * {
+  opacity: 1;
+  transform: none;
+}
+
+[data-stagger] > :nth-child(2) { --n: 1; }
+[data-stagger] > :nth-child(3) { --n: 2; }
+[data-stagger] > :nth-child(4) { --n: 3; }
+[data-stagger] > :nth-child(5) { --n: 4; }
+[data-stagger] > :nth-child(6) { --n: 5; }
+[data-stagger] > :nth-child(7) { --n: 6; }
+[data-stagger] > :nth-child(8) { --n: 7; }
+[data-stagger] > :nth-child(9) { --n: 8; }
+[data-stagger] > :nth-child(n + 10) { --n: 9; }
+
+/* ---- Load-in: elements with .enter rise out of a blur, staggered by --i. */
+@media (prefers-reduced-motion: no-preference) {
+  .enter {
+    animation: enter 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 80ms);
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 
 @media print {
-  html.reveal-ready [data-reveal] {
+  html.reveal-ready [data-reveal],
+  html.reveal-ready [data-stagger] > *,
+  .enter {
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
+    animation: none !important;
   }
+}
+
+/* ---- Page transitions between pages (cross-document View Transitions). */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  .site-header {
+    view-transition-name: site-header;
+  }
+
+  ::view-transition-old(root) {
+    animation: vt-out 220ms ease both;
+  }
+
+  ::view-transition-new(root) {
+    animation: vt-in 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* ---- Header: active-page underline and a reading-progress bar. */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -6px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--color-mint);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[dir="rtl"] .nav-link::after {
+  transform-origin: right;
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.scroll-progress {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-mint), var(--color-mint-bright));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+[dir="rtl"] .scroll-progress {
+  transform-origin: right;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-progress {
+      animation: progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+@keyframes progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-nav:not([hidden]) {
+    animation: menu-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* ---- Hero backdrop: faint grid and two slowly drifting glows. */
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(#000 55%, transparent);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.45;
+  mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 0%, transparent 70%);
+}
+
+.hero-blob {
+  position: absolute;
+  width: min(60vw, 640px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.hero-blob-1 {
+  top: -30%;
+  inset-inline-end: -10%;
+  background: radial-gradient(closest-side, rgb(132 188 156 / 0.16), transparent);
+  animation: drift-1 18s ease-in-out infinite alternate;
+}
+
+.hero-blob-2 {
+  bottom: -40%;
+  inset-inline-start: -15%;
+  background: radial-gradient(closest-side, rgb(47 155 255 / 0.08), transparent);
+  animation: drift-2 24s ease-in-out infinite alternate;
+}
+
+@keyframes drift-1 {
+  to {
+    transform: translate(-12%, 18%) scale(1.15);
+  }
+}
+
+@keyframes drift-2 {
+  to {
+    transform: translate(16%, -12%) scale(1.1);
+  }
+}
+
+/* ---- Portrait: a light sweeping around the frame. */
+@property --ring-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.portrait-ring {
+  background:
+    conic-gradient(from var(--ring-angle), transparent 0 55%, var(--color-mint-bright) 72%, var(--color-mint) 80%, transparent 92%),
+    var(--color-line-strong);
+  box-shadow: 0 0 60px rgb(132 188 156 / 0.12);
+  animation: ring-spin 6s linear infinite;
+}
+
+@keyframes ring-spin {
+  to {
+    --ring-angle: 360deg;
+  }
+}
+
+/* ---- Headline: a slow light passing through the gradient text. */
+.text-gradient {
+  background: linear-gradient(90deg, var(--color-ink) 0%, var(--color-mint-bright) 25%, var(--color-ink) 50%, var(--color-ink) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+/* ---- Cards: a soft glow follows the pointer (Spotlight.tsx sets --mx/--my). */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgb(132 188 156 / 0.1), transparent 60%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+/* A light travelling along the top edge of call-to-action cards. */
+.cta-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-mint-bright), transparent);
+  animation: beam 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes beam {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+/* ---- Buttons: a sheen sweeps across the primary button on hover. */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.4) 50%, transparent 70%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.btn-primary:hover::after {
+  transform: translateX(120%);
+  transition: transform 700ms ease;
+}
+
+.btn svg {
+  transition: transform 200ms ease;
+}
+
+.btn:hover svg.rtl-flip {
+  transform: translateX(3px);
+}
+
+[dir="rtl"] .btn:hover svg.rtl-flip {
+  transform: scaleX(-1) translateX(3px);
+}
+
+.tool-chip {
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.tool-chip:hover {
+  transform: translateY(-2px);
+  border-color: rgb(132 188 156 / 0.6);
+  background: var(--color-mint-tint);
+}
+
+/* ---- Experience timeline: dots light up as entries come into view. */
+.timeline-dot {
+  box-shadow: 0 0 0 4px var(--color-bg);
+  transition: box-shadow 600ms ease;
+}
+
+.is-visible > .timeline-dot {
+  box-shadow:
+    0 0 0 4px var(--color-bg),
+    0 0 0 8px rgb(132 188 156 / 0.18);
 }
 
 /* ---- Live terminals (LiveTerminal.tsx, WhoamiPanel.tsx). */
@@ -366,6 +722,10 @@ html.js .terminal-static {
 
 .venture-bullet {
   background: var(--accent);
+}
+
+.venture-role-text {
+  color: var(--accent);
 }
 
 .locale-fa :is(.eyebrow, .meta, [class*="uppercase"]) {

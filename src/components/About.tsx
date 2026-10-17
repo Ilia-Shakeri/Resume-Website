@@ -1,6 +1,5 @@
 import { LiveTerminal, type TerminalLine } from "@/components/LiveTerminal";
 import { WhoamiPanel } from "@/components/WhoamiPanel";
-import { Lines } from "@/components/SectionHeader";
 import type { Content } from "@/content";
 import { buildSha } from "@/lib/build-info";
 
@@ -12,6 +11,7 @@ export function About({ content }: { content: Content }) {
     { label: labels.role, value: profile.headline },
     { label: labels.basedIn, value: profile.location },
     { label: labels.focus, value: profile.focus },
+    { label: labels.languages, value: profile.languages.join(" · ") },
   ];
   // Commands from the real deployment of this site (see docs/deployment.md).
   const terminal: TerminalLine[] = [
@@ -26,37 +26,23 @@ export function About({ content }: { content: Content }) {
   ];
 
   return (
-    <section aria-labelledby="about-title" className="scroll-mt-24 py-20 lg:py-[120px]" id="about">
-      <div className="container-site grid grid-cols-1 gap-12 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-[92px]">
-        <div>
-          <p className="eyebrow">{ui.about.eyebrow}</p>
-          <div className="mt-10" data-reveal>
-            <WhoamiPanel rows={rows} localTimeLabel={labels.localTime} />
-          </div>
-          <p className="mt-10 font-mono text-[0.6875rem] leading-[1.7] text-muted">
-            {"// "}
-            {profile.availability}.
-            <br />
-            {"// "}
-            {profile.languages.join(" · ")}.
-          </p>
-        </div>
-
-        <div className="lg:pt-2" data-reveal>
-          <h2 id="about-title" className="text-[2.5rem] leading-[1.08] sm:text-5xl lg:text-[3.75rem]">
-            <Lines lines={ui.about.titleLines} />
-          </h2>
-          <p className="mt-10 text-lg leading-[1.75] text-text lg:text-[1.1875rem]">{profile.bio[0]}</p>
-          <p className="mt-6 text-base leading-[1.75] text-text lg:text-[1.0625rem]">{profile.bio[1]}</p>
-          <div className="mt-10 grid gap-8 border-t border-line pt-10 sm:grid-cols-2">
+    <section id="about" className="scroll-mt-20 py-8 lg:py-10">
+      <div className="container-site grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-14">
+        <div data-reveal data-stagger>
+          <p className="text-base leading-[1.8] text-text sm:text-[1.0625rem]">{profile.bio[0]}</p>
+          <p className="mt-5 text-base leading-[1.8] text-text sm:text-[1.0625rem]">{profile.bio[1]}</p>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {profile.principles.map((item) => (
-              <div key={item.title}>
-                <h3 className="text-xl text-ink">{item.title}</h3>
-                <p className="mt-3 text-sm text-muted">{item.detail}</p>
+              <div key={item.title} className="spotlight rounded-xl border border-line bg-card-2 p-5">
+                <h2 className="text-lg text-ink">{item.title}</h2>
+                <p className="mt-2 text-sm text-muted">{item.detail}</p>
               </div>
             ))}
           </div>
-          <LiveTerminal title="iliashakeri.ir ~ prod" lines={terminal} rows={4} className="mt-12" />
+          <LiveTerminal title="iliashakeri.ir ~ prod" lines={terminal} rows={4} className="mt-8" />
+        </div>
+        <div data-reveal className="lg:col-start-2 lg:row-start-1">
+          <WhoamiPanel rows={rows} localTimeLabel={labels.localTime} />
         </div>
       </div>
     </section>

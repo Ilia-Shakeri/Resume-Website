@@ -1,37 +1,14 @@
 import type { ReactNode } from "react";
 
-type SectionHeaderProps = {
-  id: string;
-  eyebrow: string;
-  title: ReactNode;
-  aside?: ReactNode;
-};
-
-/** Numbered eyebrow + large display heading with an optional side note. */
-export function SectionHeader({ id, eyebrow, title, aside }: SectionHeaderProps) {
+/** Compact section heading with an optional trailing action (e.g. a link). */
+export function SectionHeader({ id, title, action }: { id: string; title: string; action?: ReactNode }) {
   return (
-    <div data-reveal className="grid gap-6 xl:grid-cols-[1fr_minmax(0,390px)] xl:items-end xl:gap-16">
-      <div>
-        <p className="eyebrow">{eyebrow}</p>
-        <h2 id={id} className="mt-4 text-[2.5rem] leading-[1.05] sm:text-5xl lg:text-[4rem]">
-          {title}
-        </h2>
-      </div>
-      {aside ? <p className="max-w-[390px] text-base leading-relaxed text-text xl:pb-2 lg:text-[1.0625rem]">{aside}</p> : null}
+    <div data-reveal className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+      <h2 id={id} className="flex items-center gap-3 text-2xl leading-tight sm:text-[1.75rem]">
+        <span className="h-5 w-1 rounded-full bg-mint" aria-hidden="true" />
+        {title}
+      </h2>
+      {action}
     </div>
-  );
-}
-
-/** Renders heading lines separated by line breaks. */
-export function Lines({ lines }: { lines: readonly string[] }) {
-  return (
-    <>
-      {lines.map((line, index) => (
-        <span key={line}>
-          {index > 0 ? <br /> : null}
-          {line}
-        </span>
-      ))}
-    </>
   );
 }

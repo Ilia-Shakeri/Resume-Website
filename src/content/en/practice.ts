@@ -5,9 +5,6 @@ import type { ApproachStep, ToolkitGroup } from "../types";
 // Simple Icons (CC0) and are inlined at build time; tools without a brand icon
 // use a neutral glyph.
 
-export const toolkitIntro: string =
-  "Organized by purpose, not proficiency bars. Every tool here appears in my work history or in one of my repositories.";
-
 export const toolkit: ToolkitGroup[] = [
   {
     title: "Linux & infrastructure",
@@ -139,9 +136,6 @@ export const toolkit: ToolkitGroup[] = [
     practices: ["Alert routing", "Ticket notifications", "Runbooks"],
   },
 ];
-
-export const approachIntro: string =
-  "Small, reviewable changes, written-down operations, and feedback that reaches the next build.";
 
 export const approach: ApproachStep[] = [
   {

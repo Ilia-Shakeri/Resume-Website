@@ -1,5 +1,4 @@
 import { Icon } from "@/components/Icon";
-import { Lines } from "@/components/SectionHeader";
 import { getContent, type Content, type Locale } from "@/content";
 import { site } from "@/lib/site";
 import { resumeFileSize } from "@/lib/resume-file";
@@ -34,18 +33,17 @@ export function ResumeCta({ content, locale }: { content: Content; locale: Local
   const size = resumeFileSize();
 
   return (
-    <section aria-labelledby="resume-title" id="resume" className="scroll-mt-24 py-20 lg:py-[92px]">
+    <section aria-labelledby="resume-title" id="resume" className="scroll-mt-20 pt-4 pb-16 lg:pb-24">
       <div className="container-site">
-        <div data-reveal className="flex flex-col justify-between gap-12 rounded-2xl bg-mint px-6 py-12 text-on-mint sm:px-12 sm:py-14 lg:flex-row lg:items-center lg:pe-[90px]">
+        <div data-reveal className="flex flex-col justify-between gap-10 rounded-2xl bg-mint px-6 py-9 text-on-mint sm:px-10 lg:flex-row lg:items-center lg:pe-16">
           <div>
-            <p className="font-mono text-xs tracking-[0.06em] uppercase">{ui.resume.eyebrow}</p>
-            <h2 id="resume-title" className="mt-6 text-[2.5rem] leading-[1.08] !text-on-mint sm:text-5xl lg:text-[4rem]">
-              <Lines lines={ui.resume.titleLines} />
+            <h2 id="resume-title" className="text-[1.75rem] leading-tight !text-on-mint sm:text-[2rem]">
+              {ui.resume.title}
             </h2>
-            <p className="mt-6 max-w-[460px] text-[1.0625rem] leading-relaxed text-on-mint/80">
+            <p className="mt-3 max-w-[460px] leading-relaxed text-on-mint/80">
               {ui.resume.body}
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-5">
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4">
               <a
                 href={site.resume.pdfPath}
                 download={site.resume.downloadName}

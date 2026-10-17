@@ -1,4 +1,4 @@
-import { getContent, homePath, type Locale } from "@/content";
+import { getContent, pagePath, type Locale } from "@/content";
 import { site } from "@/lib/site";
 
 /** schema.org Person (with the two products he founded) from verified profile fields. */
@@ -12,7 +12,7 @@ export function personJsonLd(locale: Locale): string {
     alternateName: locale === "fa" ? english.profile.name : getContent("fa").profile.name,
     jobTitle: profile.headline,
     description: ui.meta.description,
-    url: `${site.url}${homePath(locale)}`,
+    url: `${site.url}${pagePath(locale, "home")}`,
     image: `${site.url}/images/ilia-shakeri.webp`,
     email: `mailto:${profile.email}`,
     sameAs: [profile.github.href, profile.linkedin.href, profile.telegram.href],

@@ -152,3 +152,29 @@ The hero now leads with the name, the title "DevOps Engineer & Full-Stack Develo
 - **Checks:** `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run qa:screens` all passed.
 - **Visual review:** the hero in both languages at 375, 1024, and 1440 px, plus the OG image.
 - **Résumé PDF:** still 2 pages. The header contact lines no longer wrap mid-link.
+
+## Multi-page site and motion — 17 Oct 2026
+
+The site is now five pages per language: Home, About, Projects, Experience, Contact. The header is 64 px tall. The "Open to remote roles" badge sits 32 px below the header. Section headings are 24–28 px. Removed: numbered eyebrows, side notes, footnotes, and the approach banner.
+
+**Checks:** `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run qa:screens` all passed. The QA covers:
+- all 10 pages at 375, 768, and 1440 px: no overflow, no clipping, no console errors;
+- per page: one h1, no skipped heading levels, alt text, anchors, safe external links;
+- 29 internal links resolve, and the sitemap lists every page;
+- the language switch keeps the page and section (`/experience/#education` ↔ `/fa/experience/#education`);
+- the active nav item, the mobile menu, and the skip link;
+- reduced motion: every animation and page transition off, nothing hidden;
+- the load-in animation and page transition rule are active;
+- stats count up (0 → 3,510), the card spotlight follows the pointer, and the progress bar fills;
+- the terminal types, the clock ticks, sections reveal on scroll, and the certificate preview shows;
+- the project filter works.
+
+**Visual review:**
+- Every page in both languages at 1440 and 375 px, with reduced motion.
+- The home page with motion, captured at 0.3 s and 2.3 s after load and after scrolling.
+
+**Fixed during review:**
+- The blue hero glow was cut off at the section edge; the backdrop now fades out.
+- The About page skipped from h1 to h3; the principle titles are now h2.
+
+The résumé PDF is still 2 pages. The OG image was regenerated.
