@@ -29,7 +29,7 @@ function LocalClock() {
     return () => clearInterval(id);
   }, []);
   return (
-    <span className="tabular-nums">
+    <span dir="ltr" className="inline-block tabular-nums">
       {now ?? "--:--:--"} <span className="text-muted">IRST</span>
     </span>
   );
@@ -40,7 +40,7 @@ function LocalClock() {
  * each value; afterwards the cursor keeps blinking and the local clock ticks.
  * The fully rendered panel is the server/no-JS/reduced-motion state.
  */
-export function WhoamiPanel({ rows }: { rows: Row[] }) {
+export function WhoamiPanel({ rows, localTimeLabel }: { rows: Row[]; localTimeLabel: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
   const active = useIsActive(ref);
@@ -78,7 +78,7 @@ export function WhoamiPanel({ rows }: { rows: Row[] }) {
 
   return (
     <div ref={ref} className="rounded-lg border border-line-strong bg-card px-6 py-6 font-mono">
-      <p className="text-sm text-mint">
+      <p dir="ltr" className="text-sm text-mint">
         <span aria-hidden="true">$ </span>
         {showAll ? COMMAND : typedCommand}
         {commandTyping && !showAll ? <span className="terminal-cursor" /> : null}
@@ -97,13 +97,13 @@ export function WhoamiPanel({ rows }: { rows: Row[] }) {
           </div>
         ))}
         <div className={showAll || done ? "" : "invisible"}>
-          <dt className="text-[0.625rem] tracking-[0.06em] text-muted uppercase">Local time</dt>
+          <dt className="text-[0.625rem] tracking-[0.06em] text-muted uppercase">{localTimeLabel}</dt>
           <dd className="mt-1.5 font-sans text-[0.9375rem] text-ink">
             <LocalClock />
           </dd>
         </div>
       </dl>
-      <p className="mt-6 text-sm text-mint" aria-hidden="true">
+      <p dir="ltr" className="mt-6 text-sm text-mint" aria-hidden="true">
         $ <span className="terminal-cursor" />
       </p>
     </div>

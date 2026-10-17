@@ -36,7 +36,7 @@ const packetBegin = (packet: number, lag = 0) => `${(-(packet * PULSE + DURATION
  * through eight stages. SMIL drives the motion (works in every engine); it is
  * paused while off screen, in background tabs, and for reduced motion.
  */
-export function DevOpsLoop() {
+export function DevOpsLoop({ title }: { title: string }) {
   const wrapper = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const reduced = usePrefersReducedMotion();
@@ -56,7 +56,7 @@ export function DevOpsLoop() {
   }, [active, reduced]);
 
   return (
-    <div ref={wrapper} className="relative mx-auto w-full max-w-[540px]">
+    <div ref={wrapper} dir="ltr" className="relative mx-auto w-full max-w-[540px]">
       <svg
         ref={svg}
         viewBox="0 0 520 300"
@@ -64,9 +64,7 @@ export function DevOpsLoop() {
         role="img"
         aria-labelledby="devops-loop-title"
       >
-        <title id="devops-loop-title">
-          The DevOps loop: plan, code, build, test, release, deploy, operate, monitor, and back to plan.
-        </title>
+        <title id="devops-loop-title">{title}</title>
         <defs>
           <linearGradient id="loop-gradient" x1="0" x2="1" y1="0" y2="0">
             <stop offset="0" stopColor="#84bc9c" stopOpacity="0.25" />

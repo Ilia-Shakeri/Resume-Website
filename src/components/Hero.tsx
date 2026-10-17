@@ -2,10 +2,11 @@ import { DevOpsLoop } from "@/components/DevOpsLoop";
 import { Icon } from "@/components/Icon";
 import { LiveTerminal, type TerminalLine } from "@/components/LiveTerminal";
 import { buildSha } from "@/lib/build-info";
-import { capabilities, profile } from "@/content/profile";
+import type { Content } from "@/content";
 import { site } from "@/lib/site";
 
-export function Hero() {
+export function Hero({ content }: { content: Content }) {
+  const { profile, capabilities, ui } = content;
   // Commands from the real deployment of this site (see docs/deployment.md).
   const terminal: TerminalLine[] = [
     { kind: "cmd", text: "curl -s https://iliashakeri.ir/build.txt" },
@@ -20,7 +21,7 @@ export function Hero() {
 
   return (
     <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden">
-      <div className="container-site grid gap-10 pt-14 pb-12 md:pt-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,40%)] min-[87.5rem]:grid-cols-[minmax(0,1fr)_minmax(0,500px)] lg:gap-6 lg:pt-[84px] lg:pb-14">
+      <div className="container-site grid grid-cols-1 gap-10 pt-14 pb-12 md:pt-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,40%)] min-[87.5rem]:grid-cols-[minmax(0,1fr)_minmax(0,500px)] lg:gap-6 lg:pt-[84px] lg:pb-14">
         <div className="relative z-10">
           <p className="eyebrow flex items-center gap-3">
             <span className="h-1.5 w-1.5 rounded-full bg-mint" aria-hidden="true" />
@@ -38,34 +39,34 @@ export function Hero() {
           </p>
           <div className="mt-9 flex flex-wrap gap-3 sm:gap-4">
             <a href="#projects" className="btn btn-primary">
-              Explore my projects
+              {ui.hero.explore}
               <Icon name="arrow-down" />
             </a>
             <a href={site.resume.pdfPath} download={site.resume.downloadName} className="btn btn-outline">
-              Download résumé
+              {ui.hero.resume}
               <Icon name="download" className="text-mint" />
             </a>
           </div>
           <a href="#about" className="meta mt-16 hidden items-center gap-4 hover:text-ink lg:inline-flex">
             <Icon name="arrow-down" className="text-mint" />
-            Scroll to explore
+            {ui.hero.scroll}
           </a>
         </div>
 
         <div className="relative flex flex-col justify-center gap-6">
-          <DevOpsLoop />
+          <DevOpsLoop title={ui.hero.loopTitle} />
           <p className="meta flex items-center gap-3">
             <span className="h-px w-9 bg-mint" aria-hidden="true" />
-            Continuous delivery / ∞
+            {ui.hero.loopCaption}
           </p>
-          <LiveTerminal title="iliashakeri.ir ~ prod" lines={terminal} rows={4} className="lg:ml-16" />
+          <LiveTerminal title="iliashakeri.ir ~ prod" lines={terminal} rows={4} className="lg:ms-16" />
         </div>
       </div>
 
       <div className="border-t border-line">
         <div className="container-site">
-          <ul className="grid gap-x-8 gap-y-3 py-6 sm:grid-cols-2 lg:grid-cols-4" aria-label="Operating layer">
-            <li className="meta">My operating layer</li>
+          <ul className="grid gap-x-8 gap-y-3 py-6 sm:grid-cols-2 lg:grid-cols-4" aria-label={ui.hero.capabilitiesLabel}>
+            <li className="meta">{ui.hero.capabilitiesLabel}</li>
             {capabilities.map((item) => (
               <li key={item} className="flex items-center gap-3 font-mono text-xs tracking-[0.06em] text-ink uppercase lg:justify-end">
                 <span className="text-mint" aria-hidden="true">

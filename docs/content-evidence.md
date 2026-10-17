@@ -36,7 +36,8 @@ Sources:
 | "99.9% uptime" | CV | ❌ excluded — no monitoring data available |
 | Freelance DevOps & Linux Administrator, Dec 2024 — Jun 2025, remote | CV | 📄 |
 | Freelance: Bash maintenance/backup/log-rotation scripts, security audits, firewall + TLS, Nginx/Apache tuning | CV; related public scripts (Automated-Backup-Script, LinSecGuard, EasyCert, SysTrack) | 📄 / partially ✅ |
-| "Product & Platform Engineering — Independent projects, 2026 — Present" | Commit history of Dolphin and Nerkhbaan (sole author); framing confirmed by Ilia, 13 Oct 2026 | ✅ |
+| Founder · Nerkhbaan, 2026 — Present | Stated by Ilia, 17 Oct 2026; GH:Nerkhbaan commit history (sole author) | ✅ self-reported role |
+| Co-founder · Dolphin CRM, 2026 — Present | Stated by Ilia, 17 Oct 2026; GH:Dolphin commit history | ✅ self-reported role; co-founders not named (no approval) |
 
 ## Featured projects
 
@@ -54,8 +55,8 @@ Sources:
 | Nginx write-stop for POST/PUT/PATCH/DELETE | GH:Dolphin/nginx/write-stop-on.conf | ✅ |
 | Backups checksummed, restore-verified with networking disabled | compose.restore-verify.yml (`network_mode: none`), scripts/verify-postgres-restore.sh | ✅ |
 | Containers read-only, cap_drop ALL, no-new-privileges | compose.yml | ✅ |
-| v2.40.42, October 2026 | VERSION; handoff doc dated 2026/10/13 | ✅ |
-| "about 3,500 automated tests" | README "about 3,510 non-browser tests as of 2.40.42" | ✅ (repo's own statement; suite not run here) |
+| v2.40.55, October 2026 | VERSION | ✅ |
+| "3,510 automated tests" | README "about 3,510 non-browser tests" | ✅ (repo's own statement; suite not run here) |
 | Customer names | Ops docs mention a specific SMS provider/customer setup | ❌ deliberately not published |
 
 ### Nerkhbaan
@@ -74,6 +75,26 @@ Sources:
 | 2.8.1 live on nerkhbaan.ir with two API replicas | PROJECT_STATUS.md (12 Oct 2026) | ✅ per repo record; ⏳ site not reachable from this session |
 | Run 38222923015 passed 15/15 jobs; zero HIGH/CRITICAL image findings | PROJECT_STATUS.md | ✅ per repo record (run page not opened from here) |
 | "zero downtime is not claimed" | PROJECT_STATUS.md | ✅ |
+
+### "Projects I'm proud of" stats and assets
+
+The venture cards show four figures per product. Each is the repository's own record; none is illustrative.
+
+| Figure | Source | Status |
+| --- | --- | --- |
+| Nerkhbaan "2.8.1 · Live release" | PROJECT_STATUS.md (12 Oct 2026) | ✅ per repo record |
+| Nerkhbaan "117 · API routes" | PROJECT_STATUS.md OpenAPI path count | ✅ per repo record |
+| Nerkhbaan "15/15 · CI jobs passed" | PROJECT_STATUS.md, run 38222923015 | ✅ per repo record |
+| Nerkhbaan "8 · Alert rules" | monitoring/rules/nerkhbaan.yml | ✅ |
+| Dolphin "40 · Feature modules" | feature manifest definitions | ✅ |
+| Dolphin "3,510 · Automated tests" | README | ✅ per repo record |
+| Dolphin "57 · Tagged releases" | `git tag` count | ✅ |
+| Dolphin "4 · Scoped DB roles" | DOLPHIN_DEPLOYMENT_RUNBOOK.md "PostgreSQL role split" | ✅ |
+| Logos | `public/images/projects/`: Dolphin `docs/brand-source/logos/DarkMode_Logo.png`, Nerkhbaan `apps/web/src/logo/logo.png`, resized to WebP | ✅ the products' own marks |
+
+### Persian version (`/fa/`)
+
+`src/content/fa/*` translates the English content claim for claim; it adds no facts. Tool, product, and protocol names stay in Latin script. Dates are Gregorian months written in Persian. The résumé PDF and `/resume/` stay in English. The Persian download button says so.
 
 ### Prometheus & Jira → Matrix bridges
 

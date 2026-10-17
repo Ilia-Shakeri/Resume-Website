@@ -2,10 +2,11 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Icon } from "@/components/Icon";
 import { PrintButton } from "@/components/PrintButton";
-import { toolkit } from "@/content/practice";
-import { education, experience, profile, qualifications, resumeSummary } from "@/content/profile";
-import { featuredProjects, secondaryProjects } from "@/content/projects";
+import { getContent } from "@/content";
 import { site } from "@/lib/site";
+
+const { toolkit, education, experience, profile, qualifications, resumeSummary, ventures, featuredBuild, secondaryProjects } =
+  getContent("en");
 
 export const metadata: Metadata = {
   title: "Résumé",
@@ -104,24 +105,38 @@ export default function ResumePage() {
           <Heading>
             <span id="r-projects">Selected projects</span>
           </Heading>
-          {featuredProjects.map((project) => (
-            <article key={project.slug} className="mt-3 break-inside-avoid">
+          {ventures.map((venture) => (
+            <article key={venture.slug} className="mt-3 break-inside-avoid">
               <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-                <h3 className="text-[0.9375rem] font-semibold">{project.name}</h3>
-                <a href={project.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
-                  {project.links[0].href.replace("https://", "")}
+                <h3 className="text-[0.9375rem] font-semibold">
+                  {venture.name} · <span className="font-normal">{venture.role}</span>
+                </h3>
+                <a href={venture.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
+                  {venture.links[0].href.replace("https://", "").replace(/\/$/, "")}
                 </a>
               </div>
-              <p className="mt-0.5">{project.summary}</p>
-              <p className="mt-0.5 text-[#4b5753]">{project.caseStudy.approach[0]}</p>
-              <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">{project.tags.join(" · ")}</p>
+              <p className="mt-0.5">{venture.description}</p>
+              <p className="mt-0.5 text-[#4b5753]">{venture.highlights[0]}</p>
+              <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">
+                {venture.tools.map((tool) => tool.name).join(" · ")}
+              </p>
             </article>
           ))}
+          <article className="mt-3 break-inside-avoid">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+              <h3 className="text-[0.9375rem] font-semibold">{featuredBuild.name}</h3>
+              <a href={featuredBuild.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
+                {featuredBuild.links[0].href.replace("https://", "")}
+              </a>
+            </div>
+            <p className="mt-0.5">{featuredBuild.summary}</p>
+            <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">{featuredBuild.tags.join(" · ")}</p>
+          </article>
           <p className="mt-3 break-inside-avoid">
             <span className="font-semibold">Also: </span>
             {secondaryProjects.map((project, index) => (
               <span key={project.name}>
-                {project.name} ({project.tags[0]}){index < secondaryProjects.length - 1 ? ", " : "."}
+                {project.name} ({project.tools[0]?.name}){index < secondaryProjects.length - 1 ? ", " : "."}
               </span>
             ))}
           </p>

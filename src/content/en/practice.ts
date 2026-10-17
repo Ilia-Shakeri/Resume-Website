@@ -1,11 +1,11 @@
-import type { ApproachStep, ToolkitGroup } from "./types";
+import type { ApproachStep, ToolkitGroup } from "../types";
 
 // Every tool listed appears in the résumé, the GitHub profile README, or a
 // repository (see docs/content-evidence.md, "Toolkit"). Brand icons come from
 // Simple Icons (CC0) and are inlined at build time; tools without a brand icon
 // use a neutral glyph.
 
-export const toolkitIntro =
+export const toolkitIntro: string =
   "Organized by purpose, not proficiency bars. Every tool here appears in my work history or in one of my repositories.";
 
 export const toolkit: ToolkitGroup[] = [
@@ -140,7 +140,7 @@ export const toolkit: ToolkitGroup[] = [
   },
 ];
 
-export const approachIntro =
+export const approachIntro: string =
   "Small, reviewable changes, written-down operations, and feedback that reaches the next build.";
 
 export const approach: ApproachStep[] = [

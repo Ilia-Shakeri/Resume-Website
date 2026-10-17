@@ -2,14 +2,16 @@
 
 Personal portfolio of Ilia Shakeri, DevOps Engineer. A static, content-driven Next.js site built from the Figma reference in `references/`.
 
-**Sections:** hero (animated DevOps loop and live terminal) · capability ribbon · about (`whoami` panel) · selected work (Dolphin CRM, Nerkhbaan, ChatOps bridges + six secondary repos) · technical toolkit · experience timeline · engineering approach · education & training · résumé download · contact. A printable résumé lives at `/resume/` and as a PDF.
+**Sections:** hero (animated DevOps loop and live terminal) · capability ribbon · about (`whoami` panel) · projects I'm proud of (Nerkhbaan and Dolphin CRM) · more builds (ChatOps bridges and a filterable grid of eight repos) · technical toolkit · experience timeline · engineering approach · education & training · résumé download · contact. A printable résumé lives at `/resume/` and as a PDF (English only).
+
+**Languages:** English at `/` and Persian (RTL, Vazirmatn) at `/fa/`, switched from the header. Both are static pages with `hreflang` alternates.
 
 ## Stack
 
 - Next.js 16 (App Router, static export), React 19, TypeScript 5.9
 - Tailwind CSS 4 with design tokens in `src/app/globals.css`
-- Self-hosted variable fonts via Fontsource (Space Grotesk, Inter, JetBrains Mono); no runtime font requests
-- No database, backend, analytics, or client-side API calls. The only client JavaScript is the mobile menu and the print button.
+- Self-hosted variable fonts via Fontsource (Space Grotesk, Inter, JetBrains Mono, Vazirmatn for Persian); no runtime font requests
+- No database, backend, analytics, or client-side API calls. Client JavaScript only drives UI: the menu, language switch, project filter, scroll reveal, terminal typing, and clock.
 
 ## Local development
 
@@ -36,20 +38,21 @@ Browser QA (needs Chrome/Chromium; set `CHROMIUM_PATH` if not auto-detected):
 npm run build && npm run qa:screens
 ```
 
-This takes full-page screenshots at 375, 768, and 1440 px into `qa-artifacts/` and checks overflow, anchors, external-link safety, heading order, the mobile menu, keyboard skip link, reduced motion, and the résumé download.
+This takes full-page screenshots of `/` and `/fa/` at 375, 768, and 1440 px into `qa-artifacts/`. It checks overflow and clipping, anchors, external-link safety, heading order, the mobile menu, the skip link, reduced motion, the language switch, the project filter, and the résumé download.
 
 ## Editing content
 
-All copy lives in typed data files. Components don't need to change.
+All copy lives in typed data files, one set per language: `src/content/en/` and `src/content/fa/`. `getContent(locale)` in `src/content/index.ts` combines them, and TypeScript makes both languages provide the same fields. Components don't need to change.
 
-| File | Contents |
+| File (per language) | Contents |
 | --- | --- |
-| `src/content/profile.ts` | Name, intro, bio, contact, availability, experience, education, training, résumé summary |
-| `src/content/projects.ts` | Featured case studies (problem, role, approach, reliability, outcome, links) and secondary repos |
-| `src/content/practice.ts` | Toolkit groups and the four-step engineering approach |
-| `src/lib/site.ts` | Site title/description, résumé file paths and "updated" label, navigation |
+| `profile.ts` | Name, intro, bio, contact, availability, experience, education, training, résumé summary |
+| `projects.ts` | `ventures` (projects I'm proud of: role, stats, highlights, case study), `featuredBuild`, and `secondaryProjects` (with filter category) |
+| `practice.ts` | Toolkit groups and the four-step engineering approach |
+| `ui.ts` | Interface text: navigation, section headings, labels |
+| `src/lib/site.ts` | Site URL, résumé file paths and "updated" label |
 
-Featured cards choose an illustration with `diagram: "dolphin-stack" | "nerkhbaan-ci" | "chatops-flow"` (see `src/components/diagrams.tsx`). To add a featured project, add an entry to `featuredProjects` and, if it needs a new diagram, a case in `ProjectDiagram`.
+The Persian `projects.ts` and `practice.ts` reuse the English entries and override only the text, so links, logos, and tools stay in one place. Cards choose an illustration with `diagram: "dolphin-stack" | "nerkhbaan-ci" | "chatops-flow"` (see `src/components/diagrams.tsx`).
 
 After content changes, regenerate the résumé PDF and social image:
 
@@ -68,11 +71,11 @@ npm run assets
 ## Repository layout
 
 ```text
-src/app/          routes: / (page.tsx), /resume, sitemap, robots, 404
+src/app/          routes: / and /fa (both render HomePage), /resume, sitemap, robots, 404
 src/components/   section components, diagrams, icons
-src/content/      typed content data
+src/content/      typed content data: en/, fa/, index.ts (getContent)
 src/lib/          site config, structured data, build-time helpers
 scripts/          résumé PDF, OG image, and browser QA scripts (Playwright core)
-public/           hero image, favicon, OG image, résumé PDF
+public/           portrait, project logos, certificates, favicon, OG image, résumé PDF
 references/       Figma export and the previous résumé (source material)
 ```

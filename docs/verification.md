@@ -102,3 +102,23 @@ Page weight: ~183 KB gzipped JS (was ~180 KB; icons are inlined at build time, n
 Visual checks: hero at 1440 px mid-animation, toolkit, certificate hover, and the `whoami` panel at 1440 px; hero at 375 px. Loop stage labels were enlarged on small screens after the 375 px review. The résumé PDF stays at 2 pages (213 KB).
 
 Without JavaScript the site shows the static terminal transcript and every section; `html.js` (set by an inline script before first paint) switches to the animated versions.
+
+## Persian version and projects — 17 Oct 2026
+
+Checked with `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run qa:screens`. All browser checks passed. New checks:
+
+| Check | Result |
+| --- | --- |
+| `/` and `/fa/` at 375, 768, and 1440 px: no horizontal overflow, no console errors | ✅ |
+| No content clipped past the viewport edge (catches overflow hidden by `overflow-hidden`) | ✅. Without the fix it failed at 375 px (see below). |
+| `/fa/` has `<html lang="fa" dir="rtl">`, Persian headings, and `hreflang` alternates | ✅ |
+| Language switch from `/#experience` goes to `/fa/#experience`, and back to `/` | ✅ |
+| Both venture cards (Nerkhbaan, Dolphin CRM) render | ✅ |
+| Project filter: All 8 → Security 3 | ✅ |
+
+**Fixed during review:**
+- **Mobile hero clipping.** The hero, venture, and featured-build grids had no explicit column template. At 375 px the single track grew to its min-content width (401 px), and `overflow-hidden` clipped the hero text. This affected the live English page too. `grid-cols-1` fixes it, and the new clipping check catches regressions.
+
+**Visual review:** `/fa/` was reviewed at 1440 px (hero, about, projects, builds, experience, education) and at 375 px. The English projects and builds were reviewed at 1440 px. The Persian hero headline holds two lines at 320–1920 px.
+
+The résumé PDF was regenerated and is still 2 pages.

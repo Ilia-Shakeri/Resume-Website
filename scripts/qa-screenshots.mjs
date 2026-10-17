@@ -18,20 +18,57 @@ const check = (ok, message) => {
 const { server, url } = await startStaticServer("out");
 const browser = await launchBrowser();
 try {
-  for (const width of widths) {
-    // Full-page captures use reduced motion so scroll-revealed sections are all visible.
-    const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: "reduce" });
-    const errors = [];
-    page.on("pageerror", (error) => errors.push(error.message));
-    page.on("console", (msg) => msg.type() === "error" && errors.push(msg.text()));
-    await page.goto(`${url}/`, { waitUntil: "networkidle" });
-    await page.evaluate(() => document.fonts.ready);
-    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-    check(overflow <= 0, `${width}px: no horizontal overflow (excess ${overflow}px)`);
-    check(errors.length === 0, `${width}px: no console/page errors ${errors.join(" | ")}`);
-    await page.screenshot({ path: `${outDir}/home-${width}.png`, fullPage: true });
-    await page.close();
+  for (const [locale, path] of [["en", "/"], ["fa", "/fa/"]]) {
+    for (const width of widths) {
+      // Full-page captures use reduced motion so scroll-revealed sections are all visible.
+      const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: "reduce" });
+      const errors = [];
+      page.on("pageerror", (error) => errors.push(error.message));
+      page.on("console", (msg) => msg.type() === "error" && errors.push(msg.text()));
+      await page.goto(`${url}${path}`, { waitUntil: "networkidle" });
+      await page.evaluate(() => document.fonts.ready);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      check(overflow <= 0, `${locale} ${width}px: no horizontal overflow (excess ${overflow}px)`);
+      // overflow-hidden sections hide overflow from scrollWidth, so also look for content
+      // pushed past the viewport edge (decorative aria-hidden layers excepted).
+      const clipped = await page.evaluate(() =>
+        [...document.querySelectorAll("main *:not(svg *)")]
+          .filter((el) => !el.closest("[aria-hidden='true']"))
+          .filter((el) => {
+            const rect = el.getBoundingClientRect();
+            return rect.width > 0 && (rect.left < -1 || rect.right > window.innerWidth + 1);
+          })
+          .map((el) => `${el.tagName.toLowerCase()}${el.id ? `#${el.id}` : ""}`)
+          .slice(0, 3),
+      );
+      check(clipped.length === 0, `${locale} ${width}px: no content clipped at the viewport edge ${clipped.join(", ")}`);
+      check(errors.length === 0, `${locale} ${width}px: no console/page errors ${errors.join(" | ")}`);
+      await page.screenshot({ path: `${outDir}/${locale === "en" ? "home" : "fa"}-${width}.png`, fullPage: true });
+      await page.close();
+    }
   }
+
+  // Persian page: document language and direction, translated content, links back.
+  const fa = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await fa.goto(`${url}/fa/`, { waitUntil: "networkidle" });
+  const [lang, dir] = await fa.evaluate(() => [document.documentElement.lang, document.documentElement.dir]);
+  check(lang === "fa" && dir === "rtl", `/fa/: <html lang="${lang}" dir="${dir}">`);
+  const faHeading = await fa.locator("#ventures-title").innerText();
+  check(/محصولاتی/.test(faHeading), `/fa/: Persian content rendered ("${faHeading.split("\n")[0]}")`);
+  const hreflang = await fa.$$eval("link[rel='alternate'][hreflang]", (links) => links.map((l) => l.hreflang).sort().join(","));
+  check(hreflang.includes("en") && hreflang.includes("fa"), `/fa/: hreflang alternates (${hreflang})`);
+  await fa.close();
+
+  // Language switch keeps the current section.
+  const sw = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await sw.goto(`${url}/#experience`, { waitUntil: "networkidle" });
+  await sw.locator("nav.lang-switch a[hreflang='fa']").click();
+  await sw.waitForURL("**/fa/#experience");
+  check(sw.url().endsWith("/fa/#experience"), `language switch → ${new URL(sw.url()).pathname}${new URL(sw.url()).hash}`);
+  await sw.locator("nav.lang-switch a[hreflang='en']").click();
+  await sw.waitForURL((u) => u.pathname === "/");
+  check(new URL(sw.url()).pathname === "/", "language switch back to English");
+  await sw.close();
 
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(`${url}/`, { waitUntil: "networkidle" });
@@ -126,7 +163,7 @@ try {
   check(farBelow === "0", `off-screen section hidden before scrolling (opacity ${farBelow})`);
   await live.locator("#toolkit").scrollIntoViewIfNeeded();
   await live.waitForTimeout(1200);
-  const revealed = await live.$eval("#toolkit li[data-reveal]", (el) => [el.classList.contains("is-visible"), getComputedStyle(el).opacity]);
+  const revealed = await live.$eval("#toolkit ul > li[data-reveal]", (el) => [el.classList.contains("is-visible"), getComputedStyle(el).opacity]);
   check(revealed[0] && revealed[1] === "1", `section fades in on scroll (opacity ${revealed[1]})`);
   const icons = await live.$$eval("#toolkit svg[role='img']", (els) => els.length);
   const chips = await live.$$eval("#toolkit li li", (els) => els.length);
@@ -145,6 +182,20 @@ try {
   const clock = await live.locator("#about dd .tabular-nums").innerText();
   check(/\d{2}:\d{2}:\d{2}/.test(clock), `whoami local clock ticking (${clock})`);
   await live.close();
+
+  // Projects: both ventures render; the filter narrows the grid.
+  const projects = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+  await projects.goto(`${url}/`, { waitUntil: "networkidle" });
+  const ventures = await projects.$$eval("#projects article", (els) => els.map((el) => el.querySelector("h3")?.textContent));
+  check(ventures.length === 2, `ventures: ${ventures.join(", ")}`);
+  const total = await projects.$$eval("#builds [data-category]", (els) => els.filter((el) => !el.hidden).length);
+  await projects.locator("#builds button[aria-pressed]", { hasText: "Security" }).click();
+  const security = await projects.$$eval("#builds [data-category]", (els) =>
+    els.filter((el) => !el.hidden).map((el) => el.dataset.category),
+  );
+  check(security.length > 0 && security.length < total && security.every((c) => c === "security"), `project filter: ${total} → ${security.length} security`);
+  await projects.locator("#projects").screenshot({ path: `${outDir}/ventures-1440.png` });
+  await projects.close();
 
   const resume = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await resume.goto(`${url}/resume/`, { waitUntil: "networkidle" });
