@@ -221,7 +221,7 @@ CLS is ≤0.074 on every page. Mobile LCP meets 2.5 s on `/contact/` and `/fa/co
 **Changes**
 - Project cards show usage and product facts instead of repository counters. The figures and their sources are in `docs/content-evidence.md`.
 - Release tags and last-update dates are read from GitHub at build time by `scripts/github-stats.mjs`.
-- Four product screenshots, with lead names blurred on the Dolphin leads board.
+- Four product screenshots. The Dolphin leads board was first published blurred, then replaced with the original after Ilia confirmed it is demo data.
 - The contact page lists remote-work details.
 - Education lists the University of Tehran data science programme (in progress).
 

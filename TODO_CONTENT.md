@@ -29,13 +29,15 @@ Edit `src/content/en/*.ts` and `src/content/fa/*.ts`, then regenerate assets wit
 - Telegram link, Persian copy, and résumé PDF: checked by Ilia.
 - University of Tehran Comprehensive Data Science Program (online) added under Education, in progress.
 
+## Confirmed by Ilia (17 Oct 2026, third review)
+
+- Remote-work details on the contact page are correct. Also open to remote work with companies in Iran.
+- The Dolphin dashboard and leads-board screenshots show demo data; the leads board is published unblurred.
+
 ## Still open
 
-1. **Remote-work details.** The contact page now lists: time zone (UTC+03:30), 4+ hours of overlap with European hours, full-time or contract, two weeks' notice, English at professional level. These are sensible defaults, not statements from Ilia. Correct any that are wrong in `src/content/*/profile.ts` (`remote`). Payment and work-authorization arrangements are deliberately not mentioned.
-2. **Dolphin dashboard screenshot.** It shows aggregate figures (customers, sales, receivables). Confirm they come from a demo installation, not a customer's. If not, replace the image.
-3. **Leads board screenshot.** Lead names were blurred. If the data is demo data, the unblurred original can be used instead.
-4. **Data Science programme.** Update `education` in `src/content/*/profile.ts` as modules finish.
-5. **Business impact.** No revenue or other customer metrics are published. Add them only with evidence and your approval.
+1. **Data Science programme.** Update `education` in `src/content/*/profile.ts` as modules finish.
+2. **Business impact.** No revenue or other customer metrics are published. Add them only with evidence and your approval.
 
 ## Left out on purpose (add only with evidence)
 

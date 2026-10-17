@@ -32,11 +32,12 @@ export const profile: Profile = {
   contactMessage:
     "Looking for a DevOps engineer or backend developer who treats deployments, backups, and alerts as engineering work? I’d like to hear about what you’re building.",
   remote: [
+    { label: "Open to", value: "Remote roles with international teams and with companies in Iran" },
     { label: "Time zone", value: "Tehran, UTC+03:30 (no daylight saving)" },
-    { label: "Overlap", value: "4+ hours with European working hours; comfortable with async teams" },
+    { label: "Overlap", value: "Same hours as Iran-based teams; 4+ hours with European working hours; comfortable with async teams" },
     { label: "Engagement", value: "Full-time or contract" },
     { label: "Start", value: "Two weeks’ notice" },
-    { label: "Working language", value: "English (professional working proficiency)" },
+    { label: "Working languages", value: "English (professional working proficiency) · Persian (native)" },
   ],
 };
 
