@@ -61,7 +61,7 @@ npm run assets
 
 - [`docs/github-inventory.md`](docs/github-inventory.md) — every accessible repository and what was (not) read
 - [`docs/content-evidence.md`](docs/content-evidence.md) — source and verification status of each public claim; project ranking
-- [`docs/deployment.md`](docs/deployment.md) — VPS + ArvanCloud deployment (recommended), auto-deploy via GitHub Actions, other options
+- [`docs/deployment.md`](docs/deployment.md) — Iran VPS + ArvanCloud deployment: pull-based updates from the `site` branch
 - [`docs/verification.md`](docs/verification.md) — checks that were actually run and their results
 - [`TODO_CONTENT.md`](TODO_CONTENT.md) — details that still need confirmation
 

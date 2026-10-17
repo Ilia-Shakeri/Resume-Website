@@ -1,179 +1,156 @@
-# Deployment
+# Deployment — Iran VPS + ArvanCloud
 
-The site is a fully static Next.js export: `npm run build` writes HTML, CSS, JS, fonts, images, certificates, and the résumé PDF to `out/`. It needs no Node.js runtime, database, or secrets on the server.
-
-## Recommended setup
+The site is a fully static Next.js export (`out/`). It runs on the Iran VPS next to Dolphin, Nerkhbaan, and wilianshop, behind the existing `edge-nginx-1`, with ArvanCloud handling DNS, CDN, and HTTPS.
 
 ```text
-visitor ──HTTPS──▶ ArvanCloud CDN ──HTTPS──▶ VPS (outside Iran)
-                   (edge cache, TLS,          reverse proxy ──▶ nginx container
-                    good reach in Iran)                         127.0.0.1:8088
-                                                                serves /srv/iliashakeri.ir/site
-GitHub (push to main) ──▶ Actions: build ──rsync over SSH──▶ /srv/iliashakeri.ir/site
+push to main ──▶ GitHub Actions: build ──▶ force-push out/ to the `site` branch
+                                                    │
+Iran VPS: iliashakeri-update.timer (every 2 min) ◀──┘ git fetch (outbound only)
+          update-site.sh ──rsync──▶ /opt/iliashakeri/site
+                                         │ (read-only mount)
+visitor ──HTTPS──▶ ArvanCloud ──HTTP:80──▶ edge-nginx-1 ──▶ iliashakeri-web-1:8080
+                                          (conf.d/iliashakeri.conf)   (nginx:1.27-alpine)
 ```
 
-Why this instead of Vercel:
+Why it works this way:
 
-- Vercel's terms and US sanctions rules make an account tied to Iran a risk, and Vercel domains are often filtered inside Iran.
-- ArvanCloud serves `.ir` domains well inside Iran and has points of presence abroad for international visitors.
-- The VPS outside Iran is reachable from GitHub Actions, so every push to `main` deploys automatically.
-- Your VPS inside Iran isn't needed. Keep it for other work, or add it later as a second ArvanCloud origin.
+- GitHub Actions can't reliably reach a server inside Iran, but the server can `git fetch` from GitHub (checked: `git ls-remote` works). So the server **pulls** builds; GitHub never connects to it, and no SSH key or secret is stored in GitHub.
+- The server never needs Node.js or npm. It only gets finished HTML/CSS/JS.
+- `nginx:1.27-alpine` is already on the server (wilianshop uses it), and the configured registry mirror can pull it again if needed.
+- Let's Encrypt is unreachable from this VPS, so ArvanCloud issues the HTTPS certificate for visitors and connects to the origin over HTTP, the same way `wilianshop.conf` works today.
 
-Files in this repository:
+Files in `deploy/`:
 
-| File | Purpose |
-| --- | --- |
-| `deploy/compose.yaml` | `nginx:1.27-alpine` container, read-only, non-root, bound to `127.0.0.1:8088` |
-| `deploy/nginx.conf` | Static serving, cache headers (immutable for `/_next/static/`, revalidate for HTML), security headers, `/healthz` |
-| `.github/workflows/deploy.yml` | Builds and rsyncs `out/` to the VPS on every push to `main`. It stays skipped until `DEPLOY_HOST` is set. |
+| File | Goes to | Purpose |
+| --- | --- | --- |
+| `compose.yaml` | `/opt/iliashakeri/` | Site container `iliashakeri-web-1`: read-only, non-root, no published port, on the `iliashakeri-edge` network |
+| `nginx.conf` | `/opt/iliashakeri/` | Static serving inside the container: cache headers, security headers, `/healthz` |
+| `update-site.sh` | `/opt/iliashakeri/` | Fetches the `site` branch and rsyncs it to `./site` when it changed |
+| `iliashakeri-update.service`, `.timer` | `/etc/systemd/system/` | Runs the update script as `deploy` every 2 minutes |
+| `edge-iliashakeri.conf` | `/opt/edge/conf.d/iliashakeri.conf` | Routes `iliashakeri.ir` / `www` through `edge-nginx-1` |
 
 ---
 
-## 1. Prepare the VPS (one time)
+## 1. GitHub (automatic)
 
-Run these as your admin user on the **VPS outside Iran**.
+Merging to `main` runs **Actions → Deploy**, which creates or refreshes the `site` branch. Check that the run is green and that the branch exists before step 2. Nothing needs configuring in GitHub.
 
-```bash
-# A deploy user that can only write the site files (no sudo, no docker group).
-sudo adduser --disabled-password --gecos "" deploy
-sudo install -d -o root -g root -m 755 /srv/iliashakeri.ir
-sudo install -d -o deploy -g deploy -m 755 /srv/iliashakeri.ir/site
-
-# Container config, copied from this repository.
-cd /srv/iliashakeri.ir
-sudo curl -fsSLo compose.yaml https://raw.githubusercontent.com/Ilia-Shakeri/Resume-Website/main/deploy/compose.yaml
-sudo curl -fsSLo nginx.conf  https://raw.githubusercontent.com/Ilia-Shakeri/Resume-Website/main/deploy/nginx.conf
-
-sudo docker compose up -d
-curl -s http://127.0.0.1:8088/healthz   # → ok   (the site itself returns 404 until the first deploy)
-```
-
-If port 8088 is already used, change `127.0.0.1:8088` in `compose.yaml` and in the proxy config below.
-
-`rsync` must be installed on the VPS (`sudo apt install rsync`).
-
-## 2. Deploy key for GitHub Actions
-
-On your own computer:
+## 2. VPS setup (one time, as root)
 
 ```bash
-ssh-keygen -t ed25519 -f iliashakeri_deploy -N "" -C "github-actions deploy"
-ssh-keyscan -p 22 YOUR_VPS_IP > known_hosts_entry   # use your SSH port if it isn't 22
+# Get the deploy files (a shallow clone of main; GitHub is reachable from this VPS).
+git clone --depth 1 https://github.com/Ilia-Shakeri/Resume-Website.git /tmp/resume-src
+
+# App directory, owned by the existing deploy user.
+install -d -o deploy -g deploy -m 755 /opt/iliashakeri
+install -o deploy -g deploy -m 644 /tmp/resume-src/deploy/compose.yaml /tmp/resume-src/deploy/nginx.conf /opt/iliashakeri/
+install -o deploy -g deploy -m 755 /tmp/resume-src/deploy/update-site.sh /opt/iliashakeri/
+
+# First pull of the built site (clones the `site` branch into /opt/iliashakeri/repo).
+sudo -u deploy /opt/iliashakeri/update-site.sh      # → "published <commit>"
+
+# Shared network between the edge and the site container.
+docker network create iliashakeri-edge
+docker network connect iliashakeri-edge edge-nginx-1
+
+# Start the site container.
+cd /opt/iliashakeri && docker compose up -d
+docker ps --filter name=iliashakeri-web-1           # → Up … (healthy) after ~30 s
 ```
 
-On the VPS, authorize the public key for the `deploy` user only:
+**Make the edge network attachment permanent.** `docker network connect` does not survive recreating `edge-nginx-1` (e.g. `docker compose up` in the edge project). Find the edge's compose file:
 
 ```bash
-sudo install -d -o deploy -g deploy -m 700 /home/deploy/.ssh
-echo "PASTE iliashakeri_deploy.pub CONTENT" | sudo tee -a /home/deploy/.ssh/authorized_keys
-sudo chown deploy:deploy /home/deploy/.ssh/authorized_keys && sudo chmod 600 /home/deploy/.ssh/authorized_keys
+docker inspect edge-nginx-1 --format '{{ index .Config.Labels "com.docker.compose.project.working_dir" }}'
 ```
 
-In GitHub, go to **Settings → Secrets and variables → Actions**:
-
-| Type | Name | Value |
-| --- | --- | --- |
-| Secret | `DEPLOY_SSH_KEY` | Contents of `iliashakeri_deploy` (the **private** key) |
-| Secret | `DEPLOY_KNOWN_HOSTS` | Contents of `known_hosts_entry` |
-| Variable | `DEPLOY_HOST` | VPS IP or SSH hostname. Setting it turns the workflow on. |
-| Variable | `DEPLOY_USER` | `deploy` |
-| Variable | `DEPLOY_PATH` | `/srv/iliashakeri.ir` |
-| Variable | `DEPLOY_PORT` | Only if SSH isn't on 22 |
-| Variable | `SMOKE_URL` | `https://iliashakeri.ir`. Set it **after** step 4 works; it makes each deploy check the live site. |
-
-Then run **Actions → Deploy → Run workflow**. Check `curl -s http://127.0.0.1:8088/ | head` on the VPS.
-
-Delete the private key file from your computer once it's stored in GitHub.
-
-## 3. Route the domain on your reverse proxy
-
-Use the block that matches the proxy already running on the VPS.
-
-**Nginx (host or container):**
-
-```nginx
-server {
-    listen 80;
-    listen 443 ssl http2;
-    server_name iliashakeri.ir www.iliashakeri.ir;
-
-    ssl_certificate     /etc/letsencrypt/live/iliashakeri.ir/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/iliashakeri.ir/privkey.pem;
-
-    if ($host = www.iliashakeri.ir) { return 301 https://iliashakeri.ir$request_uri; }
-
-    location / {
-        proxy_pass http://127.0.0.1:8088;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-If your Nginx runs in a container, `127.0.0.1` is the container itself. Use `host.docker.internal` (with `extra_hosts: ["host.docker.internal:host-gateway"]`) or put both containers on one Docker network and use `http://web:8080`.
-
-**Caddy:**
-
-```caddyfile
-iliashakeri.ir, www.iliashakeri.ir {
-    @www host www.iliashakeri.ir
-    redir @www https://iliashakeri.ir{uri} permanent
-    reverse_proxy 127.0.0.1:8088
-}
-```
-
-**Traefik:** remove `ports:` from `compose.yaml`, attach the service to Traefik's network, and add labels:
+In that compose file, add `iliashakeri-edge` to the edge service's `networks:` list and declare it at the bottom, next to the networks already there:
 
 ```yaml
-    networks: [proxy]          # your Traefik network name
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.iliashakeri.rule=Host(`iliashakeri.ir`) || Host(`www.iliashakeri.ir`)
-      - traefik.http.routers.iliashakeri.entrypoints=websecure
-      - traefik.http.routers.iliashakeri.tls.certresolver=letsencrypt   # your resolver name
-      - traefik.http.services.iliashakeri.loadbalancer.server.port=8080
+services:
+  nginx:                      # the edge service, whatever its name is
+    networks:
+      # … existing networks …
+      - iliashakeri-edge
+
 networks:
-  proxy:
+  # … existing networks …
+  iliashakeri-edge:
     external: true
 ```
 
-**Origin certificate:** get the Let's Encrypt certificate **before** turning on the ArvanCloud proxy (step 4.3). While DNS points straight at the VPS, the normal HTTP challenge works. For renewals behind the CDN, check after the first renewal cycle that it still succeeds. If it doesn't, switch to DNS validation using ArvanCloud's DNS API (acme.sh ships an ArvanCloud DNS plugin).
-
-## 4. ArvanCloud CDN and DNS
-
-Menu names below may differ slightly in the ArvanCloud panel.
-
-1. **Add the domain.** Create an ArvanCloud account, go to CDN → Add domain → `iliashakeri.ir`. ArvanCloud shows two nameservers.
-2. **Switch nameservers.** At the registrar where you bought `iliashakeri.ir` (for `.ir`, usually nic.ir or a reseller panel), replace the nameservers with ArvanCloud's. Propagation can take a few hours.
-3. **DNS records** in ArvanCloud:
-   - `A`  `@`   → VPS IP. Leave the proxy/cloud switch **off** until the origin certificate is issued, then turn it **on**.
-   - `A` or `CNAME` `www` → same target, proxy **on**.
-4. **HTTPS:** enable ArvanCloud's free certificate for `iliashakeri.ir` and `www`, turn on "redirect HTTP to HTTPS", and set the origin protocol to **HTTPS** (your proxy has the Let's Encrypt certificate).
-5. **Caching:** use the mode that respects the origin's `Cache-Control` headers. The container already sends `immutable` for build assets and `max-age=0, must-revalidate` for HTML, so new deploys show up without a manual purge.
-6. **HSTS:** enable it only after the site has worked over HTTPS for a few days.
-7. **Optional hardening:** allow ports 80/443 on the VPS only from ArvanCloud's published IP ranges, so nobody can bypass the CDN.
-
-## 5. Verify
+## 3. Edge route (one time, as root)
 
 ```bash
-curl -sI https://iliashakeri.ir/ | grep -iE "^HTTP|cache-control|server"
-curl -sI https://iliashakeri.ir/resume/ilia-shakeri-resume.pdf | head -1
-curl -s  https://iliashakeri.ir/sitemap.xml | head
+install -m 600 /tmp/resume-src/deploy/edge-iliashakeri.conf /opt/edge/conf.d/iliashakeri.conf
+docker exec edge-nginx-1 nginx -t && docker exec edge-nginx-1 nginx -s reload
+
+# Check from the server itself (bypassing ArvanCloud):
+curl -s -H 'Host: iliashakeri.ir' http://127.0.0.1/build.txt           # → the deployed commit SHA
+curl -s -o /dev/null -w '%{http_code}\n' -H 'Host: iliashakeri.ir' http://127.0.0.1/   # → 200
 ```
 
-Open the site from inside Iran (mobile data) and from outside (any VPN or a friend abroad). Then set `SMOKE_URL` so later deploys are checked automatically.
+The block relies on the `resolver 127.0.0.11` line that `dolphin.conf` already declares at the http level. If `nginx -t` fails, the old config keeps running; fix it before reloading.
 
-## Day-to-day
+## 4. Automatic updates (one time, as root)
 
-- Edit content → push to `main` → **CI** checks it and **Deploy** publishes it, usually in about a minute.
-- After content changes, run `npm run assets` locally first so the résumé PDF and social image match.
-- Container or Nginx config changes (`deploy/*`) are not synced automatically. Copy the new files to `/srv/iliashakeri.ir` and run `sudo docker compose up -d` on the VPS.
-- Roll back: **Actions → Deploy → Run workflow** on an older commit, or revert the commit on `main`.
+```bash
+install -m 644 /tmp/resume-src/deploy/iliashakeri-update.service /tmp/resume-src/deploy/iliashakeri-update.timer /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable --now iliashakeri-update.timer
+systemctl list-timers 'iliashakeri*'                # → next run within 2 minutes
+rm -rf /tmp/resume-src
+```
+
+From now on: push to `main` → the site is live within about 2–4 minutes. Logs: `journalctl -u iliashakeri-update --since today`.
+
+## 5. ArvanCloud
+
+Menu names may differ slightly in the panel.
+
+1. **Domain:** make sure `iliashakeri.ir` is added in ArvanCloud CDN and shows as active. The nameservers at IRNIC are already done; activation can take a few hours.
+2. **DNS records:**
+   - `A`  `@`    → the VPS public IP (`87.248.130.63`, if that's this server, as in `dolphin.conf`), **cloud/proxy on**
+   - `A`  `www`  → same IP, **cloud/proxy on**
+3. **HTTPS (SSL/TLS):**
+   - Turn on HTTPS and issue ArvanCloud's free certificate for `iliashakeri.ir` and `www.iliashakeri.ir`.
+   - Turn on **redirect HTTP → HTTPS**.
+   - **Origin protocol: HTTP**, port 80. The edge only serves this site on port 80; there is no certificate for it on the VPS.
+4. **Caching:** use the mode that **respects the origin's Cache-Control headers**. The site sends `immutable` for build files and `max-age=0, must-revalidate` for HTML, so new builds appear without purging.
+5. **HSTS:** leave off until the site has worked over HTTPS for a few days.
+
+## 6. Verify
+
+```bash
+curl -sI https://iliashakeri.ir/ | grep -iE '^HTTP|cache-control|server'
+curl -s  https://iliashakeri.ir/build.txt          # same SHA as the latest Deploy run
+curl -sI https://www.iliashakeri.ir/ | grep -i location   # → https://iliashakeri.ir/
+```
+
+Open the site on Iranian mobile data and from abroad (a VPN, or a friend outside Iran).
+
+Optional: add the repository variable `SMOKE_URL=https://iliashakeri.ir` (GitHub → Settings → Secrets and variables → Actions → Variables). Each Deploy run then waits until the live site serves the new build, and fails if it doesn't within 10 minutes. If ArvanCloud's DDoS protection blocks GitHub's runners, remove the variable.
 
 ---
 
+## Day-to-day
+
+| Task | How |
+| --- | --- |
+| Publish a change | Push to `main`. Run `npm run assets` first when content changed, so the résumé PDF and social image match. |
+| See what's live | `curl -s https://iliashakeri.ir/build.txt` |
+| Force an update now | `sudo systemctl start iliashakeri-update.service` |
+| Roll back | Revert the commit on `main` and push. The next build replaces the `site` branch. |
+| Change `deploy/*` files | Not synced automatically: copy them to `/opt/iliashakeri` (and `conf.d` / systemd for those files), then `docker compose up -d` or reload the edge. |
+| Pause updates | `sudo systemctl disable --now iliashakeri-update.timer` |
+
+## Security notes
+
+- The site container is read-only, runs as a non-root user with all capabilities dropped, and publishes no port.
+- The edge block allows only `GET`/`HEAD` and limits request bodies to 64 KB. The site has no forms or API.
+- The updater runs as `deploy` with systemd sandboxing, and can only write `/opt/iliashakeri`. GitHub holds no credentials for this server.
+- ArvanCloud → VPS traffic is plain HTTP, as for wilianshop today. The content is public and static. To stop visitors bypassing the CDN, allow only ArvanCloud's published IP ranges in the edge block (`allow …; deny all;`), and keep that list up to date.
+
 ## Other options
 
-- **Vercel / Netlify:** they work technically (import the repo; output is detected), but see the sanctions and filtering note above.
-- **Any static host or object storage:** upload `out/`. CI publishes it as the `site` artifact on every run. For a sub-path deployment, set `basePath` in `next.config.ts` first.
-- **Self-contained image:** if you'd rather ship an image than rsync files, build one with a `node:22-alpine` build stage running `npm ci && npm run build` and an `nginx:1.27-alpine` stage copying `out/` plus `deploy/nginx.conf`.
+Any static host can serve `out/`; CI publishes it as the `site` artifact on every run. Vercel and similar US platforms are not recommended from Iran (sanctions terms, filtering).

@@ -1,30 +1,29 @@
 name: Deploy
 
-# Builds the static site and rsyncs it to the VPS, where the nginx container
-# from deploy/compose.yaml serves it. Setup: docs/deployment.md.
+# Builds the static site and publishes it as a single commit on the `site`
+# branch. The Iran VPS pulls that branch every two minutes
+# (deploy/update-site.sh), so GitHub never needs to reach the server.
+# Setup: docs/deployment.md.
 #
-# Repository variables: DEPLOY_HOST (enables this workflow), DEPLOY_USER,
-#   DEPLOY_PATH (e.g. /srv/iliashakeri.ir), optional DEPLOY_PORT, SMOKE_URL.
-# Repository secrets:   DEPLOY_SSH_KEY (private key), DEPLOY_KNOWN_HOSTS.
+# Optional repository variable SMOKE_URL (e.g. https://iliashakeri.ir): after
+# publishing, wait until the live site serves this build.
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 concurrency:
   group: deploy-production
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: Build and deploy to VPS
-    if: ${{ vars.DEPLOY_HOST != '' }}
+  publish:
+    name: Build and publish site branch
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
+    permissions:
+      contents: write
     environment:
       name: production
       url: ${{ vars.SMOKE_URL || 'https://iliashakeri.ir' }}
@@ -49,44 +48,36 @@ jobs:
           for file in index.html resume/index.html resume/ilia-shakeri-resume.pdf 404.html; do
             test -s "out/$file" || { echo "missing out/$file"; exit 1; }
           done
+          # Build marker for the smoke test and for checking what is live.
+          echo "$GITHUB_SHA" > out/build.txt
 
-      - name: Configure SSH
+      - name: Publish to the site branch
         env:
-          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          test -n "$SSH_KEY" || { echo "DEPLOY_SSH_KEY secret is not set"; exit 1; }
-          test -n "$KNOWN_HOSTS" || { echo "DEPLOY_KNOWN_HOSTS secret is not set"; exit 1; }
-          install -d -m 700 ~/.ssh
-          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          cd out
+          git init --quiet --initial-branch=site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          git commit --quiet -m "Site build from ${GITHUB_SHA}"
+          git push --quiet --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" site
+          echo "Published ${GITHUB_SHA} to the site branch"
 
-      - name: Upload site
-        env:
-          HOST: ${{ vars.DEPLOY_HOST }}
-          USER_NAME: ${{ vars.DEPLOY_USER }}
-          PORT: ${{ vars.DEPLOY_PORT || '22' }}
-          TARGET: ${{ vars.DEPLOY_PATH }}
-        run: |
-          test -n "$USER_NAME" && test -n "$TARGET" || { echo "DEPLOY_USER and DEPLOY_PATH variables are required"; exit 1; }
-          # Keep old /_next/static chunks (P = protect from --delete) so pages
-          # still cached by a browser or the CDN never reference a missing file.
-          rsync -az --delete --delay-updates \
-            --filter='P /_next/static/**' \
-            -e "ssh -i ~/.ssh/deploy_key -p $PORT -o StrictHostKeyChecking=yes" \
-            out/ "$USER_NAME@$HOST:$TARGET/site/"
-
-      - name: Smoke test
+      - name: Wait for the live site
         if: ${{ vars.SMOKE_URL != '' }}
         env:
           URL: ${{ vars.SMOKE_URL }}
         run: |
-          curl -fsS --retry 3 --retry-delay 5 --max-time 20 "$URL/" | grep -q "Built to ship" \
-            || { echo "home page did not return the expected content"; exit 1; }
-          curl -fsS --max-time 20 -o /dev/null "$URL/resume/ilia-shakeri-resume.pdf"
-          echo "Smoke test passed for $URL"
-
-      - name: Remove SSH key
-        if: always()
-        run: rm -f ~/.ssh/deploy_key
+          # The VPS checks every two minutes; give it up to ten.
+          for attempt in $(seq 1 40); do
+            live=$(curl -fsS --max-time 15 "$URL/build.txt?ts=$(date +%s)" 2>/dev/null || true)
+            if [ "$live" = "$GITHUB_SHA" ]; then
+              curl -fsS --max-time 20 "$URL/" | grep -q "Built to ship" || { echo "home page content check failed"; exit 1; }
+              echo "Live site serves ${GITHUB_SHA}"
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "Live site still serves '${live:-nothing}' after 10 minutes"
+          exit 1

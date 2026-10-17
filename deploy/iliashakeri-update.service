@@ -1,0 +1,16 @@
+[Unit]
+Description=Update iliashakeri.ir from the site branch
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=deploy
+Group=deploy
+Environment=HOME=/opt/iliashakeri
+ExecStart=/opt/iliashakeri/update-site.sh
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/iliashakeri
+PrivateTmp=true
