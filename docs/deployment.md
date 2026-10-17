@@ -33,7 +33,7 @@ Files in `deploy/`:
 
 ## 1. GitHub (automatic)
 
-Merging to `main` runs **Actions → Deploy**, which creates or refreshes the `site` branch. Check that the run is green and that the branch exists before step 2. Nothing needs configuring in GitHub.
+Merging to `main` runs **Actions → Deploy**, which creates or refreshes the `site` branch. The workflow also runs every 6 hours to refresh the GitHub release dates shown on the project cards. Check that the run is green and that the branch exists before step 2. Nothing needs configuring in GitHub.
 
 ## 2. VPS setup (one time, as root)
 

@@ -14,7 +14,7 @@ export const featured: FeaturedProject[] = [
     role: "بنیان‌گذار و تنها مهندس",
     category: "بک‌اند · DevOps · مهندسی محصول",
     period: "۲۰۲۶ — اکنون",
-    status: "فعال روی nerkhbaan.ir (نسخهٔ 2.8.1)",
+    status: "فعال روی nerkhbaan.ir · بیش از ۱۰ کاربر فعال",
     summary:
       "پلتفرم قیمت طلا، ارز و رمزارز با تاریخچه، هشدار قیمت و اپلیکیشن‌های وب، پنل مدیریت و دسکتاپ. هر قیمت منبع و زمان خودش را نشان می‌دهد و زمان انقضای مشخص دارد؛ بنابراین قیمت قدیمی هیچ‌وقت به‌جای قیمت روز نمایش داده نمی‌شود.",
     highlights: [
@@ -23,12 +23,30 @@ export const featured: FeaturedProject[] = [
       "هر نسخه از ۱۵ جاب CI عبور می‌کند؛ از جمله تست یکپارچگی روی TimescaleDB و Redis واقعی، تست مرورگر با Playwright و اسکن هفت ایمیج با Trivy.",
     ],
     facts: [
-      { value: "2.8.1", label: "نسخهٔ فعال" },
-      { value: "۱۱۷", label: "مسیر API (OpenAPI)" },
-      { value: "۱۵/۱۵", label: "جاب موفق CI" },
+      { value: "۱۰+", label: "کاربر فعال" },
+      { value: "۳", label: "اپ: وب، پنل مدیریت، دسکتاپ" },
+      { value: "۵ دقیقه", label: "به‌روزرسانی فید قیمت" },
       { value: "۳۲۳ ms", label: "p95 در تست بار ۳۰ دقیقه‌ای" },
     ],
-    factsSource: "از سند وضعیت پروژه و CI، اکتبر ۲۰۲۶. تست بار روی نسخه‌ای ایزوله از سیستم اجرا شد.",
+    screenshots: [
+      {
+        thumb: "/images/projects/nerkhbaan-dashboard-800.webp",
+        full: "/images/projects/nerkhbaan-dashboard.webp",
+        width: 1600,
+        height: 807,
+        alt: "داشبورد نرخبان در حالت تیره با کارت‌های قیمت طلا و نقره، نمودار قیمت ۲۴ ساعته یا ۳۰ روزه و منوی مقایسهٔ منابع.",
+        caption: "داشبورد: قیمت زندهٔ طلا و نقره همراه با تاریخچه",
+      },
+      {
+        thumb: "/images/projects/nerkhbaan-login-800.webp",
+        full: "/images/projects/nerkhbaan-login.webp",
+        width: 1600,
+        height: 812,
+        alt: "صفحهٔ ورود نرخبان با لوگوی فارسی، فیلدهای نام کاربری و رمز عبور و دکمهٔ تغییر زبان.",
+        caption: "صفحهٔ ورود (رابط فارسی)",
+      },
+    ],
+    factsSource: "تعداد کاربران تا اکتبر ۲۰۲۶. تست بار روی نسخه‌ای ایزوله از سیستم پروداکشن اجرا شد.",
     links: [
       { label: "nerkhbaan.ir", href: "https://nerkhbaan.ir/", primary: true },
       { label: "سورس‌کد", href: "https://github.com/Ilia-Shakeri/Nerkhbaan" },
@@ -108,10 +126,10 @@ export const featured: FeaturedProject[] = [
     ...dolphin,
     name: "دلفین CRM",
     localName: "Dolphin CRM",
-    role: "هم‌بنیان‌گذار و مهندس ارشد",
+    role: "هم‌بنیان‌گذار · توسعه‌دهندهٔ اصلی و مدیر فنی",
     category: "بک‌اند · امنیت · عملیات پروداکشن",
     period: "۲۰۲۶ — اکنون",
-    status: "نسخهٔ 2.40.55 (اکتبر ۲۰۲۶)",
+    status: "در حال استفاده در بیش از دو شرکت",
     summary:
       "یک CRM/ERP فارسی‌محور برای فروش، پیش‌فاکتور و فاکتور، پرداخت، انبار، تلفن و خدمات پس از فروش. یک کدبیس برای هر مشتری جداگانه مستقر می‌شود و هر نصب، مجموعه سرویس‌های مستقل خودش را روی Docker Compose دارد.",
     highlights: [
@@ -120,12 +138,30 @@ export const featured: FeaturedProject[] = [
       "ساخت ابزارهای عملیاتی: اسکریپت استقرار و بازگشت نسخه، توقف نوشتن هنگام نگهداری، و بکاپ‌هایی که با بازیابی واقعی تأیید می‌شوند.",
     ],
     facts: [
-      { value: "۴۶", label: "قابلیت قابل فعال‌سازی" },
-      { value: "۳٬۶۴۱", label: "تست خودکار" },
-      { value: "۵۶", label: "نسخهٔ برچسب‌گذاری‌شده در Git" },
-      { value: "۳", label: "نقش پایگاه داده بدون superuser" },
+      { value: "۲+", label: "شرکت استفاده‌کننده" },
+      { value: "۱ استک", label: "مستقل برای هر مشتری" },
+      { value: "۴۶", label: "قابلیت قابل فعال‌سازی برای هر مشتری" },
+      { value: "۳٬۶۰۰+", label: "تست خودکار" },
     ],
-    factsSource: "از مخزن کد تا ۱۵ اکتبر ۲۰۲۶. تست‌ها روی SQLite و PostgreSQL 16 اجرا می‌شوند، به‌علاوهٔ ۲۳ تست مرورگر.",
+    screenshots: [
+      {
+        thumb: "/images/projects/dolphin-dashboard-800.webp",
+        full: "/images/projects/dolphin-dashboard.webp",
+        width: 1600,
+        height: 813,
+        alt: "داشبورد دلفین CRM در حالت روشن با کاشی‌های مشتریان، سرنخ‌ها، فروش، پرونده‌های پس از فروش و مطالبات، و نمودار نرخ تبدیل و وصول.",
+        caption: "داشبورد پلتفرم: فروش، سرنخ‌ها و خدمات پس از فروش در یک نگاه",
+      },
+      {
+        thumb: "/images/projects/dolphin-leads-800.webp",
+        full: "/images/projects/dolphin-leads.webp",
+        width: 1600,
+        height: 816,
+        alt: "تابلوی سرنخ‌های دلفین CRM در حالت تیره با سه ستون وضعیت: در انتظار تکمیل، تکمیل و کنسل‌شده. محتوای کارت‌ها محو شده است.",
+        caption: "تابلوی سرنخ‌ها بر اساس وضعیت (نام‌ها محو شده‌اند)",
+      },
+    ],
+    factsSource: "تعداد مشتریان تا اکتبر ۲۰۲۶. تست‌ها روی SQLite و PostgreSQL 16 اجرا می‌شوند، به‌علاوهٔ تست‌های مرورگر.",
     links: [{ label: "سورس‌کد", href: "https://github.com/Ilia-Shakeri/Dolphin", primary: true }],
     architecture: {
       caption: "مسیر درخواست و سرویس‌های اطراف آن در یک نصب.",
@@ -209,7 +245,7 @@ export const featured: FeaturedProject[] = [
     role: "طراح و تنها مهندس",
     category: "مهندسی پلتفرم · ابزار DevOps",
     period: "۲۰۲۶ — اکنون",
-    status: "پیش از ۱٫۰: نسخهٔ 0.7.0 در حال توسعه، آخرین برچسب v0.6.0",
+    status: "پیش از نسخهٔ ۱٫۰، در حال توسعهٔ فعال",
     summary:
       "یک ابزار self-hosted که فهرست سرویس‌ها، سلامت، توپولوژی، لاگ، متریک و رویدادهای Docker و Kubernetes را در یک API نسخه‌دار و یک رابط دوزبانهٔ فارسی و انگلیسی جمع می‌کند. به‌طور پیش‌فرض فقط‌خواندنی است و برای عیب‌یابی ساخته شده، نه برای کنترل زیرساخت.",
     highlights: [
@@ -218,12 +254,12 @@ export const featured: FeaturedProject[] = [
       "CI اتصال به Docker و Kubernetes را روی یک Docker Engine واقعی و یک کلاستر kind آزمایش می‌کند، نه فقط با دادهٔ ساختگی.",
     ],
     facts: [
-      { value: "۴۷", label: "مسیر OpenAPI" },
-      { value: "۱۴", label: "مایگریشن فقط رو به جلو" },
-      { value: "۶", label: "جاب CI" },
-      { value: "v0.6.0", label: "آخرین برچسب" },
+      { value: "Docker + K8s", label: "منابع در یک نما" },
+      { value: "فقط‌خواندنی", label: "دسترسی پیش‌فرض" },
+      { value: "EN / FA", label: "زبان‌های رابط" },
+      { value: "Apache-2.0", label: "مجوز متن‌باز" },
     ],
-    factsSource: "از مخزن کد تا ۱۷ اکتبر ۲۰۲۶.",
+    factsSource: "از مخزن کد، اکتبر ۲۰۲۶.",
     links: [{ label: "سورس‌کد", href: "https://github.com/Ilia-Shakeri/Stackplore", primary: true }],
     architecture: {
       caption: "یک اپلیکیشن Go با رابط کاربری داخلی که داده را از منابع می‌خواند و در PostgreSQL نگه می‌دارد.",

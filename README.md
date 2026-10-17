@@ -74,6 +74,10 @@ All copy lives in typed data files, one set per language: `src/content/en/` and 
 | `ui.ts` | Interface text: navigation, section headings, labels |
 | `src/lib/site.ts` | Site URL, résumé file paths and "updated" label |
 
+Release tags and last-update dates on the project cards come from `src/content/github.json`. `node scripts/github-stats.mjs` refreshes it from the GitHub API (set `GITHUB_TOKEN` to avoid rate limits). The Deploy workflow runs it before every build and also rebuilds every 6 hours, so the dates stay current without client-side requests. If the API can't be reached, the committed snapshot is used.
+
+Product screenshots live in `public/images/projects/` as an 800 px thumbnail and a 1600 px WebP; list them in a featured project's `screenshots`.
+
 The Persian `projects.ts` and `practice.ts` reuse the English entries and override only the text, so links, logos, and tools stay in one place.
 
 After content changes, regenerate the résumé PDF and social image:
@@ -97,7 +101,7 @@ src/app/          routes: /, /about, /projects, /experience, /contact and their 
 src/components/   page views and shell, section components, motion helpers (ScrollReveal, Spotlight, CountUp), icons
 src/content/      typed content data: en/, fa/, index.ts (getContent)
 src/lib/          site config, structured data, build-time helpers
-scripts/          résumé PDF, OG image, and browser QA scripts (Playwright core)
+scripts/          résumé PDF, OG image, GitHub figures, and browser QA scripts (Playwright core)
 public/           portrait (hero), project logos, certificates, favicon, OG image, résumé PDF
 references/       Figma export and the previous résumé (source material)
 ```

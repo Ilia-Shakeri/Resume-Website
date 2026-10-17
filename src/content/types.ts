@@ -25,6 +25,8 @@ export type Profile = {
   bio: string[];
   principles: { title: string; detail: string }[];
   contactMessage: string;
+  /** Remote-work terms shown on the contact page. */
+  remote: { label: string; value: string }[];
 };
 
 export type Locale = "en" | "fa";
@@ -78,7 +80,13 @@ export type FeaturedProject = {
   architecture: { caption: string; steps: FlowStep[] };
   caseStudy: CaseSection[];
   limitations: string[];
+  /** Repository under github.com/Ilia-Shakeri; its latest release and last commit are read at build time. */
+  repo?: string;
+  /** Product screenshots: an 800 px thumbnail and a 1600 px full image. */
+  screenshots?: Screenshot[];
 };
+
+export type Screenshot = { thumb: string; full: string; width: number; height: number; alt: string; caption: string };
 
 export type ToolkitIcon = "server" | "boxes" | "branch" | "pulse" | "terminal" | "shield" | "database" | "code" | "chat";
 
@@ -139,4 +147,7 @@ export type Education = {
   institution?: string;
   status: string;
   note: string;
+  /** For programmes in progress: modules finished and still ahead. */
+  completed?: string[];
+  upcoming?: string[];
 };

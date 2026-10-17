@@ -132,6 +132,34 @@ The site does not claim a 0.7.0 release, published images, production readiness,
 
 **Logos** are the products' own marks: Dolphin `docs/brand-source/logos/DarkMode_Logo.png`, Nerkhbaan `apps/web/src/logo/logo.png`.
 
+### Card figures and screenshots — 17 Oct 2026 (second review)
+
+At Ilia's request the project cards no longer show repository counters (CI jobs, tags, API paths, migrations). Those figures stay in the case studies and in the tables above. The cards now show:
+
+| Card figure / claim | Source | Note |
+| --- | --- | --- |
+| Nerkhbaan "10+ · Active users"; status "10+ active users" | Stated by Ilia, 17 Oct 2026 | Self-reported; no analytics were seen |
+| Nerkhbaan "3 · Apps: web, admin, desktop" | `apps/web`, `apps/admin`, Electron app; README | |
+| Nerkhbaan "5 min · Price feed refresh" | `.github/workflows` scheduled feed job; architecture section | |
+| Nerkhbaan "323 ms · p95 in a 30-min load test" | PROJECT_STATUS.md (see above) | Unchanged |
+| Dolphin "2+ · Companies using it"; stage "In production" | Stated by Ilia, 17 Oct 2026 ("sold to 2–3 companies") | Self-reported; customers are not named. "2+" is the lower bound of what Ilia stated |
+| Dolphin "1 stack · Isolated per customer" | README "Why it's built this way"; compose.yml | |
+| Dolphin "46 · Per-customer feature flags" | `common/deployment/registry.py` | |
+| Dolphin "3,600+ · Automated tests" | DOLPHIN_PROJECT_HANDOFF.md §5 (3,641) | Rounded down so it stays true between releases |
+| Dolphin role "Co-founder · Lead developer & IT lead" | Stated by Ilia, 17 Oct 2026 | The other co-founder (sales) is not named, at Ilia's request |
+| Stackplore "Docker + K8s", "Read-only by default", "EN / FA", "Apache-2.0" | README; `LICENSE` (Apache 2.0) | |
+
+**Release tags and activity** are read from the GitHub API by `scripts/github-stats.mjs` at build time (every deploy, plus a scheduled rebuild every 6 hours) and stored in `src/content/github.json`. The card labels the value "Latest release tag", because a tag is not proof of deployment (Nerkhbaan v2.8.6 is tagged; the last documented deployment is 2.8.1). If the API is unreachable, the last committed snapshot is kept.
+
+**Screenshots** were supplied by Ilia on 17 Oct 2026 and re-encoded as WebP (1600 px and 800 px, no metadata):
+
+| File | Content | Redaction |
+| --- | --- | --- |
+| `nerkhbaan-dashboard*.webp` | Gold and silver price cards with charts | None needed (public market prices) |
+| `nerkhbaan-login*.webp` | Sign-in page | None needed (empty form) |
+| `dolphin-dashboard*.webp` | Platform admin dashboard (light) | Aggregate tiles only; no names. ⏳ Ilia to confirm these are demo, not customer, figures |
+| `dolphin-leads*.webp` | Leads board by status (dark) | Card contents (lead names) blurred before publishing |
+
 ### Persian version (`/fa/`)
 
 `src/content/fa/*` translates the English content claim for claim; it adds no facts. Tool, product, and protocol names stay in Latin script. Dates are Gregorian months written in Persian. The résumé PDF and `/resume/` stay in English. The Persian download button says so.
@@ -193,6 +221,7 @@ Cards show a kind (for example "Bash CLI"), a one-sentence summary, and two or t
 | LPIC-1 training course, CanDo IT Academy, issued 29 Jan 2025 (course 22 Oct 2024 – 21 Jan 2025), Cert ID 03/17758 | `references/LPIC1.pdf` — a CanDo "Certificate of Excellence" for completing the requirements for "Linux Professional Institute Certification 1" | ✅ as a **course**. The document is issued by CanDo, not LPI (no LPI ID or verification code), so it is not presented as an LPI certification. Ilia chose this labelling on 13 Oct 2026. |
 | LPIC-2 training course, TOSINSO, Jun 2025 | CV only; no certificate file | 📄 shown as a course, without a certificate link |
 | "Security-focused DevOps Engineer (Certified)" | CV summary | ❌ excluded — no certification identified |
+| Comprehensive Data Science Program, University of Tehran (online), May 2026 – Aug 2027 (planned), about halfway | Stated by Ilia, 17 Oct 2026; syllabus spreadsheet supplied by Ilia (schedule from 25 Ordibehesht 1405) | ✅ shown as an in-progress programme, not a certificate. "Completed" modules are those scheduled before 17 Oct 2026 (statistics, Excel, data-science foundations, SQL Server, Power BI) |
 
 ## Ranking of project candidates
 
