@@ -46,7 +46,7 @@ export const ui: UiStrings = {
     ctaButton: "تماس با من",
   },
   pages: {
-    about: { title: "دربارهٔ من", lead: "روی چه کارهایی کار می‌کنم، شواهدش کجاست و روش کارم چیست." },
+    about: { title: "دربارهٔ من", lead: "روی چه کارهایی کار می‌کنم، با چه ابزارهایی، و شواهدش کجاست." },
     projects: {
       title: "پروژه‌ها",
       lead: "سه سیستم با یادداشت‌های کامل مهندسی، و پس از آن ابزارهای کوچک‌تر. تاریخ نسخه‌ها از GitHub خوانده می‌شود و منبع و تاریخ بقیهٔ ارقام کنارشان آمده است.",
@@ -65,9 +65,9 @@ export const ui: UiStrings = {
     },
     terminalBadge: "بازپخش",
     terminalCaption: "بازپخش دستورهایی که برای بررسی استقرار همین سایت اجرا می‌کنم. خروجی زنده نیست؛ شناسهٔ بیلد مربوط به نسخهٔ فعلی سایت است.",
-    expertiseTitle: "تخصص‌های اصلی",
+    expertiseTitle: "تخصص‌ها و ابزارها",
     evidenceLabel: "شواهد",
-    toolsToggle: "همهٔ ابزارهایی که با آن‌ها کار کرده‌ام",
+    toolsLabel: "ابزارها",
   },
   ventures: {
     title: "پروژه‌های شاخص",
@@ -92,15 +92,8 @@ export const ui: UiStrings = {
     filterLabel: "فیلتر پروژه‌ها",
     filters: { all: "همه", ops: "اتوماسیون و عملیات", security: "امنیت", monitoring: "مانیتورینگ", apps: "اپلیکیشن" },
   },
-  toolkit: {
-    title: "جعبه‌ابزار",
-  },
   experience: {
     focusLabel: "حوزه‌های تمرکز",
-  },
-  approach: {
-    title: "روش کار من",
-    output: "خروجی",
   },
   education: {
     title: "تحصیلات و آموزش",

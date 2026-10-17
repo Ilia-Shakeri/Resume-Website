@@ -234,3 +234,10 @@ CLS is ≤0.074 on every page. Mobile LCP meets 2.5 s on `/contact/` and `/fa/co
 - Résumé PDF: 2 pages, 233 KB. One line per project (the first highlight) was removed so the new education entry fits.
 
 **Not verified:** how the GitHub refresh behaves in Actions until the first Deploy run after merging.
+
+## About and contact polish — 17 Oct 2026
+
+- About: "Core expertise" and the collapsible tool list are merged into one "Expertise & tools" section. Each area lists what it covers, its tools with brand logos, and where the work shows. "How I work" was removed.
+- Contact: email, LinkedIn, GitHub, and Telegram show their logos. Simple Icons no longer ships LinkedIn, so its mark is inlined in `TechIcon.tsx`.
+- Section headings use a dot marker instead of a vertical bar.
+- Checks: lint, typecheck, build, `npm run qa:screens`, and visual review of /about/ and /contact/ in English and Persian at 1440 and 375 px.

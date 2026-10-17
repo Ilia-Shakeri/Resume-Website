@@ -248,16 +248,15 @@ try {
   await about.waitForTimeout(4000);
   const clock = await about.locator("#about dd .tabular-nums").innerText();
   check(/\d{2}:\d{2}:\d{2}/.test(clock), `whoami local clock ticking (${clock})`);
-  const farBelow = await about.$eval("#approach ol[data-stagger] > li", (el) => getComputedStyle(el).opacity);
+  const farBelow = await about.$eval("#expertise ul[data-stagger] > li:last-child", (el) => getComputedStyle(el).opacity);
   check(farBelow === "0", `off-screen content hidden before scrolling (opacity ${farBelow})`);
   await about.locator("#expertise").scrollIntoViewIfNeeded();
   await about.waitForTimeout(1200);
   const revealed = await about.$eval("#expertise ul[data-reveal]", (el) => [el.classList.contains("is-visible"), getComputedStyle(el.firstElementChild).opacity]);
   check(revealed[0] && revealed[1] === "1", `section fades in on scroll (opacity ${revealed[1]})`);
-  await about.locator("#toolkit summary").click();
-  const icons = await about.$$eval("#toolkit svg[role='img']", (els) => els.length);
-  const chips = await about.$$eval("#toolkit li li", (els) => els.length);
-  check(icons >= 50, `toolkit: ${chips} tools, ${icons} brand icons`);
+  const icons = await about.$$eval("#expertise svg[role='img']", (els) => els.length);
+  const chips = await about.$$eval("#expertise li li", (els) => els.length);
+  check(icons >= 50, `expertise: ${chips} tools, ${icons} brand icons`);
   await about.close();
 
   const experience = await browser.newPage({ viewport: { width: 1440, height: 900 } });

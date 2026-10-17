@@ -44,7 +44,7 @@ export const ui = {
     ctaButton: "Get in touch",
   },
   pages: {
-    about: { title: "About me", lead: "What I work on, where it shows, and how I work." },
+    about: { title: "About me", lead: "What I work on, the tools I use, and where the work can be checked." },
     projects: {
       title: "Projects",
       lead: "Three systems with full engineering notes, then smaller tools. Release dates are read from GitHub; every other figure states its source and date.",
@@ -63,9 +63,9 @@ export const ui = {
     },
     terminalBadge: "REPLAY",
     terminalCaption: "A replay of the commands I use to check this site’s deployment. It is not live output; the build ID is the one currently deployed.",
-    expertiseTitle: "Core expertise",
+    expertiseTitle: "Expertise & tools",
     evidenceLabel: "Where it shows",
-    toolsToggle: "All tools I have worked with",
+    toolsLabel: "tools",
   },
   ventures: {
     title: "Featured projects",
@@ -90,15 +90,8 @@ export const ui = {
     filterLabel: "Filter projects",
     filters: { all: "All", ops: "Automation & ops", security: "Security", monitoring: "Monitoring", apps: "Apps" },
   },
-  toolkit: {
-    title: "Toolkit",
-  },
   experience: {
     focusLabel: "Focus areas",
-  },
-  approach: {
-    title: "How I work",
-    output: "Output",
   },
   education: {
     title: "Education & training",

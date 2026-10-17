@@ -1,53 +1,17 @@
-import type { ApproachStep, Expertise, ToolkitGroup } from "../types";
+import type { ToolkitGroup } from "../types";
 
-// Every tool listed appears in the résumé, the GitHub profile README, or a
+// Areas of expertise, each with the tools used and where the work can be
+// checked. Every tool listed appears in the résumé, the GitHub profile README, or a
 // repository (see docs/content-evidence.md, "Toolkit"). Brand icons come from
 // Simple Icons (CC0) and are inlined at build time; tools without a brand icon
 // use a neutral glyph.
-
-// Core expertise: each area names where the work can be checked.
-export const expertise: Expertise[] = [
-  {
-    title: "Linux systems",
-    detail: "Provisioning, hardening, and configuration management with Ansible.",
-    evidence: "OTICAMP servers · LinSecGuard",
-  },
-  {
-    title: "Backend development",
-    detail: "APIs and services in Python (FastAPI, Django) and Go.",
-    evidence: "Nerkhbaan · Dolphin CRM · Stackplore",
-  },
-  {
-    title: "Containers",
-    detail: "Docker Compose production stacks, non-root hardened images, Helm.",
-    evidence: "Nerkhbaan · Dolphin CRM · Stackplore",
-  },
-  {
-    title: "CI/CD and automation",
-    detail: "GitHub Actions pipelines with integration tests, browser tests, and image scans; Bash and n8n automation.",
-    evidence: "Nerkhbaan (15 CI jobs) · ChatOps bridges",
-  },
-  {
-    title: "PostgreSQL and Redis",
-    detail: "Schema migrations, TimescaleDB history, role separation, leases, caching, and outboxes.",
-    evidence: "Nerkhbaan · Dolphin CRM",
-  },
-  {
-    title: "Monitoring and observability",
-    detail: "Prometheus, Alertmanager, Grafana, and Loki; alert rules and routing to chat.",
-    evidence: "OTICAMP · Nerkhbaan alert rules",
-  },
-  {
-    title: "Security and recovery",
-    detail: "Least-privilege access, TLS, MFA, vulnerability scans, and backups verified by restoring them.",
-    evidence: "Dolphin CRM · Nerkhbaan · EasyCert",
-  },
-];
 
 export const toolkit: ToolkitGroup[] = [
   {
     title: "Linux & infrastructure",
     icon: "server",
+    detail: "Provisioning, hardening, and configuration management with Ansible.",
+    evidence: "OTICAMP servers · LinSecGuard",
     tools: [
       { name: "Linux", brand: "siLinux" },
       { name: "Ubuntu", brand: "siUbuntu" },
@@ -59,11 +23,12 @@ export const toolkit: ToolkitGroup[] = [
       { name: "Terraform", brand: "siTerraform" },
       { name: "Ansible", brand: "siAnsible" },
     ],
-    practices: ["Provisioning", "Hardening", "Configuration management"],
   },
   {
     title: "Containers & orchestration",
     icon: "boxes",
+    detail: "Docker Compose production stacks, non-root hardened images, and Helm charts.",
+    evidence: "Nerkhbaan · Dolphin CRM · Stackplore",
     tools: [
       { name: "Docker", brand: "siDocker" },
       { name: "Docker Compose", brand: "siDocker" },
@@ -71,11 +36,12 @@ export const toolkit: ToolkitGroup[] = [
       { name: "Kubernetes", brand: "siKubernetes" },
       { name: "Helm", brand: "siHelm" },
     ],
-    practices: ["Images", "Compose stacks", "Charts"],
   },
   {
     title: "Delivery & automation",
     icon: "branch",
+    detail: "GitHub Actions pipelines with integration tests, browser tests, and image scans; Bash and n8n automation.",
+    evidence: "Nerkhbaan CI · ChatOps bridges",
     tools: [
       { name: "GitHub Actions", brand: "siGithubactions" },
       { name: "GitLab CI/CD", brand: "siGitlab" },
@@ -85,11 +51,12 @@ export const toolkit: ToolkitGroup[] = [
       { name: "GNU Bash", brand: "siGnubash" },
       { name: "Make", fallback: "terminal" },
     ],
-    practices: ["Build", "Scan", "Release", "Rollback"],
   },
   {
     title: "Monitoring & observability",
     icon: "pulse",
+    detail: "Metrics, alert rules, and logs, with alerts routed to team chat.",
+    evidence: "OTICAMP · Nerkhbaan alert rules",
     tools: [
       { name: "Prometheus", brand: "siPrometheus" },
       { name: "Alertmanager", brand: "siPrometheus" },
@@ -99,11 +66,12 @@ export const toolkit: ToolkitGroup[] = [
       { name: "Logstash", brand: "siLogstash" },
       { name: "Kibana", brand: "siKibana" },
     ],
-    practices: ["Metrics", "Alerts", "Logs"],
   },
   {
     title: "Web, network & security",
     icon: "shield",
+    detail: "Reverse proxies and TLS, least-privilege access, MFA, vulnerability scans, and backups verified by restoring them.",
+    evidence: "Dolphin CRM · Nerkhbaan · EasyCert",
     tools: [
       { name: "Nginx", brand: "siNginx" },
       { name: "Apache", brand: "siApache" },
@@ -116,11 +84,12 @@ export const toolkit: ToolkitGroup[] = [
       { name: "UFW / iptables", fallback: "shield" },
       { name: "Active Directory", fallback: "server" },
     ],
-    practices: ["Reverse proxying", "TLS", "IAM", "Hardening"],
   },
   {
     title: "Data & messaging",
     icon: "database",
+    detail: "Schema migrations, TimescaleDB history, database role separation, Redis leases, caching, and outboxes.",
+    evidence: "Nerkhbaan · Dolphin CRM",
     tools: [
       { name: "PostgreSQL", brand: "siPostgresql" },
       { name: "TimescaleDB", brand: "siTimescale" },
@@ -132,11 +101,12 @@ export const toolkit: ToolkitGroup[] = [
       { name: "RabbitMQ", brand: "siRabbitmq" },
       { name: "MinIO", brand: "siMinio" },
     ],
-    practices: ["Least-privilege roles", "Backups", "Restore tests"],
   },
   {
     title: "Languages & frameworks",
     icon: "code",
+    detail: "APIs and services in Python (FastAPI, Django) and Go; React and Next.js when a product needs a frontend.",
+    evidence: "Nerkhbaan · Dolphin CRM · Stackplore",
     tools: [
       { name: "Python", brand: "siPython" },
       { name: "Go", brand: "siGo" },
@@ -160,11 +130,12 @@ export const toolkit: ToolkitGroup[] = [
       { name: "Playwright", fallback: "code" },
       { name: "Selenium", brand: "siSelenium" },
     ],
-    practices: ["Scripting", "APIs", "Testing"],
   },
   {
     title: "Collaboration & ChatOps",
     icon: "chat",
+    detail: "Prometheus alerts and Jira updates delivered to team chat, plus chat-server administration.",
+    evidence: "ChatOps bridges · Matrix User Manager",
     tools: [
       { name: "Matrix", brand: "siMatrix" },
       { name: "Element", brand: "siElement" },
@@ -172,37 +143,5 @@ export const toolkit: ToolkitGroup[] = [
       { name: "Telegram Bot API", brand: "siTelegram" },
       { name: "Asterisk / FreePBX", brand: "siAsterisk" },
     ],
-    practices: ["Alert routing", "Ticket notifications", "Runbooks"],
-  },
-];
-
-export const approach: ApproachStep[] = [
-  {
-    title: "Understand",
-    icon: "search",
-    description: "Map the system, its constraints, and what failure would cost.",
-    practice: "Write the contract first: Dolphin’s business rules live in a backend spec, not in memory.",
-    output: "A clear baseline",
-  },
-  {
-    title: "Codify",
-    icon: "code",
-    description: "Turn infrastructure, access, and policy into versioned, reviewable code.",
-    practice: "Compose files, Ansible playbooks, hash-pinned dependencies, and explicit database grants.",
-    output: "Repeatable systems",
-  },
-  {
-    title: "Ship safely",
-    icon: "rocket",
-    description: "Test, scan, and release in small steps, with a rollback plan.",
-    practice: "Images built from tagged commits, scanned in CI, deployed after a backup, rolled back by script.",
-    output: "Confident delivery",
-  },
-  {
-    title: "Observe & refine",
-    icon: "pulse",
-    description: "Measure service health, learn from incidents, and reduce toil.",
-    practice: "Readiness checks, Prometheus alerts routed to chat, and restore tests on real backups.",
-    output: "Continuous improvement",
   },
 ];

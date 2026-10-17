@@ -7,7 +7,7 @@ Personal portfolio of Ilia Shakeri, DevOps & Backend Engineer. A static, content
 | Path | Contents |
 | --- | --- |
 | `/` | Hero (name, role, core stack, intro, three actions, portrait, DevOps loop), capability strip, three featured-project cards, contact call to action |
-| `/about/` | Bio, `whoami` panel, deploy-check replay terminal, core expertise with evidence, collapsible full tool list, how I work |
+| `/about/` | Bio, `whoami` panel, deploy-check replay terminal, expertise areas with tool logos and evidence |
 | `/projects/` | Nerkhbaan, Dolphin CRM, and Stackplore with summary, dated key facts, architecture flow, expandable engineering case study, and known limitations; then a filterable grid of eight smaller repos |
 | `/experience/` | Experience timeline with engagement type, education, training courses (marked as not official certifications), résumé download |
 | `/contact/` | Email (with copy button), remote-work details, LinkedIn, GitHub, Telegram |
@@ -70,7 +70,7 @@ All copy lives in typed data files, one set per language: `src/content/en/` and 
 | --- | --- |
 | `profile.ts` | Name, intro, bio, contact, availability, experience, education, training, résumé summary |
 | `projects.ts` | `featured` (role, stage, status, dated facts with source, "my part", architecture steps, case-study sections, limitations) and `projects` (kind, category, summary, 2–3 highlights, tools, links) |
-| `practice.ts` | Core expertise (with evidence), toolkit groups, and the four-step engineering approach |
+| `practice.ts` | Expertise areas: what each covers, its tools (with brand icons), and where the work shows |
 | `ui.ts` | Interface text: navigation, section headings, labels |
 | `src/lib/site.ts` | Site URL, résumé file paths and "updated" label |
 
