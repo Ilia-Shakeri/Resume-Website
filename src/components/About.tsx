@@ -1,3 +1,4 @@
+import { WhoamiPanel } from "@/components/WhoamiPanel";
 import { profile } from "@/content/profile";
 
 export function About() {
@@ -13,18 +14,8 @@ export function About() {
       <div className="container-site grid gap-12 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-[92px]">
         <div>
           <p className="eyebrow">01 / The human layer</p>
-          <div className="mt-10 rounded-lg border border-line-strong bg-card px-6 py-6 font-mono">
-            <p className="text-sm text-mint">
-              <span aria-hidden="true">$ </span>whoami
-            </p>
-            <dl className="mt-6 space-y-[18px]">
-              {rows.map((row) => (
-                <div key={row.label}>
-                  <dt className="text-[0.625rem] tracking-[0.06em] text-muted uppercase">{row.label}</dt>
-                  <dd className="mt-1.5 font-sans text-[0.9375rem] text-ink">{row.value}</dd>
-                </div>
-              ))}
-            </dl>
+          <div className="mt-10" data-reveal>
+            <WhoamiPanel rows={rows} />
           </div>
           <p className="mt-10 font-mono text-[0.6875rem] leading-[1.7] text-muted">
             {"// "}
@@ -35,7 +26,7 @@ export function About() {
           </p>
         </div>
 
-        <div className="lg:pt-2">
+        <div className="lg:pt-2" data-reveal>
           <h2 id="about-title" className="text-[2.5rem] leading-[1.08] sm:text-5xl lg:text-[3.75rem]">
             A systems thinker.
             <br />

@@ -135,7 +135,7 @@ export default function ResumePage() {
             {toolkit.map((group) => (
               <div key={group.title}>
                 <dt className="font-semibold">{group.title}</dt>
-                <dd className="text-[#36403c]">{group.tools.flat().join(", ")}</dd>
+                <dd className="text-[#36403c]">{group.tools.map((tool) => tool.name).join(", ")}</dd>
               </div>
             ))}
           </dl>

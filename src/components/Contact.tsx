@@ -22,7 +22,7 @@ export function Contact() {
   return (
     <section aria-labelledby="contact-title" id="contact" className="scroll-mt-24 pt-10 pb-16 lg:pt-12 lg:pb-20">
       <div className="container-site grid gap-14 lg:grid-cols-[minmax(0,1fr)_360px]">
-        <div>
+        <div data-reveal>
           <p className="eyebrow">08 / Next connection</p>
           <h2 id="contact-title" className="mt-10 text-[3.25rem] leading-[1.05] sm:text-7xl lg:text-[6rem] lg:leading-[1.02]">
             Let’s build
@@ -39,7 +39,7 @@ export function Contact() {
           </a>
         </div>
 
-        <div className="lg:pt-24">
+        <div data-reveal className="lg:pt-24">
           <ContactOrbit />
           <p className="mt-6 font-mono text-xs leading-[1.7] tracking-[0.04em] text-text uppercase">
             {profile.availability}

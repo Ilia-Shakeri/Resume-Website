@@ -97,28 +97,27 @@ Sources:
 
 ## Toolkit
 
-| Tool | Evidence |
-| --- | --- |
-| Linux VPS, LVM, NFS, Ubuntu/CentOS | CV |
-| Terraform | CV, GH profile README — **no public repository uses it** (📄) |
-| Ansible | CV, GH profile README (📄; no public playbooks) |
-| PostgreSQL, Redis | Dolphin, Nerkhbaan, Stackplore |
-| TimescaleDB | Nerkhbaan |
-| Docker, Compose | Dolphin, Nerkhbaan, Stackplore, many bots |
-| Swarm | CV (📄) |
-| Kubernetes, Helm | Stackplore Helm chart; CV, GH profile |
-| GitHub Actions | Nerkhbaan (ci.yml, price-feed.yml), Stackplore |
-| GitLab CI | CV (📄) |
-| n8n | ChatOps repos |
-| Make | Stackplore, Tabdil-Bot Makefiles |
-| Prometheus, Alertmanager, Grafana | Nerkhbaan monitoring/; bridge repo |
-| Loki, ELK | CV (📄) |
-| Bash, Python, Go, SQL | Many repos; Go in Stackplore and Nerkhbaan price-feed-pull |
-| Nginx, Traefik, OpenSSL | Dolphin/Nerkhbaan nginx; EasyCert |
-| Keycloak | CV (📄) |
-| Trivy | Nerkhbaan CI |
-| UFW/iptables | LinSecGuard; CV |
-| Matrix, Jira | ChatOps repos |
+73 tools in 8 groups (`src/content/practice.ts`). Brand icons are from Simple Icons (CC0). Tools without a Simple Icons entry (systemd, LVM, NFS, Make, Loki, UFW/iptables, Active Directory, SQL, Playwright) use a neutral glyph.
+
+| Group | Tools | Evidence |
+| --- | --- | --- |
+| Linux & infrastructure | Linux, Ubuntu, CentOS, LVM, NFS, Terraform, Ansible | CV (📄; Terraform/Ansible have no public repo) |
+| | Alpine Linux, systemd | Alpine-based images in Dolphin/Nerkhbaan/this site's Compose files; systemd units in Nerkhbaan `infra/price-worker` and this repo's `deploy/` |
+| Containers & orchestration | Docker, Compose, Swarm, Kubernetes, Helm | CV; Compose in Dolphin, Nerkhbaan, Stackplore; Helm chart in Stackplore |
+| Delivery & automation | GitHub Actions, GitLab CI/CD, Git, GitHub, n8n, GNU Bash, Make | CV; workflows in Nerkhbaan/Stackplore; ChatOps repos; Bash tools; Makefiles in Stackplore/Tabdil-Bot |
+| Monitoring & observability | Prometheus, Alertmanager, Grafana, Loki, Elasticsearch, Logstash, Kibana | CV (ELK, Loki 📄); Nerkhbaan `monitoring/` (Prometheus, Alertmanager, Grafana) |
+| Web, network & security | Nginx, Apache, Traefik, Caddy, OpenSSL, Let's Encrypt, Keycloak, Trivy, UFW/iptables, Active Directory | CV; Caddy in Nitro-Bot; Let's Encrypt on the Nerkhbaan host; Trivy in Nerkhbaan CI; EasyCert/LinSecGuard; Active Directory from the GitHub profile README (📄) |
+| Data & messaging | PostgreSQL, TimescaleDB, MySQL, MariaDB, Galera Cluster, Redis, SQLite, RabbitMQ, MinIO | CV; TimescaleDB in Nerkhbaan; MariaDB in Clockwork; MinIO in Nitro-Bot |
+| Languages & frameworks | Python, Go, TypeScript, JavaScript, SQL, FastAPI, Django, Flask, SQLAlchemy, Pydantic, Gunicorn, React, Next.js, Node.js, Vite, Tailwind CSS, Electron, OpenAPI, pytest, Playwright, Selenium | Repos: Nerkhbaan (FastAPI, SQLAlchemy, Pydantic, React, Vite, Tailwind, Electron, Playwright), Dolphin (Django, Gunicorn, Selenium), Stackplore (Go, OpenAPI), ZoodSub/keshepool (Next.js), CipherCert (Electron, FastAPI), Music-Inline-Bot (pytest); Flask from the Naharestan repository description (metadata only) |
+| Collaboration & ChatOps | Matrix, Element, Jira, Telegram Bot API, Asterisk/FreePBX | CV; ChatOps repos; Telegram bots (Nitro-Bot, Tabdil-Bot, Music-Inline-Bot, ZoodSub); Dolphin telephony integration |
+
+## Live elements
+
+| Element | What it shows | Source |
+| --- | --- | --- |
+| Hero terminal | `curl …/build.txt` → the commit the page was built from; `docker compose ps` → `iliashakeri-web-1 Up (healthy)`; `systemctl is-active iliashakeri-update.timer` | Real deployment (docs/deployment.md). The SHA is read at build time, so it matches `/build.txt`; the container/timer lines are replayed, not polled live. |
+| `whoami` panel | Profile fields and the current time in Tehran | Profile data; the clock runs in the visitor's browser |
+| DevOps loop | The eight DevOps stages | Illustration, no data |
 
 ## Education and training
 
