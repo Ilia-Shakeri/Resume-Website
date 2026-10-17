@@ -337,3 +337,28 @@ html.js .terminal-static {
     font-size: 15px;
   }
 }
+
+/* ---- Portrait (About.tsx): mint duotone that warms to full colour on hover. */
+.portrait img {
+  filter: grayscale(1) contrast(1.06) brightness(0.9);
+  transition: filter 600ms ease;
+}
+
+.portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-mint);
+  mix-blend-mode: color;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 600ms ease;
+}
+
+.portrait:hover img {
+  filter: none;
+}
+
+.portrait:hover::after {
+  opacity: 0;
+}
