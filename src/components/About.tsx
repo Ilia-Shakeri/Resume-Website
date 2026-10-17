@@ -1,6 +1,8 @@
+import { LiveTerminal, type TerminalLine } from "@/components/LiveTerminal";
 import { WhoamiPanel } from "@/components/WhoamiPanel";
 import { Lines } from "@/components/SectionHeader";
 import type { Content } from "@/content";
+import { buildSha } from "@/lib/build-info";
 
 export function About({ content }: { content: Content }) {
   const { profile, ui } = content;
@@ -11,28 +13,24 @@ export function About({ content }: { content: Content }) {
     { label: labels.basedIn, value: profile.location },
     { label: labels.focus, value: profile.focus },
   ];
+  // Commands from the real deployment of this site (see docs/deployment.md).
+  const terminal: TerminalLine[] = [
+    { kind: "cmd", text: "curl -s https://iliashakeri.ir/build.txt" },
+    { kind: "out", text: buildSha() },
+    { kind: "cmd", text: "docker compose ps --format '{{.Name}} {{.Status}}'" },
+    { kind: "out", text: "iliashakeri-web-1 Up (healthy)" },
+    { kind: "cmd", text: "systemctl is-active iliashakeri-update.timer" },
+    { kind: "ok", text: "active · pulls new builds every 2 min" },
+    { kind: "cmd", text: 'echo "$MOTTO"' },
+    { kind: "ok", text: "Built to ship. Built to stay up." },
+  ];
 
   return (
     <section aria-labelledby="about-title" className="scroll-mt-24 py-20 lg:py-[120px]" id="about">
-      <div className="container-site grid gap-12 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-[92px]">
+      <div className="container-site grid grid-cols-1 gap-12 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-[92px]">
         <div>
           <p className="eyebrow">{ui.about.eyebrow}</p>
-          <figure data-reveal className="portrait group relative mt-10 overflow-hidden rounded-lg border border-line-strong bg-card">
-            {/* eslint-disable-next-line @next/next/no-img-element -- static export; pre-sized WebP */}
-            <img
-              src="/images/ilia-shakeri.webp"
-              alt={ui.about.portraitAlt}
-              width={640}
-              height={640}
-              loading="lazy"
-              decoding="async"
-              className="aspect-square h-auto w-full object-cover"
-            />
-            <figcaption dir="ltr" className="absolute start-3 bottom-3 rounded-sm bg-bg/75 px-2 py-1 font-mono text-[0.625rem] tracking-[0.06em] text-text uppercase backdrop-blur-sm">
-              ~/ilia-shakeri.webp
-            </figcaption>
-          </figure>
-          <div className="mt-6" data-reveal>
+          <div className="mt-10" data-reveal>
             <WhoamiPanel rows={rows} localTimeLabel={labels.localTime} />
           </div>
           <p className="mt-10 font-mono text-[0.6875rem] leading-[1.7] text-muted">
@@ -58,6 +56,7 @@ export function About({ content }: { content: Content }) {
               </div>
             ))}
           </div>
+          <LiveTerminal title="iliashakeri.ir ~ prod" lines={terminal} rows={4} className="mt-12" />
         </div>
       </div>
     </section>

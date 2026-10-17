@@ -1,4 +1,4 @@
-import type { FeaturedProject, SecondaryProject, Venture } from "../types";
+import type { Project, Venture } from "../types";
 
 // Every technical statement below is traceable to the linked repository (see
 // docs/content-evidence.md). Founder / co-founder roles are as stated by Ilia.
@@ -16,14 +16,12 @@ export const ventures: Venture[] = [
     role: "Founder",
     period: "2026 — Present",
     status: "Live at nerkhbaan.ir",
-    tagline: "Live gold, currency, and crypto prices that never pretend to be fresh.",
     description:
-      "A price platform for Iranian users: gold, currencies, and crypto with history, alerts, and web, admin, and desktop apps. Every price carries its source time and expires instead of going quietly stale.",
+      "A price platform I founded for gold, currencies, and crypto, with history, alerts, and web, admin, and desktop apps. Every price shows its source time and expires instead of going stale.",
     highlights: [
-      "Designed and built the whole product: FastAPI API, TimescaleDB history, Redis, React web and admin apps, an Electron desktop app, and a Go feed sidecar.",
-      "Pricing pipeline with independent verification: stale, suspicious, or expired quotes are never shown as current.",
-      "Runs on infrastructure I operate: a Compose stack behind Nginx with two API replicas, backups, and Prometheus alerting.",
-      "Every push goes through CI gates: real TimescaleDB integration tests, browser tests, and Trivy image scans.",
+      "Built the whole product: FastAPI, TimescaleDB, Redis, React web and admin apps, an Electron desktop app, and a Go feed sidecar.",
+      "Run it in production myself: Compose behind Nginx, two API replicas, backups, and Prometheus alerts.",
+      "CI on every push: TimescaleDB integration tests, browser tests, and Trivy image scans.",
     ],
     stats: [
       { value: "2.8.1", label: "Live release" },
@@ -44,7 +42,6 @@ export const ventures: Venture[] = [
       { name: "GitHub Actions", brand: "siGithubactions" },
       { name: "Trivy", brand: "siTrivy" },
     ],
-    diagram: "nerkhbaan-ci",
     links: [
       { label: "Visit nerkhbaan.ir", href: "https://nerkhbaan.ir/", primary: true },
       { label: "Source code", href: `${GH}/Nerkhbaan` },
@@ -79,15 +76,13 @@ export const ventures: Venture[] = [
     accent: "#2f9bff",
     role: "Co-founder",
     period: "2026 — Present",
-    status: "Shipping tagged releases",
-    tagline: "A Persian-first CRM that runs a company’s whole commercial pipeline.",
+    status: "v2.40.55 · October 2026",
     description:
-      "Leads and campaigns, quotations and invoices, payments and cheques, inventory, postal tracking, telephony, and after-sales, in one RTL panel that updates live. Each installation runs as its own locked-down stack.",
+      "A Persian-first CRM/ERP I co-founded: leads, quotations, invoices, payments, inventory, telephony, and after-sales in one live RTL panel. Each installation runs as its own isolated stack.",
     highlights: [
-      "Lead engineer: the Django application with 40 switchable feature modules and a Persian RTL panel with live updates.",
-      "Deployment model: an isolated Compose stack per installation, a signed Ed25519 feature manifest, and four least-privilege PostgreSQL roles.",
-      "Release discipline: tagged releases, a deploy script with rollback, and backups that are verified by restoring them.",
-      "Integrations: Asterisk/FreePBX click-to-call and call logs, SMS gateways, and signed webhooks.",
+      "Lead engineer on the Django app: 40 switchable feature modules and a live-updating RTL panel.",
+      "Designed the deployment: an isolated Compose stack per installation, a signed Ed25519 feature manifest, and four least-privilege PostgreSQL roles.",
+      "Tagged releases, a deploy script with rollback, and backups that count only after a test restore.",
     ],
     stats: [
       { value: "40", label: "Feature modules" },
@@ -106,7 +101,6 @@ export const ventures: Venture[] = [
       { name: "Selenium", brand: "siSelenium" },
       { name: "GNU Bash", brand: "siGnubash" },
     ],
-    diagram: "dolphin-stack",
     links: [{ label: "Source code", href: `${GH}/Dolphin`, primary: true }],
     caseStudy: {
       problem:
@@ -132,138 +126,167 @@ export const ventures: Venture[] = [
   },
 ];
 
-export const featuredBuild: FeaturedProject = {
-  slug: "chatops-bridges",
-  category: "Observability & ChatOps",
-  name: "Prometheus & Jira → Matrix bridges",
-  period: "2025",
-  role: "Author",
-  title: "Less noise. Alerts that reach the right person.",
-  summary:
-    "Two n8n workflows from my ChatOps work: one turns Alertmanager webhooks into readable HTML alerts in Matrix rooms, the other routes Jira assignments and @mentions to the right person’s Matrix direct messages.",
-  tags: ["n8n", "Prometheus", "Alertmanager", "Matrix", "Jira"],
-  outcomeLabel: "Design",
-  outcome:
-    "Tokens are checked before use and renewed on 401; delivery retries with exponential backoff and jitter on HTTP 429.",
-  diagram: "chatops-flow",
-  links: [
-    { label: "Alert bridge", href: `${GH}/n8n-prometheus-matrix-bridge` },
-    { label: "Jira notifier", href: `${GH}/jira2matrix-notifier-n8n` },
-  ],
-  caseStudy: {
-    problem:
-      "Plain webhooks fail silently when a bot token expires or the chat server rate-limits, and email notifications get ignored. Alerts and ticket updates need to land where the team already works.",
-    role: "Designed and published both workflows.",
-    approach: [
-      "Alertmanager posts to an n8n webhook; labels and annotations become a colour-coded firing/resolved message with a link back to the Prometheus graph.",
-      "Jira webhooks are parsed for assignees and @mentions in comment HTML, mapped to Matrix users, and delivered to cached direct-message rooms that are created on first use.",
+export const projects: Project[] = [
+  {
+    name: "Prometheus & Jira → Matrix bridges",
+    year: "2025",
+    kind: "n8n workflows",
+    category: "monitoring",
+    summary: "Two n8n workflows that bring Prometheus alerts and Jira updates into the team’s Matrix chat.",
+    highlights: [
+      "Alertmanager webhooks become colour-coded firing/resolved messages with a link to the Prometheus graph.",
+      "Jira assignments and @mentions reach the right person’s Matrix direct messages.",
+      "Tokens are validated and renewed automatically; delivery retries with backoff and jitter.",
     ],
-    reliability: [
-      "Access tokens are cached in n8n tables, validated with whoami before use, and renewed automatically on expiry.",
-      "Login and delivery retry with exponential backoff and jitter.",
+    tools: [
+      { name: "n8n", brand: "siN8n" },
+      { name: "Prometheus", brand: "siPrometheus" },
+      { name: "Matrix", brand: "siMatrix" },
+      { name: "Jira", brand: "siJira" },
     ],
-    outcome: ["Both workflows are published as importable n8n JSON with setup guides."],
+    links: [
+      { label: "Alert bridge", href: `${GH}/n8n-prometheus-matrix-bridge` },
+      { label: "Jira notifier", href: `${GH}/jira2matrix-notifier-n8n` },
+    ],
   },
-};
-
-export const secondaryProjects: SecondaryProject[] = [
   {
     name: "Stackplore",
     year: "2026",
-    summary:
-      "Self-hosted explorer for Docker and Kubernetes services: topology, health, logs, metrics, and events behind one versioned API. In active development; ships non-root images, Compose, and a Helm chart.",
+    kind: "Go service · Helm chart",
     category: "ops",
+    summary: "A self-hosted explorer for Docker and Kubernetes services. In active development, not yet 1.0.",
+    highlights: [
+      "Topology, health, logs, metrics, and events behind one versioned OpenAPI contract.",
+      "Go API with PostgreSQL migrations and CI.",
+      "Ships non-root images, a Compose file, and a Helm chart.",
+    ],
     tools: [
       { name: "Go", brand: "siGo" },
       { name: "PostgreSQL", brand: "siPostgresql" },
       { name: "Helm", brand: "siHelm" },
       { name: "OpenAPI", brand: "siOpenapiinitiative" },
     ],
-    href: `${GH}/Stackplore`,
+    links: [{ label: "Source", href: `${GH}/Stackplore` }],
   },
   {
     name: "Matrix User Manager",
     year: "2025",
-    summary:
-      "Interactive Bash/whiptail tool for Synapse admins: finds the containers, reads homeserver.yaml, and manages users on PostgreSQL or SQLite, including database backups and safe stop/start for SQLite writes.",
+    kind: "Bash TUI",
     category: "ops",
+    summary: "A terminal menu for managing users on a Synapse homeserver running in Docker.",
+    highlights: [
+      "Finds the Synapse containers and reads homeserver.yaml on its own.",
+      "Works with PostgreSQL or SQLite, with a safe stop/start around SQLite writes.",
+      "Includes database backups.",
+    ],
     tools: [
       { name: "GNU Bash", brand: "siGnubash" },
       { name: "Docker", brand: "siDocker" },
       { name: "Matrix", brand: "siMatrix" },
     ],
-    href: `${GH}/Matrix-User-Manager`,
+    links: [{ label: "Source", href: `${GH}/Matrix-User-Manager` }],
   },
   {
     name: "LinSecGuard",
     year: "2025",
-    summary:
-      "Linux hardening helper: SSH root login and port, UFW rules, running services, insecure permissions, open ports, failed logins, and pending security updates.",
+    kind: "Bash CLI",
     category: "security",
+    summary: "An interactive hardening check for Linux servers.",
+    highlights: [
+      "Checks SSH root login and port, UFW rules, and running services.",
+      "Finds insecure file permissions and open ports.",
+      "Reports failed logins and pending security updates.",
+    ],
     tools: [
       { name: "GNU Bash", brand: "siGnubash" },
       { name: "Linux", brand: "siLinux" },
     ],
-    href: `${GH}/LinSecGuard`,
+    links: [{ label: "Source", href: `${GH}/LinSecGuard` }],
   },
   {
     name: "EasyCert",
     year: "2025",
-    summary:
-      "Interactive OpenSSL wrapper that creates a local CA and wildcard or subdomain certificates, then restarts the Nginx or Traefik container.",
+    kind: "Bash CLI",
     category: "security",
+    summary: "An interactive OpenSSL wrapper for a local certificate authority.",
+    highlights: [
+      "Creates a local CA and wildcard or subdomain certificates.",
+      "Restarts the Nginx or Traefik container to load them.",
+    ],
     tools: [
       { name: "OpenSSL", brand: "siOpenssl" },
       { name: "Nginx", brand: "siNginx" },
       { name: "Traefik", brand: "siTraefikproxy" },
     ],
-    href: `${GH}/EasyCert`,
+    links: [{ label: "Source", href: `${GH}/EasyCert` }],
   },
   {
     name: "CipherCert",
     year: "2026",
-    summary:
-      "Desktop TLS certificate analyzer: an Electron/React UI over a FastAPI engine that inspects chains and expiry, grades domains, and keeps scan history.",
+    kind: "Desktop app",
     category: "security",
+    summary: "A desktop analyzer for TLS certificates.",
+    highlights: [
+      "Electron/React interface over a FastAPI engine.",
+      "Inspects certificate chains and expiry, and grades domains.",
+      "Keeps scan history in SQLite.",
+    ],
     tools: [
       { name: "Python", brand: "siPython" },
       { name: "FastAPI", brand: "siFastapi" },
       { name: "Electron", brand: "siElectron" },
     ],
-    href: `${GH}/CipherCert-App`,
+    links: [{ label: "Source", href: `${GH}/CipherCert-App` }],
   },
   {
     name: "SysTrack",
     year: "2025",
-    summary:
-      "Cron-scheduled Bash monitor for CPU, memory, disk, and network usage that emails alerts over a threshold and rotates its own logs.",
+    kind: "Bash · cron",
     category: "monitoring",
+    summary: "A cron-scheduled resource monitor for Linux hosts.",
+    highlights: [
+      "Tracks CPU, memory, disk, and network usage.",
+      "Emails an alert when a threshold is crossed.",
+      "Rotates its own logs.",
+    ],
     tools: [
       { name: "GNU Bash", brand: "siGnubash" },
       { name: "Linux", brand: "siLinux" },
     ],
-    href: `${GH}/SysTrack`,
+    links: [{ label: "Source", href: `${GH}/SysTrack` }],
   },
   {
     name: "Automated Backup Script",
     year: "2025",
-    summary:
-      "Interactive backups of directories to tar or zip archives, scheduled with cron, with logging and automatic cleanup of backups older than seven days.",
+    kind: "Bash CLI",
     category: "ops",
+    summary: "Interactive, scheduled backups of directories.",
+    highlights: [
+      "Creates tar or zip archives on a cron schedule.",
+      "Logs its runs and removes backups older than seven days.",
+    ],
     tools: [{ name: "GNU Bash", brand: "siGnubash" }],
-    href: `${GH}/Automated-Backup-Script`,
+    links: [{ label: "Source", href: `${GH}/Automated-Backup-Script` }],
   },
   {
     name: "Clockwork OrangeHRM",
     year: "2026",
-    summary:
-      "CLI and Windows desktop toolkit that reads attendance straight from self-hosted OrangeHRM databases and exports work hours and payroll ranges to CSV or PDF.",
+    kind: "CLI + desktop app",
     category: "apps",
+    summary: "Attendance and payroll reports from a self-hosted OrangeHRM.",
+    highlights: [
+      "Reads attendance straight from the OrangeHRM database.",
+      "Exports work hours and payroll ranges to CSV or PDF.",
+      "A Bash CLI and an Electron desktop app for Windows.",
+    ],
     tools: [
       { name: "GNU Bash", brand: "siGnubash" },
       { name: "Electron", brand: "siElectron" },
       { name: "MariaDB", brand: "siMariadb" },
     ],
-    href: `${GH}/Clockwork-OrangeHRM-Desktop`,
+    links: [
+      { label: "CLI", href: `${GH}/Clockwork-OrangeHRM-CLI` },
+      { label: "Desktop app", href: `${GH}/Clockwork-OrangeHRM-Desktop` },
+    ],
   },
 ];

@@ -2,7 +2,7 @@
 
 Personal portfolio of Ilia Shakeri, DevOps Engineer. A static, content-driven Next.js site built from the Figma reference in `references/`.
 
-**Sections:** hero (animated DevOps loop and live terminal) · capability ribbon · about (`whoami` panel) · projects I'm proud of (Nerkhbaan and Dolphin CRM) · more builds (ChatOps bridges and a filterable grid of eight repos) · technical toolkit · experience timeline · engineering approach · education & training · résumé download · contact. A printable résumé lives at `/resume/` and as a PDF (English only).
+**Sections:** hero (portrait, personal intro, animated DevOps loop) · capability ribbon · about (`whoami` panel and a live deploy terminal) · projects I'm proud of (Nerkhbaan and Dolphin CRM) · more projects (a filterable grid of nine repos) · technical toolkit · experience timeline · engineering approach · education & training · résumé download · contact. A printable résumé lives at `/resume/` and as a PDF (English only).
 
 **Languages:** English at `/` and Persian (RTL, Vazirmatn) at `/fa/`, switched from the header. Both are static pages with `hreflang` alternates.
 
@@ -47,12 +47,12 @@ All copy lives in typed data files, one set per language: `src/content/en/` and 
 | File (per language) | Contents |
 | --- | --- |
 | `profile.ts` | Name, intro, bio, contact, availability, experience, education, training, résumé summary |
-| `projects.ts` | `ventures` (projects I'm proud of: role, stats, highlights, case study), `featuredBuild`, and `secondaryProjects` (with filter category) |
+| `projects.ts` | `ventures` (projects I'm proud of: role, status, key facts, "my part", engineering notes) and `projects` (kind, category, summary, 2–3 highlights, tools, links) |
 | `practice.ts` | Toolkit groups and the four-step engineering approach |
 | `ui.ts` | Interface text: navigation, section headings, labels |
 | `src/lib/site.ts` | Site URL, résumé file paths and "updated" label |
 
-The Persian `projects.ts` and `practice.ts` reuse the English entries and override only the text, so links, logos, and tools stay in one place. Cards choose an illustration with `diagram: "dolphin-stack" | "nerkhbaan-ci" | "chatops-flow"` (see `src/components/diagrams.tsx`).
+The Persian `projects.ts` and `practice.ts` reuse the English entries and override only the text, so links, logos, and tools stay in one place.
 
 After content changes, regenerate the résumé PDF and social image:
 
@@ -76,6 +76,6 @@ src/components/   section components, diagrams, icons
 src/content/      typed content data: en/, fa/, index.ts (getContent)
 src/lib/          site config, structured data, build-time helpers
 scripts/          résumé PDF, OG image, and browser QA scripts (Playwright core)
-public/           portrait, project logos, certificates, favicon, OG image, résumé PDF
+public/           portrait (hero), project logos, certificates, favicon, OG image, résumé PDF
 references/       Figma export and the previous résumé (source material)
 ```
