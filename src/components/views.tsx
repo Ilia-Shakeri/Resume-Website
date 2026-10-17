@@ -44,7 +44,7 @@ export function ProjectsView({ locale }: { locale: Locale }) {
   return (
     <SiteShell locale={locale} page="projects">
       <PageHeader title={content.ui.pages.projects.title} lead={content.ui.pages.projects.lead} />
-      <FeaturedProjects content={content} />
+      <FeaturedProjects content={content} locale={locale} />
       <Builds content={content} />
     </SiteShell>
   );

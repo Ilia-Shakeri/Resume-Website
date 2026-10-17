@@ -215,3 +215,22 @@ The résumé PDF is still 2 pages. The OG image was regenerated.
 CLS is ≤0.074 on every page. Mobile LCP meets 2.5 s on `/contact/` and `/fa/contact/` only. The rest is the simulated slow-4G download of the CSS and the framework JavaScript. Preloading fonts with `next/font` was tried and measured worse on Persian pages, so it was reverted. INP was not measured; Lighthouse lab runs cannot.
 
 **Résumé PDF:** regenerated, 2 pages, 242 KB. Text is selectable (checked with `pdftotext`), and the contact details are current.
+
+## Real usage, screenshots, and GitHub data — 17 Oct 2026
+
+**Changes**
+- Project cards show usage and product facts instead of repository counters. The figures and their sources are in `docs/content-evidence.md`.
+- Release tags and last-update dates are read from GitHub at build time by `scripts/github-stats.mjs`.
+- Four product screenshots, with lead names blurred on the Dolphin leads board.
+- The contact page lists remote-work details.
+- Education lists the University of Tehran data science programme (in progress).
+
+**Checks run**
+- `npm run lint` and `npm run typecheck`: clean.
+- `npm run build`: 10 pages and `/resume/`. The GitHub line and dates appear in the static HTML.
+- `npm run qa:screens`: all checks passed, including axe at 375 and 1440 px on every page.
+- Visual review of the project cards, education section, and contact page in English and Persian at 1440 and 375 px.
+- `node scripts/github-stats.mjs` from this container: the GitHub API returned 401, the snapshot was kept unchanged, and the script exited 0. The live refresh runs only in GitHub Actions.
+- Résumé PDF: 2 pages, 233 KB. One line per project (the first highlight) was removed so the new education entry fits.
+
+**Not verified:** how the GitHub refresh behaves in Actions until the first Deploy run after merging.

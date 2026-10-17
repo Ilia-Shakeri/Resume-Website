@@ -49,7 +49,7 @@ export const ui: UiStrings = {
     about: { title: "دربارهٔ من", lead: "روی چه کارهایی کار می‌کنم، شواهدش کجاست و روش کارم چیست." },
     projects: {
       title: "پروژه‌ها",
-      lead: "سه سیستم با یادداشت‌های کامل مهندسی، و پس از آن ابزارهای کوچک‌تر. همهٔ ارقام از اسناد خود پروژه آمده‌اند و به سورس لینک دارند.",
+      lead: "سه سیستم با یادداشت‌های کامل مهندسی، و پس از آن ابزارهای کوچک‌تر. تاریخ نسخه‌ها از GitHub خوانده می‌شود و منبع و تاریخ بقیهٔ ارقام کنارشان آمده است.",
     },
     experience: { title: "سوابق کاری" },
     contact: { title: "تماس" },
@@ -83,6 +83,9 @@ export const ui: UiStrings = {
     caseStudy: "بررسی مهندسی",
     limitations: "محدودیت‌های شناخته‌شده",
     details: "خواندن بررسی مهندسی",
+    screenshotsLabel: "تصاویر محصول",
+    openFull: " (باز کردن تصویر در اندازهٔ کامل)",
+    github: { label: "GitHub", release: "آخرین تگ نسخه", updated: "آخرین به‌روزرسانی", checked: "خوانده‌شده از GitHub در" },
   },
   builds: {
     title: "پروژه‌های دیگر",
@@ -103,6 +106,8 @@ export const ui: UiStrings = {
     title: "تحصیلات و آموزش",
     educationLabel: "تحصیلات",
     certId: "شناسهٔ گواهی",
+    completedLabel: "بخش‌های گذرانده‌شده",
+    upcomingLabel: "بخش‌های پیش رو",
     viewCertificate: "مشاهدهٔ گواهی",
     trainingLabel: "دوره‌های آموزشی",
     trainingNote: "این‌ها گواهی پایان دوره از آموزشگاه‌ها هستند، نه مدرک رسمی LPI.",
@@ -121,7 +126,6 @@ export const ui: UiStrings = {
     copy: "کپی ایمیل",
     copied: "کپی شد",
     remote: "همکاری دورکاری",
-    remoteDetail: "آمادهٔ همکاری دورکاری. ساکن تهران، ایران (UTC+03:30، بدون تغییر ساعت تابستانی).",
   },
   footer: {
     backToTop: "بازگشت به بالا",

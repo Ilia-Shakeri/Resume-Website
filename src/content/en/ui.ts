@@ -47,7 +47,7 @@ export const ui = {
     about: { title: "About me", lead: "What I work on, where it shows, and how I work." },
     projects: {
       title: "Projects",
-      lead: "Three systems with full engineering notes, then smaller tools. Every figure comes from the project’s own records and links to the source.",
+      lead: "Three systems with full engineering notes, then smaller tools. Release dates are read from GitHub; every other figure states its source and date.",
     },
     experience: { title: "Experience" },
     contact: { title: "Contact" },
@@ -81,6 +81,9 @@ export const ui = {
     caseStudy: "Engineering case study",
     limitations: "Known limitations",
     details: "Read the case study",
+    screenshotsLabel: "Screenshots",
+    openFull: " (open full-size image)",
+    github: { label: "GitHub", release: "Latest release tag", updated: "Last updated", checked: "Read from GitHub on" },
   },
   builds: {
     title: "More projects",
@@ -101,6 +104,8 @@ export const ui = {
     title: "Education & training",
     educationLabel: "Education",
     certId: "Cert ID",
+    completedLabel: "Completed modules",
+    upcomingLabel: "Still ahead",
     viewCertificate: "View certificate",
     trainingLabel: "Training courses",
     trainingNote: "Course-completion certificates from training providers. These are not official LPI certifications.",
@@ -119,7 +124,6 @@ export const ui = {
     copy: "Copy email",
     copied: "Copied",
     remote: "Remote work",
-    remoteDetail: "Open to remote roles. Based in Tehran, Iran (UTC+03:30, no daylight saving).",
   },
   footer: {
     backToTop: "Back to top",

@@ -125,7 +125,6 @@ export default function ResumePage() {
               <p className="mt-0.5">
                 {project.summary} <span className="text-[#4b5753]">Status: {project.status}.</span>
               </p>
-              <p className="mt-0.5 text-[#4b5753]">{project.highlights[0]}</p>
               <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">
                 {project.tools.map((tool) => tool.name).join(" · ")}
               </p>
@@ -172,8 +171,12 @@ export default function ResumePage() {
         <section className="mt-5 grid break-inside-avoid gap-5 sm:grid-cols-2" aria-label="Education, training, and languages">
           <div>
             <Heading>Education</Heading>
-            <p className="mt-2 font-semibold">{education.degree}</p>
-            <p>{education.institution ? `${education.institution} · ` : ""}{education.status}</p>
+            {education.map((entry) => (
+              <div key={entry.degree} className="mt-2">
+                <p className="font-semibold">{entry.degree}</p>
+                <p>{entry.institution ? `${entry.institution} · ` : ""}{entry.status}</p>
+              </div>
+            ))}
             <div className="mt-4">
               <Heading>Languages</Heading>
               <p className="mt-2">{profile.languages.join(" · ")}</p>

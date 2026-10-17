@@ -10,15 +10,21 @@ export function Education({ content }: { content: Content }) {
       <div className="container-site">
         <SectionHeader id="education-title" title={ui.education.title} />
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[400px_minmax(0,1fr)] lg:gap-10">
-          <div data-reveal className="spotlight self-start rounded-2xl border border-line-strong bg-card p-6">
-            <p className="flex items-center gap-3 font-mono text-xs tracking-[0.06em] text-mint uppercase">
-              <Icon name="cap" size={20} />
-              {ui.education.educationLabel}
-            </p>
-            <h3 className="mt-5 text-xl leading-tight">{education.degree}</h3>
-            {education.institution ? <p className="mt-3 text-text">{education.institution}</p> : null}
-            <p className="mt-2 text-sm text-muted">{education.status}</p>
-            <p className="mt-5 border-t border-line pt-5 text-sm leading-[1.7] text-text">{education.note}</p>
+          <div className="flex flex-col gap-4 self-start">
+            {education.map((entry) => (
+              <div key={entry.degree} data-reveal className="spotlight rounded-2xl border border-line-strong bg-card p-6">
+                <p className="flex items-center gap-3 font-mono text-xs tracking-[0.06em] text-mint uppercase">
+                  <Icon name="cap" size={20} />
+                  {ui.education.educationLabel}
+                </p>
+                <h3 className="mt-5 text-xl leading-tight">{entry.degree}</h3>
+                {entry.institution ? <p className="mt-3 text-text">{entry.institution}</p> : null}
+                <p className="mt-2 text-sm text-muted">{entry.status}</p>
+                <p className="mt-5 border-t border-line pt-5 text-sm leading-[1.7] text-text">{entry.note}</p>
+                {entry.completed?.length ? <ModuleList label={ui.education.completedLabel} items={entry.completed} done /> : null}
+                {entry.upcoming?.length ? <ModuleList label={ui.education.upcomingLabel} items={entry.upcoming} /> : null}
+              </div>
+            ))}
           </div>
 
           <div>
@@ -73,5 +79,23 @@ export function Education({ content }: { content: Content }) {
         </div>
       </div>
     </section>
+  );
+}
+
+function ModuleList({ label, items, done = false }: { label: string; items: string[]; done?: boolean }) {
+  return (
+    <div className="mt-4">
+      <h4 className="text-xs text-muted">{label}</h4>
+      <ul className="mt-2 flex flex-wrap gap-1.5">
+        {items.map((item) => (
+          <li
+            key={item}
+            className={`rounded-full border px-2.5 py-1 text-xs leading-none ${done ? "border-mint/40 bg-mint-tint text-ink" : "border-line-strong text-text"}`}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

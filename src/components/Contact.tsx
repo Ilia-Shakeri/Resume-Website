@@ -41,10 +41,14 @@ export function Contact({ content }: { content: Content }) {
           <div className="mt-8 flex items-end justify-between gap-6 border-t border-line pt-6">
             <div>
               <h2 className="text-sm font-normal text-muted">{ui.contact.remote}</h2>
-              <p className="mt-2 flex items-start gap-2.5 text-sm leading-relaxed text-text">
-                <Icon name="pin" size={16} className="mt-0.5 shrink-0 text-mint" />
-                {ui.contact.remoteDetail}
-              </p>
+              <dl className="mt-3 space-y-2.5 text-sm leading-relaxed">
+                {profile.remote.map((item) => (
+                  <div key={item.label} className="grid grid-cols-1 gap-0.5 sm:grid-cols-[9.5rem_minmax(0,1fr)] sm:gap-3">
+                    <dt className="text-muted">{item.label}</dt>
+                    <dd className="text-text">{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
             <div className="hidden shrink-0 sm:block">
               <ContactOrbit />

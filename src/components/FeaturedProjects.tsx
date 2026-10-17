@@ -4,8 +4,9 @@ import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
 import { SectionHeader } from "@/components/SectionHeader";
 import { TechIcon } from "@/components/TechIcon";
-import type { Content } from "@/content";
+import type { Content, Locale } from "@/content";
 import type { FeaturedProject } from "@/content/types";
+import { formatDate, githubCheckedAt, repoActivity } from "@/lib/github";
 
 export function ProjectLogo({ project, size }: { project: FeaturedProject; size: "sm" | "md" }) {
   const box = size === "md" ? "h-14 w-14 p-2" : "h-12 w-12 p-1.5";
@@ -43,9 +44,10 @@ export function StagePill({ stage, labels }: { stage: FeaturedProject["stage"]; 
   );
 }
 
-function FeaturedCard({ project, content }: { project: FeaturedProject; content: Content }) {
+function FeaturedCard({ project, content, locale }: { project: FeaturedProject; content: Content; locale: Locale }) {
   const ui = content.ui.ventures;
   const titleId = `${project.slug}-title`;
+  const activity = repoActivity(project.repo);
 
   return (
     <article
@@ -87,6 +89,27 @@ function FeaturedCard({ project, content }: { project: FeaturedProject; content:
             <dd className="text-ink">
               <bdi>{project.status}</bdi>
             </dd>
+            {activity && (activity.latestTag || activity.lastActivity) ? (
+              <>
+                <dt className="text-muted">{ui.github.label}</dt>
+                <dd className="text-ink">
+                  {activity.latestTag ? (
+                    <span className="me-4 inline-block">
+                      {ui.github.release} <bdi dir="ltr" className="font-mono text-[0.8125rem]">{activity.latestTag}</bdi>
+                      {activity.latestTagDate ? <span className="text-muted"> · {formatDate(activity.latestTagDate, locale)}</span> : null}
+                    </span>
+                  ) : null}
+                  {activity.lastActivity ? (
+                    <span className="inline-block">
+                      {ui.github.updated} <span className="text-muted">{formatDate(activity.lastActivity, locale)}</span>
+                    </span>
+                  ) : null}
+                  <span className="mt-0.5 block text-xs text-muted">
+                    {ui.github.checked} {formatDate(githubCheckedAt, locale)}
+                  </span>
+                </dd>
+              </>
+            ) : null}
             <dt className="text-muted">{ui.evidence}</dt>
             <dd className="flex flex-wrap gap-x-5 gap-y-1">
               {project.links.map((link) => (
@@ -118,6 +141,37 @@ function FeaturedCard({ project, content }: { project: FeaturedProject; content:
             <p className="mt-2 text-xs leading-relaxed text-muted">{project.factsSource}</p>
           </div>
         </div>
+
+        {project.screenshots?.length ? (
+          <div className="mt-6">
+            <h4 className="sr-only">{ui.screenshotsLabel}</h4>
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {project.screenshots.map((shot) => (
+                <li key={shot.full}>
+                  <figure>
+                    <a
+                      href={shot.full}
+                      className="group/shot block overflow-hidden rounded-lg border border-line-strong bg-bg transition hover:border-mint/50"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element -- static export; pre-sized WebP */}
+                      <img
+                        src={shot.thumb}
+                        alt={shot.alt}
+                        width={800}
+                        height={Math.round((shot.height * 800) / shot.width)}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-auto w-full transition duration-300 group-hover/shot:scale-[1.015]"
+                      />
+                      <span className="sr-only">{ui.openFull}</span>
+                    </a>
+                    <figcaption className="mt-2 text-xs leading-snug text-muted">{shot.caption}</figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
           <div>
@@ -200,14 +254,14 @@ function FeaturedCard({ project, content }: { project: FeaturedProject; content:
 }
 
 /** /projects/: the three featured projects, each with its engineering case study. */
-export function FeaturedProjects({ content }: { content: Content }) {
+export function FeaturedProjects({ content, locale }: { content: Content; locale: Locale }) {
   return (
     <section aria-labelledby="ventures-title" id="ventures" className="scroll-mt-20 py-8 lg:py-10">
       <div className="container-site">
         <SectionHeader id="ventures-title" title={content.ui.ventures.title} />
         <div className="mt-6 space-y-6">
           {content.featured.map((project) => (
-            <FeaturedCard key={project.slug} project={project} content={content} />
+            <FeaturedCard key={project.slug} project={project} content={content} locale={locale} />
           ))}
         </div>
       </div>

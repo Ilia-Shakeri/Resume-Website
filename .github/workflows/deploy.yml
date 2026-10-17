@@ -11,6 +11,10 @@ name: Deploy
 on:
   push:
     branches: [main]
+  # Rebuild every six hours so the GitHub figures on /projects/ (latest
+  # release, last activity) stay current without a code change.
+  schedule:
+    - cron: "23 */6 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -39,6 +43,11 @@ jobs:
 
       - name: Install locked dependencies
         run: npm ci
+
+      - name: Refresh GitHub figures
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/github-stats.mjs
 
       - name: Build static export
         run: npm run build
@@ -73,7 +82,7 @@ jobs:
           for attempt in $(seq 1 40); do
             live=$(curl -fsS --max-time 15 "$URL/build.txt?ts=$(date +%s)" 2>/dev/null || true)
             if [ "$live" = "$GITHUB_SHA" ]; then
-              curl -fsS --max-time 20 "$URL/" | grep -q "Built to ship" || { echo "home page content check failed"; exit 1; }
+              curl -fsS --max-time 20 "$URL/" | grep -q "Ilia Shakeri" || { echo "home page content check failed"; exit 1; }
               echo "Live site serves ${GITHUB_SHA}"
               exit 0
             fi
