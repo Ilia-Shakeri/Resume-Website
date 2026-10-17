@@ -21,14 +21,17 @@ export function Education({ content }: { content: Content }) {
             <p className="mt-5 border-t border-line pt-5 text-sm leading-[1.7] text-text">{education.note}</p>
           </div>
 
-          <ul className="border-t border-line">
+          <div>
+          <h3 className="text-base text-ink">{ui.education.trainingLabel}</h3>
+          <p className="mt-1 text-sm text-muted">{ui.education.trainingNote}</p>
+          <ul className="mt-4 border-t border-line">
             {qualifications.map((item) => (
               <li key={item.title} data-reveal className="group relative flex gap-4 border-b border-line py-5">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-mint-tint text-mint">
                   <Icon name="badge" size={18} />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-lg leading-tight">{item.title}</h3>
+                  <h4 className="text-lg leading-tight">{item.title}</h4>
                   <p className="mt-1.5 text-xs text-muted">
                     {item.issuer} · {item.date}
                     {item.certId ? (
@@ -47,7 +50,7 @@ export function Education({ content }: { content: Content }) {
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element -- static export; pre-sized WebP */}
                     <img src={item.href} alt="" width={340} height={240} loading="lazy" className="h-auto w-full" />
-                    <figcaption dir="ltr" className="border-t border-line px-3 py-2 font-mono text-[0.625rem] text-muted uppercase">
+                    <figcaption dir="ltr" className="border-t border-line px-3 py-2 font-mono text-xs text-muted uppercase">
                       {item.title} · {item.certId}
                     </figcaption>
                   </figure>
@@ -56,7 +59,7 @@ export function Education({ content }: { content: Content }) {
                   <ExternalLink
                     href={item.href}
                     newTabLabel={ui.external}
-                    className="link-row -mt-1 inline-flex h-11 shrink-0 items-start gap-2 pt-1 text-sm text-mint"
+                    className="link-row -mt-1 inline-flex h-11 min-w-11 shrink-0 items-start justify-center gap-2 pt-1 text-sm text-mint"
                   >
                     <span className="max-sm:sr-only">{ui.education.viewCertificate}</span>
                     <span className="sr-only">: {item.title}</span>
@@ -66,6 +69,7 @@ export function Education({ content }: { content: Content }) {
               </li>
             ))}
           </ul>
+          </div>
         </div>
       </div>
     </section>

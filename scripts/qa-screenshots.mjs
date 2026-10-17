@@ -2,13 +2,15 @@
 // widths (overflow, clipping, console errors, screenshots), link and heading
 // integrity, the language switch, mobile menu, reduced motion, and the
 // animated features. Output: qa-artifacts/ (git-ignored).
-import { mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 import { launchBrowser } from "./browser.mjs";
 import { startStaticServer } from "./static-server.mjs";
 
 const outDir = "qa-artifacts";
 mkdirSync(outDir, { recursive: true });
-const widths = [375, 768, 1440];
+// The viewports from the review brief: small, standard, modern, and large phones, tablet, laptop, desktop, wide.
+const viewports = [[320, 700], [375, 812], [390, 844], [430, 932], [768, 1024], [1024, 768], [1440, 900], [1920, 1080]];
+const axeSource = readFileSync("node_modules/axe-core/axe.min.js", "utf8");
 const pages = ["", "about/", "projects/", "experience/", "contact/"];
 const paths = ["/", "/fa/"].flatMap((prefix) => pages.map((page) => prefix + page));
 const failures = [];
@@ -21,9 +23,9 @@ const { server, url } = await startStaticServer("out");
 const browser = await launchBrowser();
 try {
   for (const path of paths) {
-    for (const width of widths) {
+    for (const [width, height] of viewports) {
       // Full-page captures use reduced motion so scroll-revealed sections are all visible.
-      const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: "reduce" });
+      const page = await browser.newPage({ viewport: { width, height }, reducedMotion: "reduce" });
       const errors = [];
       page.on("pageerror", (error) => errors.push(error.message));
       page.on("console", (msg) => msg.type() === "error" && errors.push(msg.text()));
@@ -42,8 +44,28 @@ try {
           .map((el) => `${el.tagName.toLowerCase()}${el.id ? `#${el.id}` : ""}`)
           .slice(0, 3),
       );
-      const ok = overflow <= 0 && clipped.length === 0 && errors.length === 0;
-      check(ok, `${path} ${width}px: no overflow (${overflow}), no clipping ${clipped.join(", ")}, no errors ${errors.join(" | ")}`);
+      // Interactive targets at least 24×24 CSS px (WCAG 2.2 AA, 2.5.8); visually hidden skip links excepted.
+      const small = await page.evaluate(() =>
+        [...document.querySelectorAll("a, button, summary")]
+          .filter((el) => !el.closest(".sr-only") && !el.matches(".sr-only, .stretched-link") && el.getClientRects().length)
+          .filter((el) => {
+            const rect = el.getBoundingClientRect();
+            return rect.width < 24 || rect.height < 24;
+          })
+          .filter((el) => getComputedStyle(el).display !== "inline" || !el.closest("p, li, dd"))
+          .map((el) => (el.textContent ?? "").trim().slice(0, 20)),
+      );
+      const ok = overflow <= 0 && clipped.length === 0 && errors.length === 0 && small.length === 0;
+      check(ok, `${path} ${width}px: overflow ${overflow}, clipping ${clipped.join(", ") || "none"}, small targets ${small.join(", ") || "none"}, errors ${errors.join(" | ") || "none"}`);
+      if (width === 375 || width === 1440) {
+        await page.addScriptTag({ content: axeSource });
+        const violations = await page.evaluate(async () =>
+          (await window.axe.run(document, { runOnly: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] })).violations.map(
+            (v) => `${v.id} (${v.nodes.length})`,
+          ),
+        );
+        check(violations.length === 0, `${path} ${width}px: axe WCAG 2.2 AA ${violations.join(", ") || "no violations"}`);
+      }
       const name = path.replace(/^\/|\/$/g, "").replace(/\//g, "-") || "home";
       await page.screenshot({ path: `${outDir}/${name}-${width}.png`, fullPage: true });
       await page.close();
@@ -104,10 +126,42 @@ try {
   const [lang, dir] = await fa.evaluate(() => [document.documentElement.lang, document.documentElement.dir]);
   check(lang === "fa" && dir === "rtl", `/fa/projects/: <html lang="${lang}" dir="${dir}">`);
   const faHeading = await fa.locator("#ventures-title").innerText();
-  check(/افتخار/.test(faHeading), `/fa/projects/: Persian content rendered ("${faHeading}")`);
+  check(/شاخص/.test(faHeading), `/fa/projects/: Persian content rendered ("${faHeading}")`);
   const hreflang = await fa.$$eval("link[rel='alternate'][hreflang]", (links) => links.map((l) => `${l.hreflang}=${new URL(l.href).pathname}`).sort().join(","));
   check(hreflang.includes("en=/projects/") && hreflang.includes("fa=/fa/projects/"), `/fa/projects/: hreflang alternates (${hreflang})`);
   await fa.close();
+
+  // Project figures: identical with and without JavaScript, and never zero or mid-animation.
+  for (const path of ["/", "/projects/", "/fa/", "/fa/projects/"]) {
+    const read = async (javaScriptEnabled) => {
+      const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, javaScriptEnabled });
+      await page.goto(`${url}${path}`, { waitUntil: javaScriptEnabled ? "networkidle" : "load" });
+      if (javaScriptEnabled) await page.waitForTimeout(800);
+      const values = await page.$$eval("main dd bdi", (els) => els.map((el) => el.textContent.trim()));
+      await page.close();
+      return values;
+    };
+    const [withJs, withoutJs] = [await read(true), await read(false)];
+    const zero = withJs.filter((value) => /^[0۰]$/.test(value));
+    check(
+      withJs.length > 0 && withJs.join("|") === withoutJs.join("|") && zero.length === 0,
+      `${path}: ${withJs.length} project figures match the static HTML, none zero (${withJs.slice(0, 4).join(" ")})`,
+    );
+  }
+
+  // Without JavaScript every page keeps its content, contact links, and résumé link visible.
+  const noJs = await browser.newPage({ viewport: { width: 375, height: 812 }, javaScriptEnabled: false });
+  for (const path of paths) {
+    await noJs.goto(`${url}${path}`, { waitUntil: "load" });
+    await noJs.waitForTimeout(150);
+    const state = await noJs.evaluate(() => ({
+      hidden: [...document.querySelectorAll("main [data-reveal], main [data-stagger] > *")].filter((el) => getComputedStyle(el).opacity === "0").length,
+      resume: !!document.querySelector("a[href$='.pdf']"),
+      mail: !!document.querySelector("a[href^='mailto:']"),
+    }));
+    check(state.hidden === 0 && state.resume && state.mail, `${path} without JavaScript: ${state.hidden} hidden blocks, résumé link ${state.resume}, email link ${state.mail}`);
+  }
+  await noJs.close();
 
   // Language switch keeps the page and the section.
   const sw = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -169,15 +223,8 @@ try {
   await live.waitForTimeout(600);
   const t2 = await loop.evaluate((svg) => svg.getCurrentTime());
   check(t2 > t1 && !(await loop.evaluate((svg) => svg.animationsPaused())), `DevOps loop running (${t1.toFixed(2)}s → ${t2.toFixed(2)}s)`);
-  const enter = await live.$eval("#hero-title", (el) => getComputedStyle(el).animationName);
   const vt = await live.$eval(".site-header", (el) => getComputedStyle(el).viewTransitionName);
-  check(enter === "enter" && vt === "site-header", `load-in animation (${enter}) and page transitions (${vt})`);
-  const stat = live.locator("main [data-count='3,510']").first();
-  const startValue = await stat.innerText();
-  await stat.scrollIntoViewIfNeeded();
-  await live.waitForTimeout(1800);
-  const endValue = await stat.innerText();
-  check(startValue === "0" && endValue === "3,510", `stats count up when scrolled to (${startValue} → ${endValue})`);
+  check(vt === "site-header", `page transitions enabled (${vt})`);
   const card = live.locator("main .spotlight").first();
   await card.hover({ position: { x: 40, y: 30 } });
   const mx = await card.evaluate((el) => el.style.getPropertyValue("--mx"));
@@ -203,10 +250,11 @@ try {
   check(/\d{2}:\d{2}:\d{2}/.test(clock), `whoami local clock ticking (${clock})`);
   const farBelow = await about.$eval("#approach ol[data-stagger] > li", (el) => getComputedStyle(el).opacity);
   check(farBelow === "0", `off-screen content hidden before scrolling (opacity ${farBelow})`);
-  await about.locator("#toolkit").scrollIntoViewIfNeeded();
+  await about.locator("#expertise").scrollIntoViewIfNeeded();
   await about.waitForTimeout(1200);
-  const revealed = await about.$eval("#toolkit ul > li[data-reveal]", (el) => [el.classList.contains("is-visible"), getComputedStyle(el).opacity]);
+  const revealed = await about.$eval("#expertise ul[data-reveal]", (el) => [el.classList.contains("is-visible"), getComputedStyle(el.firstElementChild).opacity]);
   check(revealed[0] && revealed[1] === "1", `section fades in on scroll (opacity ${revealed[1]})`);
+  await about.locator("#toolkit summary").click();
   const icons = await about.$$eval("#toolkit svg[role='img']", (els) => els.length);
   const chips = await about.$$eval("#toolkit li li", (els) => els.length);
   check(icons >= 50, `toolkit: ${chips} tools, ${icons} brand icons`);
@@ -227,8 +275,12 @@ try {
   // Projects: both ventures render; the filter narrows the grid.
   const projects = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
   await projects.goto(`${url}/projects/`, { waitUntil: "networkidle" });
-  const ventures = await projects.$$eval("#ventures article", (els) => els.map((el) => el.querySelector("h3")?.textContent));
-  check(ventures.length === 2, `ventures: ${ventures.join(", ")}`);
+  const ventures = await projects.$$eval("#ventures > div > div > article", (els) => els.map((el) => el.querySelector("h3")?.textContent));
+  check(ventures.length === 3, `featured projects: ${ventures.join(", ")}`);
+  const study = projects.locator("#nerkhbaan details");
+  await study.locator("summary").click();
+  const opened = await study.evaluate((el) => [el.open, el.querySelectorAll("ol li").length, el.querySelectorAll("section").length]);
+  check(opened[0] && opened[1] >= 5 && opened[2] >= 5, `case study expands: ${opened[1]} architecture steps, ${opened[2]} sections`);
   const total = await projects.$$eval("#builds [data-category]", (els) => els.filter((el) => !el.hidden).length);
   await projects.locator("#builds button[aria-pressed]", { hasText: "Security" }).click();
   const security = await projects.$$eval("#builds [data-category]", (els) =>

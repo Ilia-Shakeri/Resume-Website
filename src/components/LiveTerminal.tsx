@@ -7,6 +7,8 @@ export type TerminalLine = { kind: "cmd" | "out" | "ok"; text: string };
 
 type Props = {
   title: string;
+  /** Short status label in the title bar, e.g. "REPLAY". */
+  badge: string;
   lines: TerminalLine[];
   /** How many lines stay on screen; older ones scroll away. */
   rows?: number;
@@ -27,7 +29,7 @@ function lineClass(kind: TerminalLine["kind"]) {
 
 function Line({ line, typing = false }: { line: TerminalLine; typing?: boolean }) {
   return (
-    <p className={`truncate ${lineClass(line.kind)}`}>
+    <p className={`break-words whitespace-pre-wrap ${lineClass(line.kind)}`}>
       {line.kind === "cmd" ? <span className="text-muted">$ </span> : null}
       {line.kind === "ok" ? "✓ " : null}
       {line.text}
@@ -41,7 +43,7 @@ function Line({ line, typing = false }: { line: TerminalLine; typing?: boolean }
  * the tab is visible, shows the full transcript statically with reduced motion
  * or without JavaScript, and exposes the transcript to screen readers once.
  */
-export function LiveTerminal({ title, lines, rows = 4, className = "" }: Props) {
+export function LiveTerminal({ title, badge, lines, rows = 4, className = "" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
   const active = useIsActive(ref);
@@ -92,11 +94,11 @@ export function LiveTerminal({ title, lines, rows = 4, className = "" }: Props) 
 
   return (
     <div ref={ref} dir="ltr" className={`rounded-lg border border-line-strong bg-card-2 px-5 py-4 font-mono text-[0.8125rem] ${className}`}>
-      <div className="flex items-center justify-between text-[0.6875rem] text-muted">
+      <div className="flex items-center justify-between text-xs text-muted">
         <span>{title}</span>
         <span className="flex items-center gap-2 text-mint">
-          <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-mint" aria-hidden="true" />
-          LIVE
+          <span className="h-1.5 w-1.5 rounded-full bg-mint" aria-hidden="true" />
+          {badge}
         </span>
       </div>
 

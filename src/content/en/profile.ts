@@ -7,13 +7,14 @@ import type { Education, ExperienceItem, Profile, Qualification } from "../types
 export const profile: Profile = {
   name: "Ilia Shakeri",
   role: "DevOps Engineer",
-  headline: "DevOps Engineer & Full-Stack Developer",
+  headline: "DevOps & Backend Engineer",
+  stack: ["Linux", "Python", "Go", "Docker", "CI/CD", "Observability"],
   intro:
-    "I build software end to end and run it in production. Most of my development is backend work in Python (FastAPI, Django) and Go, with React or Next.js frontends when a product needs one. I deploy it on Linux, containers, CI/CD, and monitoring that I set up myself. Founder of Nerkhbaan and co-founder of Dolphin CRM.",
+    "I build backend systems and operate them in production. My work spans Python and Go services, Linux infrastructure, CI/CD, and observability, from development and deployment to monitoring and recovery. Founder of Nerkhbaan and co-founder of Dolphin CRM.",
   study: "Computer Science student (B.Sc.)",
   location: "Tehran, Iran",
   timeZone: "IRST · UTC+03:30",
-  availability: "Open to remote DevOps, backend & full-stack roles",
+  availability: "Open to remote DevOps, backend & platform roles",
   email: "iliashkr@gmail.com",
   github: { label: "github.com/Ilia-Shakeri", href: "https://github.com/Ilia-Shakeri" },
   linkedin: { label: "linkedin.com/in/ilia-shakeri", href: "https://www.linkedin.com/in/ilia-shakeri/" },
@@ -21,8 +22,8 @@ export const profile: Profile = {
   focus: "Backend · Infrastructure · Automation",
   languages: ["Persian (native)", "English (professional working)"],
   bio: [
-    "I work on both sides of shipping software. On the development side, I write backend services in Python (FastAPI, Django) and Go, and build React or Next.js frontends when a product needs one. On the operations side, I harden Linux hosts, package services into containers, wire CI pipelines, and put Prometheus, Grafana, and Loki in front of what runs in production.",
-    "I work from evidence: write the runbook, test the restore, record what was actually verified. Outside the terminal, I follow open-source DevOps tooling and have played the piano for more than ten years.",
+    "I develop backend services with Python and Go and manage the infrastructure they run on. My work includes Linux administration, containerized deployments, CI/CD, monitoring, security hardening, and backup recovery. When a product needs a frontend, I build it in React or Next.js.",
+    "I prioritize reproducible deployments, tested recovery procedures, and operational evidence over assumptions. Outside work, I have played the piano for more than ten years.",
   ],
   principles: [
     { title: "Automate the repeatable.", detail: "Scripts, playbooks, and workflows over manual steps." },
@@ -33,57 +34,63 @@ export const profile: Profile = {
 };
 
 export const capabilities = [
-  "Backend & full-stack",
+  "Backend services",
   "Linux & hardening",
-  "Delivery automation",
-  "Reliability & observability",
+  "CI/CD & automation",
+  "Observability & recovery",
 ];
 
 export const experienceSummary: string =
-  "From hands-on Linux administration to owning delivery and monitoring for production services, and founding products I build and run end to end.";
+  "A DevOps role at OTICAMP since June 2025, alongside two products I build and run myself: Nerkhbaan, which I founded, and Dolphin CRM, which I co-founded.";
 
 export const experience: ExperienceItem[] = [
   {
     title: "DevOps Engineer",
+    type: "Employment",
     organization: "OTICAMP",
     location: "Tehran, Iran",
     period: "Jun 2025 — Present",
     scope:
       "Provisioning, hardening, and monitoring Linux infrastructure for internal and product services.",
     highlights: [
-      "Provisioned and hardened Linux VPS environments; Ansible playbooks keep server setup consistent between development and production.",
-      "Deployed a Prometheus, Grafana, and Loki stack for system metrics and logs.",
-      "Built ChatOps automation in n8n that routes Prometheus alerts and Jira events into Matrix rooms and direct messages.",
-      "Deployed and run Keycloak for centralized sign-in across internal services.",
+      "Provision and harden Linux infrastructure with Ansible, keeping development and production configuration consistent.",
+      "Deploy and maintain Prometheus, Grafana, and Loki for infrastructure metrics and logs.",
+      "Built n8n automation that routes Prometheus alerts and Jira events to Matrix channels and direct messages.",
+      "Deploy and operate Keycloak for centralized authentication across internal services.",
     ],
     tags: ["Ansible", "Observability", "ChatOps", "Keycloak"],
   },
   {
-    title: "Founder",
+    title: "Founder & Engineer",
+    type: "Own product",
     organization: "Nerkhbaan",
     location: "Tehran, Iran",
     period: "2026 — Present",
-    scope: "Founded and built a live gold, currency, and crypto price platform, and run it in production.",
+    scope: "Founded a live gold, currency, and crypto price platform; I am its only engineer and run it in production.",
     highlights: [
-      "Built the FastAPI, TimescaleDB, and Redis backend, the React web and admin apps, and an Electron desktop app.",
-      "Operate it on a Compose stack behind Nginx with two API replicas, Prometheus alerting, and CI gates covering integration tests, browser tests, and Trivy image scans.",
+      "Built the FastAPI, TimescaleDB, and Redis backend, a Go feed sidecar, the React web and admin apps, and an Electron desktop app.",
+      "Run it on Docker Compose with two API replicas behind Nginx; release 2.8.1 passed 15 CI jobs, including integration tests, browser tests, and Trivy image scans.",
+      "Load-tested an isolated copy of the stack: 27,000 of 27,000 requests succeeded over 30 minutes, p95 323 ms.",
     ],
     tags: ["Product", "FastAPI", "CI/CD", "Prometheus"],
   },
   {
-    title: "Co-founder",
+    title: "Co-founder & Lead Engineer",
+    type: "Co-founded product",
     organization: "Dolphin CRM",
     location: "Tehran, Iran",
     period: "2026 — Present",
     scope: "Co-founded a Persian-first CRM/ERP and lead its engineering and delivery.",
     highlights: [
-      "Built the Django/PostgreSQL platform with 40 switchable feature modules, shipped as tagged releases.",
-      "Designed the deployment model: isolated Compose stacks, a signed feature manifest, least-privilege database roles, scripted rollback, and restore-verified backups.",
+      "Lead development of the Django and PostgreSQL application: 46 feature flags and about 3,640 automated tests.",
+      "Designed the deployment model: an isolated Compose stack per installation, a signed feature manifest, and non-superuser database roles with per-table grants.",
+      "Built scripted deploy and rollback and backups that are verified by restoring them.",
     ],
     tags: ["Product", "Django", "Docker Compose", "PostgreSQL"],
   },
   {
-    title: "Freelance DevOps & Linux Administrator",
+    title: "DevOps & Linux Administrator",
+    type: "Freelance",
     organization: "Self-employed",
     location: "Remote",
     period: "Dec 2024 — Jun 2025",
@@ -140,4 +147,4 @@ export const qualifications: Qualification[] = [
 ];
 
 export const resumeSummary: string =
-  "DevOps engineer and full-stack developer (mostly backend), studying for a B.Sc. in Computer Science. I build services in Python (FastAPI, Django) and Go, with React or Next.js frontends when needed, and run them on hardened Linux servers with Docker Compose, CI pipelines with security gates, and Prometheus alerting. Founder of Nerkhbaan and co-founder of Dolphin CRM: two products I built and run with least-privilege databases, scripted rollbacks, and restore-tested backups.";
+  "DevOps and backend engineer. I build services in Python (FastAPI, Django) and Go and operate them in production: Linux administration, Docker Compose deployments, CI pipelines with security gates, monitoring, and tested backup recovery. React and Next.js when a product needs a frontend. Founder of Nerkhbaan and co-founder of Dolphin CRM; studying for a B.Sc. in Computer Science.";

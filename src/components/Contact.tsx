@@ -1,3 +1,4 @@
+import { CopyButton } from "@/components/CopyButton";
 import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
 import type { Content } from "@/content";
@@ -16,8 +17,8 @@ function ContactOrbit() {
 export function Contact({ content }: { content: Content }) {
   const { profile, ui } = content;
   const links = [
-    { name: "GitHub", ...profile.github },
     { name: "LinkedIn", ...profile.linkedin },
+    { name: "GitHub", ...profile.github },
     { name: "Telegram", ...profile.telegram },
   ];
 
@@ -25,26 +26,26 @@ export function Contact({ content }: { content: Content }) {
     <section aria-label={ui.pages.contact.title} id="contact" className="scroll-mt-20 py-8 pb-16 lg:py-10 lg:pb-24">
       <div className="container-site grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_400px]">
         <div data-reveal className="spotlight cta-card relative overflow-hidden rounded-2xl border border-line-strong bg-card p-6 sm:p-8">
-          <p className="text-sm text-muted">{ui.contact.email}</p>
+          <h2 className="text-sm font-normal text-muted">{ui.contact.email}</h2>
           <a
             href={`mailto:${profile.email}`}
             dir="ltr"
-            className="link-row mt-2 inline-flex max-w-full items-center gap-4 font-display text-[1.5rem] break-all text-mint sm:text-[2rem]"
+            className="link-row mt-2 inline-flex max-w-full items-center gap-3 font-display text-[1.5rem] break-all text-mint sm:text-[2rem]"
           >
             {profile.email}
             <Icon name="arrow-up-right" size={20} className="shrink-0" />
           </a>
+          <div className="mt-5">
+            <CopyButton value={profile.email} label={ui.contact.copy} copiedLabel={ui.contact.copied} />
+          </div>
           <div className="mt-8 flex items-end justify-between gap-6 border-t border-line pt-6">
-            <ul className="space-y-2 text-sm text-text">
-              <li className="flex items-center gap-2.5">
-                <span className="h-2 w-2 rounded-full bg-mint pulse-dot" aria-hidden="true" />
-                {profile.availability}
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Icon name="pin" size={16} className="text-mint" />
-                {profile.location} · <span dir="ltr">{profile.timeZone}</span>
-              </li>
-            </ul>
+            <div>
+              <h2 className="text-sm font-normal text-muted">{ui.contact.remote}</h2>
+              <p className="mt-2 flex items-start gap-2.5 text-sm leading-relaxed text-text">
+                <Icon name="pin" size={16} className="mt-0.5 shrink-0 text-mint" />
+                {ui.contact.remoteDetail}
+              </p>
+            </div>
             <div className="hidden shrink-0 sm:block">
               <ContactOrbit />
             </div>
@@ -52,8 +53,8 @@ export function Contact({ content }: { content: Content }) {
         </div>
 
         <div data-reveal>
-          <p className="text-sm text-muted">{ui.contact.elsewhere}</p>
-          <ul data-stagger className="mt-2 space-y-3">
+          <h2 className="text-sm font-normal text-muted">{ui.contact.elsewhere}</h2>
+          <ul className="mt-2 space-y-3">
             {links.map((link) => (
               <li key={link.name}>
                 <ExternalLink

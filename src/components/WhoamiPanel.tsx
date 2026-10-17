@@ -86,7 +86,7 @@ export function WhoamiPanel({ rows, localTimeLabel }: { rows: Row[]; localTimeLa
       <dl className="mt-6 space-y-[18px]">
         {typedRows.map((row) => (
           <div key={row.label} className={showAll || row.started ? "" : "invisible"}>
-            <dt className="text-[0.625rem] tracking-[0.06em] text-muted uppercase">{row.label}</dt>
+            <dt className="text-xs tracking-[0.06em] text-muted uppercase">{row.label}</dt>
             <dd className="mt-1.5 font-sans text-[0.9375rem] text-ink">
               <span className="sr-only">{row.value}</span>
               <span aria-hidden="true">
@@ -97,7 +97,7 @@ export function WhoamiPanel({ rows, localTimeLabel }: { rows: Row[]; localTimeLa
           </div>
         ))}
         <div className={showAll || done ? "" : "invisible"}>
-          <dt className="text-[0.625rem] tracking-[0.06em] text-muted uppercase">{localTimeLabel}</dt>
+          <dt className="text-xs tracking-[0.06em] text-muted uppercase">{localTimeLabel}</dt>
           <dd className="mt-1.5 font-sans text-[0.9375rem] text-ink">
             <LocalClock />
           </dd>

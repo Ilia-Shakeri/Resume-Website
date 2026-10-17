@@ -43,7 +43,7 @@ export function LanguageSwitch({ locale, label, paths }: { locale: Locale; label
           onClick={(event) => go(event, target)}
           className={`relative z-10 flex min-w-11 items-center justify-center rounded-full px-3 text-[0.8125rem] font-semibold transition-colors duration-200 ${
             active === target ? "text-on-mint" : "text-text hover:text-ink"
-          } ${target === "fa" ? "font-[Vazirmatn_Variable]" : "font-mono tracking-[0.04em]"}`}
+          } ${target === "fa" ? "font-[system-ui]" : "font-mono tracking-[0.04em]"}`}
         >
           <span aria-hidden="true">{target === "en" ? "EN" : "فا"}</span>
           <span className="sr-only">{target === "en" ? "English" : "فارسی"}</span>

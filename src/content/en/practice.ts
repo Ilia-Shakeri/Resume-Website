@@ -1,9 +1,48 @@
-import type { ApproachStep, ToolkitGroup } from "../types";
+import type { ApproachStep, Expertise, ToolkitGroup } from "../types";
 
 // Every tool listed appears in the résumé, the GitHub profile README, or a
 // repository (see docs/content-evidence.md, "Toolkit"). Brand icons come from
 // Simple Icons (CC0) and are inlined at build time; tools without a brand icon
 // use a neutral glyph.
+
+// Core expertise: each area names where the work can be checked.
+export const expertise: Expertise[] = [
+  {
+    title: "Linux systems",
+    detail: "Provisioning, hardening, and configuration management with Ansible.",
+    evidence: "OTICAMP servers · LinSecGuard",
+  },
+  {
+    title: "Backend development",
+    detail: "APIs and services in Python (FastAPI, Django) and Go.",
+    evidence: "Nerkhbaan · Dolphin CRM · Stackplore",
+  },
+  {
+    title: "Containers",
+    detail: "Docker Compose production stacks, non-root hardened images, Helm.",
+    evidence: "Nerkhbaan · Dolphin CRM · Stackplore",
+  },
+  {
+    title: "CI/CD and automation",
+    detail: "GitHub Actions pipelines with integration tests, browser tests, and image scans; Bash and n8n automation.",
+    evidence: "Nerkhbaan (15 CI jobs) · ChatOps bridges",
+  },
+  {
+    title: "PostgreSQL and Redis",
+    detail: "Schema migrations, TimescaleDB history, role separation, leases, caching, and outboxes.",
+    evidence: "Nerkhbaan · Dolphin CRM",
+  },
+  {
+    title: "Monitoring and observability",
+    detail: "Prometheus, Alertmanager, Grafana, and Loki; alert rules and routing to chat.",
+    evidence: "OTICAMP · Nerkhbaan alert rules",
+  },
+  {
+    title: "Security and recovery",
+    detail: "Least-privilege access, TLS, MFA, vulnerability scans, and backups verified by restoring them.",
+    evidence: "Dolphin CRM · Nerkhbaan · EasyCert",
+  },
+];
 
 export const toolkit: ToolkitGroup[] = [
   {

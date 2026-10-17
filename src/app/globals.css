@@ -111,7 +111,7 @@
 
   .meta {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--color-muted);
@@ -124,7 +124,7 @@
     border-radius: 999px;
     padding: 0.3rem 0.75rem;
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     line-height: 1.2;
     color: var(--color-text);
   }
@@ -239,26 +239,22 @@
 /* ---- Scroll reveal (ScrollReveal.tsx). Only active once JS adds .reveal-ready. */
 html.reveal-ready [data-reveal] {
   opacity: 0;
-  transform: translateY(24px) scale(0.985);
-  filter: blur(6px);
+  transform: translateY(20px);
   transition:
-    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
 html.reveal-ready [data-reveal].is-visible {
   opacity: 1;
   transform: none;
-  filter: none;
 }
 
 /* A [data-stagger] container stays put; its children rise in one after another. */
 html.reveal-ready [data-reveal][data-stagger] {
   opacity: 1;
   transform: none;
-  filter: none;
 }
 
 html.reveal-ready [data-stagger] > * {
@@ -286,31 +282,9 @@ html.reveal-ready .is-visible [data-stagger] > * {
 [data-stagger] > :nth-child(9) { --n: 8; }
 [data-stagger] > :nth-child(n + 10) { --n: 9; }
 
-/* ---- Load-in: elements with .enter rise out of a blur, staggered by --i. */
-@media (prefers-reduced-motion: no-preference) {
-  .enter {
-    animation: enter 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    animation-delay: calc(var(--i, 0) * 90ms + 80ms);
-  }
-}
-
-@keyframes enter {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
-
 @media print {
   html.reveal-ready [data-reveal],
-  html.reveal-ready [data-stagger] > *,
-  .enter {
+  html.reveal-ready [data-stagger] > * {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
@@ -420,7 +394,7 @@ html.reveal-ready .is-visible [data-stagger] > * {
   }
 }
 
-/* ---- Hero backdrop: faint grid and two slowly drifting glows. */
+/* ---- Hero backdrop: faint grid and one slowly drifting glow. */
 .hero-backdrop {
   position: absolute;
   inset: 0;
@@ -442,34 +416,18 @@ html.reveal-ready .is-visible [data-stagger] > * {
 
 .hero-blob {
   position: absolute;
+  top: -30%;
+  inset-inline-end: -10%;
   width: min(60vw, 640px);
   aspect-ratio: 1;
   border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(132 188 156 / 0.12), transparent);
+  animation: drift 18s ease-in-out infinite alternate;
 }
 
-.hero-blob-1 {
-  top: -30%;
-  inset-inline-end: -10%;
-  background: radial-gradient(closest-side, rgb(132 188 156 / 0.16), transparent);
-  animation: drift-1 18s ease-in-out infinite alternate;
-}
-
-.hero-blob-2 {
-  bottom: -40%;
-  inset-inline-start: -15%;
-  background: radial-gradient(closest-side, rgb(47 155 255 / 0.08), transparent);
-  animation: drift-2 24s ease-in-out infinite alternate;
-}
-
-@keyframes drift-1 {
+@keyframes drift {
   to {
     transform: translate(-12%, 18%) scale(1.15);
-  }
-}
-
-@keyframes drift-2 {
-  to {
-    transform: translate(16%, -12%) scale(1.1);
   }
 }
 
@@ -491,25 +449,6 @@ html.reveal-ready .is-visible [data-stagger] > * {
 @keyframes ring-spin {
   to {
     --ring-angle: 360deg;
-  }
-}
-
-/* ---- Headline: a slow light passing through the gradient text. */
-.text-gradient {
-  background: linear-gradient(90deg, var(--color-ink) 0%, var(--color-mint-bright) 25%, var(--color-ink) 50%, var(--color-ink) 100%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 6s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  from {
-    background-position: 100% 0;
-  }
-  to {
-    background-position: -100% 0;
   }
 }
 
@@ -617,6 +556,15 @@ html.reveal-ready .is-visible [data-stagger] > * {
 /* ---- Live terminals (LiveTerminal.tsx, WhoamiPanel.tsx). */
 .terminal-live {
   display: none;
+}
+
+/* Controls that need JavaScript (e.g. copy to clipboard) stay hidden without it. */
+.js-only {
+  display: none;
+}
+
+html.js .js-only {
+  display: inline-flex;
 }
 
 html.js .terminal-live {

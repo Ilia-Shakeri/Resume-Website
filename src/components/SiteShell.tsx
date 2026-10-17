@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { CountUp } from "@/components/CountUp";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -36,10 +35,9 @@ export function SiteShell({ locale, page, children }: { locale: Locale; page: Pa
       <main id="main" tabIndex={-1} className="outline-none">
         {children}
       </main>
-      <SiteFooter name={profile.name} nav={nav} backToTop={ui.footer.backToTop} />
+      <SiteFooter name={profile.name} email={profile.email} nav={nav} backToTop={ui.footer.backToTop} />
       <ScrollReveal />
       <Spotlight />
-      <CountUp locale={locale} />
     </div>
   );
 }

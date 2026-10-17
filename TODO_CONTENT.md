@@ -27,6 +27,20 @@ Edit `src/content/en/*.ts` and `src/content/fa/*.ts`, then regenerate assets wit
 5. **Persian copy.** `src/content/fa/` was translated from the English content. Read `/fa/` once and adjust any wording in those files.
 6. **Dolphin co-founders.** Not named on the site. Add them to `src/content/*/projects.ts` if they agree.
 
+## Needs your input (17 Oct 2026 review)
+
+7. **Remote-work details.** The site only says "open to remote roles, based in Tehran (UTC+03:30)". If you want them shown, confirm:
+   - working-hours overlap;
+   - contract type (employee or contractor);
+   - how you can be paid;
+   - start availability.
+8. **Telegram link.** `t.me/ilia_ssh` could not be opened from the build environment. Click it once.
+9. **Nerkhbaan releases.** Tags v2.8.2–v2.8.6 exist but are not deployed. The site says "live release 2.8.1". Update it when a newer release goes live.
+10. **Dolphin figures.** 46 feature flags, 3,641 tests, and 56 tags are as of 15 Oct 2026. Refresh them with each release.
+11. **AI-assisted development.** Most Dolphin commits carry AI co-author trailers. The site makes no statement about it either way. Decide whether to mention it, for example in an interview.
+12. **Business impact.** No user counts, revenue, or customer metrics are published. Add them only with evidence and your approval.
+13. **UI screenshots.** None of the repositories contains product screenshots. The featured projects use architecture flows instead. Real, data-free screenshots of Nerkhbaan or Dolphin would strengthen the case studies.
+
 ## Left out on purpose (add only with evidence)
 
 - **"Reduced incident response time by 40%"** (résumé). Needs a baseline, method, and period.

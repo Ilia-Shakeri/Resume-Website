@@ -42,6 +42,8 @@ Sources:
 | Freelance: Bash maintenance/backup/log-rotation scripts, security audits, firewall + TLS, Nginx/Apache tuning | CV; related public scripts (Automated-Backup-Script, LinSecGuard, EasyCert, SysTrack) | 📄 / partially ✅ |
 | Founder · Nerkhbaan, 2026 — Present | Stated by Ilia, 17 Oct 2026; GH:Nerkhbaan commit history (sole author) | ✅ self-reported role |
 | Co-founder · Dolphin CRM, 2026 — Present | Stated by Ilia, 17 Oct 2026; GH:Dolphin commit history | ✅ self-reported role; co-founders not named (no approval) |
+| Engagement types: Employment (OTICAMP), Own product (Nerkhbaan), Co-founded product (Dolphin), Freelance | Derived from the rows above | ✅ no full-time or part-time arrangement is stated, because none is known |
+| Headline "DevOps & Backend Engineer" | Ilia's positioning brief, 17 Oct 2026; matches the evidence above | ✅ no seniority title is claimed |
 
 ## Featured projects
 
@@ -80,21 +82,55 @@ Sources:
 | Run 38222923015 passed 15/15 jobs; zero HIGH/CRITICAL image findings | PROJECT_STATUS.md | ✅ per repo record (run page not opened from here) |
 | "zero downtime is not claimed" | PROJECT_STATUS.md | ✅ |
 
-### "Projects I'm proud of" stats and assets
+### Re-verification for the featured case studies — 17 Oct 2026
 
-The venture cards show four figures per product. Each is the repository's own record; none is illustrative.
+The three featured projects were re-checked against their repositories on 17 Oct 2026: Nerkhbaan at `main@025ccbb`, Dolphin at `main@023012e`, and Stackplore at `main@1a39e78`. The site was corrected where the earlier wording was out of date or too strong.
 
-| Figure | Source | Status |
+**Nerkhbaan**
+
+| Site figure / claim | Source | Note |
 | --- | --- | --- |
-| Nerkhbaan "2.8.1 · Live release" | PROJECT_STATUS.md (12 Oct 2026) | ✅ per repo record |
-| Nerkhbaan "117 · API routes" | PROJECT_STATUS.md OpenAPI path count | ✅ per repo record |
-| Nerkhbaan "15/15 · CI jobs passed" | PROJECT_STATUS.md, run 38222923015 | ✅ per repo record |
-| Nerkhbaan "8 · Alert rules" | monitoring/rules/nerkhbaan.yml | ✅ |
-| Dolphin "40 · Feature modules" | feature manifest definitions | ✅ |
-| Dolphin "3,510 · Automated tests" | README | ✅ per repo record |
-| Dolphin "57 · Tagged releases" | `git tag` count | ✅ |
-| Dolphin "4 · Scoped DB roles" | DOLPHIN_DEPLOYMENT_RUNBOOK.md "PostgreSQL role split" | ✅ |
-| Logos | `public/images/projects/`: Dolphin `docs/brand-source/logos/DarkMode_Logo.png`, Nerkhbaan `apps/web/src/logo/logo.png`, resized to WebP | ✅ the products' own marks |
+| "2.8.1 · Live release" | PROJECT_STATUS.md L3, L31; README (target checked 2026-10-12 and, at tag v2.8.6, 2026-10-17) | Tags v2.8.2–v2.8.6 exist but are not deployed; the site says *live* release, not latest |
+| "117 · API paths (OpenAPI)" | PROJECT_STATUS.md L12 "Generated API contracts cover 117 paths" | Was "API routes"; there are 124 operations |
+| "15/15 · CI jobs passed" | PROJECT_STATUS.md L22–25, run 38222923015; ci.yml has 8 jobs plus a 7-image Trivy matrix | |
+| "323 ms · p95 in a 30-min load test" | PROJECT_STATUS.md L57–73: 27,000/27,000 HTTP 200, 14.998 req/s, p95 323.249 ms, 200 WebSockets, 0 errors | Ran on an isolated copy of the stack on one host, anonymous reads only; the site states this scope |
+| Fault recovery 3.7 s / 4.5 s | Same record, attempt `219409486950` | The first combined fault run failed (a test-harness bug) and is kept as failed in the repository |
+| Full restore matched every table and row | PROJECT_STATUS.md L44–47 | |
+| Freshness wording | `app/pricing/models.py` L678–689 | Was "expires instead of going stale"; quotes go stale *then* expire |
+| Readiness | `app/health.py` L141 | Gates on database + migrations; Redis and refresh health are reported only |
+| Monitoring | `monitoring/rules/nerkhbaan.yml` (8 rules), promtool in CI | Production use is not documented, so the site says the rules are validated in CI and no longer says "Prometheus alerting in production" |
+| Not published | — | Server paths, subnets, IPs, user count, provider names, and the co-hosted services |
+
+**Dolphin CRM**
+
+| Site figure / claim | Source | Note |
+| --- | --- | --- |
+| "46 · Feature flags" (22 on by default) | `common/deployment/registry.py` FEATURE_DEPENDENCIES at HEAD | Was 40 |
+| "3,641 · Automated tests" | DOLPHIN_PROJECT_HANDOFF.md §5 (SQLite and PostgreSQL 16, before the 2.40.55 build), plus 23 browser tests | Was "3,510" (the README figure as of 2.40.42) |
+| "56 · Tagged releases" | `git tag`: v2.40.0–v2.40.55 | Was 57; the 57th tag is a release candidate |
+| "3 · Non-superuser DB roles" | `scripts/bootstrap-postgres.sh` | Was "4 scoped roles"; the setup role is an existing superuser, used only by one-shot jobs |
+| Signed manifest threat model | `common/deployment/manifest.py`, `config/settings.py` L329–348; BACKEND_SPEC "Honest limit" | Trusted keys come from the host `.env`, so the site states it does not protect against the host owner |
+| Image digests | Dockerfile, `scripts/deploy.sh` | Only base images are pinned by digest; the "images by digest" claim was removed |
+| Hardened containers | compose.yml | Scoped to application and job containers (not db or nginx) |
+| Integrations | `telephony/`, `communications/sms.py`; roadmap §8 | Described as implemented and tested against simulated systems |
+| Not published | — | Customer and staging names, server IP and SSH details, the SMS vendor, key IDs, and open customer security tasks |
+
+**Stackplore** (newly featured)
+
+| Site figure / claim | Source |
+| --- | --- |
+| "47 · OpenAPI paths" | `contracts/openapi.yaml` (OpenAPI 3.1.0, version 0.7.0) |
+| "14 · Forward-only migrations" | `apps/api/postgresmigrations/000001…000014` |
+| "6 · CI jobs" | `.github/workflows/ci.yml`: code, deploy, compose-install, helm-install, docker-provider, kubernetes-provider |
+| "v0.6.0 · Latest tag"; 0.7.0 in progress | `git tag`; CHANGELOG 0.7.0; README status line |
+| Implemented / in progress / planned lists | README "Implemented" and "Still required for 1.0"; roadmap; CHANGELOG |
+| Security | `deploy/Dockerfile.api` (UID 10001), Helm `cluster-reader.yaml` (get/list only), `compose.docker.yaml` (mTLS proxy) |
+
+The site does not claim a 0.7.0 release, published images, production readiness, or a hosted demo.
+
+**Authorship.** All three repositories have a single human author (Ilia). Most Dolphin commits carry AI co-author trailers, and Nerkhbaan's branch names suggest AI tooling. The site makes no claim either way; see TODO_CONTENT.md.
+
+**Logos** are the products' own marks: Dolphin `docs/brand-source/logos/DarkMode_Logo.png`, Nerkhbaan `apps/web/src/logo/logo.png`.
 
 ### Persian version (`/fa/`)
 
@@ -142,7 +178,7 @@ Cards show a kind (for example "Bash CLI"), a one-sentence summary, and two or t
 
 | Element | What it shows | Source |
 | --- | --- | --- |
-| Hero terminal | `curl …/build.txt` → the commit the page was built from; `docker compose ps` → `iliashakeri-web-1 Up (healthy)`; `systemctl is-active iliashakeri-update.timer` | Real deployment (docs/deployment.md). The SHA is read at build time, so it matches `/build.txt`; the container/timer lines are replayed, not polled live. |
+| About terminal ("REPLAY") | `curl …/build.txt` → the commit the page was built from; `docker compose ps` → `iliashakeri-web-1 Up (healthy)`; `systemctl is-active iliashakeri-update.timer` | Real deployment (docs/deployment.md). The SHA is read at build time, so it matches `/build.txt`. The container and timer lines are a replay, and both the badge and the caption say so; it is not shown as live telemetry. |
 | `whoami` panel | Profile fields and the current time in Tehran | Profile data; the clock runs in the visitor's browser |
 | DevOps loop | The eight DevOps stages | Illustration, no data |
 
