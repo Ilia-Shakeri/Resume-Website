@@ -1,16 +1,19 @@
-# Portfolio static site. The GitHub Actions deploy workflow rsyncs the build
-# into ./site; nginx serves it read-only, so content updates need no restart.
+# Portfolio static site on the Iran VPS (/opt/iliashakeri).
 #
-#   cd /srv/iliashakeri.ir && docker compose up -d
+# update-site.sh (run by iliashakeri-update.timer) pulls the built site from
+# the `site` branch into ./site; nginx serves it read-only, so updates need no
+# restart. No host port is published: edge-nginx-1 reaches this container as
+# iliashakeri-web-1:8080 over the shared `iliashakeri-edge` network.
 #
-# The container listens only on 127.0.0.1:8088. Point your existing reverse
-# proxy (Nginx, Caddy, Traefik) at it for iliashakeri.ir — see
-# docs/deployment.md.
+#   docker network create iliashakeri-edge        # once
+#   docker network connect iliashakeri-edge edge-nginx-1
+#   docker compose up -d
 name: iliashakeri
 
 services:
   web:
     image: nginx:1.27-alpine
+    container_name: iliashakeri-web-1
     restart: unless-stopped
     read_only: true
     cap_drop: [ALL]
@@ -23,8 +26,7 @@ services:
     volumes:
       - ./site:/usr/share/nginx/html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    ports:
-      - "127.0.0.1:8088:8080"
+    networks: [edge]
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/healthz"]
       interval: 30s
@@ -35,3 +37,8 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+networks:
+  edge:
+    name: iliashakeri-edge
+    external: true
