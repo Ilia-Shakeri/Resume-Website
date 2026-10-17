@@ -1,0 +1,5 @@
+:HL["/_next/static/chunks/3q_dfehxgds-b.css","style"]
+:HC["/",""]
+:HL["/images/ilia-shakeri.webp","image",{"fetchPriority":"high"}]
+1:[["children",{"s":"__PAGE__","h":160}]]
+0:{"b":"dqGoG5t9GliOjNaIS2w7p","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
