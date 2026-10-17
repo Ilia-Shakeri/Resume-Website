@@ -30,7 +30,7 @@ function Pill({ children }: { children: ReactNode }) {
 
 function DolphinStack() {
   return (
-    <figure className="relative h-full p-6 sm:p-10" aria-label="Dolphin CRM deployment architecture">
+    <figure dir="ltr" className="relative h-full p-6 sm:p-10" aria-label="Dolphin CRM deployment architecture">
       <figcaption className="meta">Deployment blueprint / isolated Compose stack</figcaption>
       <div className="relative mt-8 grid grid-cols-2 gap-3 sm:grid-cols-[1fr_1.15fr_1fr] sm:gap-5">
         <div className="flex flex-col gap-3 sm:gap-16">
@@ -76,7 +76,7 @@ const ciStages: { label: string; detail: string; icon: IconName }[] = [
 
 function NerkhbaanCi() {
   return (
-    <figure className="p-6 sm:p-7" aria-label="Nerkhbaan CI pipeline">
+    <figure dir="ltr" className="p-6 sm:p-7" aria-label="Nerkhbaan CI pipeline">
       <figcaption className="flex flex-wrap items-center justify-between gap-2 font-mono text-[0.6875rem]">
         <span className="text-muted">main / .github/workflows/ci.yml</span>
         <span className="text-mint">✓ 2.8.1 · all jobs passed</span>
@@ -124,7 +124,7 @@ function FlowRow({ label, steps }: { label: string; steps: { title: string; deta
 
 function ChatopsFlow() {
   return (
-    <figure className="space-y-6 p-6 sm:p-7" aria-label="ChatOps alert and notification flow">
+    <figure dir="ltr" className="space-y-6 p-6 sm:p-7" aria-label="ChatOps alert and notification flow">
       <figcaption className="flex flex-wrap items-center justify-between gap-2 font-mono text-[0.6875rem]">
         <span className="text-muted">n8n / chatops-bridges</span>
         <span className="text-mint">retry · backoff + jitter</span>

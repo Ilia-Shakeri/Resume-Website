@@ -1,4 +1,4 @@
-import type { Education, ExperienceItem, Profile, Qualification } from "./types";
+import type { Education, ExperienceItem, Profile, Qualification } from "../types";
 
 // Sources for every statement in this file are recorded in
 // docs/content-evidence.md. Time-sensitive values (employment status,
@@ -36,8 +36,8 @@ export const capabilities = [
   "Reliability & observability",
 ];
 
-export const experienceSummary =
-  "From hands-on Linux administration to owning delivery and monitoring for production services, and building complete products end to end.";
+export const experienceSummary: string =
+  "From hands-on Linux administration to owning delivery and monitoring for production services, and founding products I build and run end to end.";
 
 export const experience: ExperienceItem[] = [
   {
@@ -56,17 +56,28 @@ export const experience: ExperienceItem[] = [
     tags: ["Ansible", "Observability", "ChatOps", "Keycloak"],
   },
   {
-    title: "Product & Platform Engineering",
-    organization: "Independent projects",
-    location: "Remote",
+    title: "Founder",
+    organization: "Nerkhbaan",
+    location: "Tehran, Iran",
     period: "2026 — Present",
-    scope:
-      "Designing, building, and deploying complete products: Dolphin CRM and the Nerkhbaan pricing platform.",
+    scope: "Founded and built a live gold, currency, and crypto price platform, and run it in production.",
     highlights: [
-      "Dolphin CRM: a Django/PostgreSQL CRM shipped as versioned, tagged releases with Compose-based deployment, scripted rollback, and restore-verified backups.",
-      "Nerkhbaan: a FastAPI, TimescaleDB, and Redis platform with CI covering integration, browser, and image-scan gates, and Prometheus alerting, running on a live host.",
+      "Built the FastAPI, TimescaleDB, and Redis backend, the React web and admin apps, and an Electron desktop app.",
+      "Operate it on a Compose stack behind Nginx with two API replicas, Prometheus alerting, and CI gates covering integration tests, browser tests, and Trivy image scans.",
     ],
-    tags: ["Docker Compose", "PostgreSQL", "CI/CD", "Prometheus"],
+    tags: ["Product", "FastAPI", "CI/CD", "Prometheus"],
+  },
+  {
+    title: "Co-founder",
+    organization: "Dolphin CRM",
+    location: "Tehran, Iran",
+    period: "2026 — Present",
+    scope: "Co-founded a Persian-first CRM/ERP and lead its engineering and delivery.",
+    highlights: [
+      "Built the Django/PostgreSQL platform with 40 switchable feature modules, shipped as tagged releases.",
+      "Designed the deployment model: isolated Compose stacks, a signed feature manifest, least-privilege database roles, scripted rollback, and restore-verified backups.",
+    ],
+    tags: ["Product", "Django", "Docker Compose", "PostgreSQL"],
   },
   {
     title: "Freelance DevOps & Linux Administrator",
@@ -125,5 +136,5 @@ export const qualifications: Qualification[] = [
   },
 ];
 
-export const resumeSummary =
-  "DevOps engineer focused on Linux infrastructure, container delivery, and monitoring. I provision and harden servers, package services with Docker Compose, build CI pipelines with security gates, and route Prometheus alerts to the people who act on them. Recent work includes Dolphin CRM and Nerkhbaan: two complete products I built and deploy with least-privilege databases, scripted rollbacks, and restore-tested backups.";
+export const resumeSummary: string =
+  "DevOps engineer focused on Linux infrastructure, container delivery, and monitoring. I provision and harden servers, package services with Docker Compose, build CI pipelines with security gates, and route Prometheus alerts to the people who act on them. Founder of Nerkhbaan and co-founder of Dolphin CRM: two products I built and run with least-privilege databases, scripted rollbacks, and restore-tested backups.";

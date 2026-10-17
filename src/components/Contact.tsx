@@ -1,6 +1,7 @@
 import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
-import { profile } from "@/content/profile";
+import { Lines } from "@/components/SectionHeader";
+import type { Content } from "@/content";
 
 function ContactOrbit() {
   return (
@@ -13,7 +14,8 @@ function ContactOrbit() {
   );
 }
 
-export function Contact() {
+export function Contact({ content }: { content: Content }) {
+  const { profile, ui } = content;
   const links = [
     { name: "GitHub", ...profile.github },
     { name: "LinkedIn", ...profile.linkedin },
@@ -23,15 +25,14 @@ export function Contact() {
     <section aria-labelledby="contact-title" id="contact" className="scroll-mt-24 pt-10 pb-16 lg:pt-12 lg:pb-20">
       <div className="container-site grid gap-14 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div data-reveal>
-          <p className="eyebrow">08 / Next connection</p>
+          <p className="eyebrow">{ui.contact.eyebrow}</p>
           <h2 id="contact-title" className="mt-10 text-[3.25rem] leading-[1.05] sm:text-7xl lg:text-[6rem] lg:leading-[1.02]">
-            Let’s build
-            <br />
-            what’s next.
+            <Lines lines={ui.contact.titleLines} />
           </h2>
           <p className="mt-10 max-w-[560px] text-lg leading-[1.7] text-text">{profile.contactMessage}</p>
           <a
             href={`mailto:${profile.email}`}
+            dir="ltr"
             className="link-row mt-12 inline-flex max-w-full items-center gap-6 border-b border-line-strong pb-4 font-display text-[1.6rem] break-all text-mint sm:text-[2.25rem]"
           >
             {profile.email}
@@ -44,17 +45,17 @@ export function Contact() {
           <p className="mt-6 font-mono text-xs leading-[1.7] tracking-[0.04em] text-text uppercase">
             {profile.availability}
             <br />
-            {profile.location} · {profile.timeZone}
+            {profile.location} · <span dir="ltr">{profile.timeZone}</span>
           </p>
           <ul className="mt-6">
             {links.map((link) => (
               <li key={link.name} className="border-b border-line">
-                <ExternalLink href={link.href} className="link-row flex items-start justify-between gap-4 py-5">
+                <ExternalLink href={link.href} newTabLabel={ui.external} className="link-row flex items-start justify-between gap-4 py-5">
                   <span>
                     <span className="block text-lg text-ink">{link.name}</span>
-                    <span className="mt-1 block font-mono text-[0.6875rem] text-muted">{link.label}</span>
+                    <span dir="ltr" className="mt-1 block font-mono text-[0.6875rem] text-muted">{link.label}</span>
                   </span>
-                  <Icon name="arrow-up-right" className="mt-1 text-mint" />
+                  <Icon name="arrow-up-right" className="rtl-flip mt-1 text-mint" />
                 </ExternalLink>
               </li>
             ))}

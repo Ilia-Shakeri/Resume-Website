@@ -362,3 +362,115 @@ html.js .terminal-static {
 .portrait:hover::after {
   opacity: 0;
 }
+
+/* ---- Persian (fa) typography and RTL. */
+.locale-fa {
+  --font-display: "Vazirmatn Variable", "Space Grotesk Variable", ui-sans-serif, sans-serif;
+  --font-sans: "Vazirmatn Variable", "Inter Variable", ui-sans-serif, sans-serif;
+  /* Latin code stays in JetBrains Mono; Persian falls back to Vazirmatn. */
+  --font-mono: "JetBrains Mono Variable", "Vazirmatn Variable", ui-monospace, monospace;
+  font-family: var(--font-sans);
+}
+
+/* Letter-spacing breaks the joins of Persian script; uppercase does nothing. */
+.locale-fa :is(h1, h2, h3, h4, .eyebrow, .meta, [class*="tracking-"]) {
+  letter-spacing: 0;
+}
+
+.locale-fa :is(h1, h2) {
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+.locale-fa .eyebrow,
+.locale-fa .meta {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+}
+
+/* Directional glyphs (→, ↗) point the other way in RTL. */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .link-row:hover svg.rtl-flip {
+  transform: scaleX(-1) translate(2px, -2px);
+}
+
+/* ---- Venture cards (Ventures.tsx). */
+.venture-glow {
+  background: var(--accent);
+  opacity: 0.16;
+}
+
+.venture-logo {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.venture-role {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.venture-stat {
+  color: var(--color-ink);
+}
+
+.venture-bullet {
+  background: var(--accent);
+}
+
+.venture {
+  transition: border-color 300ms ease;
+}
+
+.venture:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--color-line-strong));
+}
+
+.locale-fa :is(.eyebrow, .meta, [class*="uppercase"]) {
+  text-transform: none;
+}
+
+/* Persian words run wider than the Latin headline at the same size. */
+.locale-fa #hero-title {
+  font-size: 1.85rem;
+}
+
+@media (min-width: 360px) {
+  .locale-fa #hero-title {
+    font-size: 2.05rem;
+  }
+}
+
+@media (min-width: 400px) {
+  .locale-fa #hero-title {
+    font-size: 2.3rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .locale-fa #hero-title {
+    font-size: 4.2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .locale-fa #hero-title {
+    font-size: 2.85rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .locale-fa #hero-title {
+    font-size: 4.1rem;
+  }
+}
+
+@media (min-width: 87.5rem) {
+  .locale-fa #hero-title {
+    font-size: 4.6rem;
+  }
+}

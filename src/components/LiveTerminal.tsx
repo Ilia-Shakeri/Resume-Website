@@ -91,7 +91,7 @@ export function LiveTerminal({ title, lines, rows = 4, className = "" }: Props) 
   const history = shown.slice(-(rows - 1));
 
   return (
-    <div ref={ref} className={`rounded-lg border border-line-strong bg-card-2 px-5 py-4 font-mono text-[0.8125rem] ${className}`}>
+    <div ref={ref} dir="ltr" className={`rounded-lg border border-line-strong bg-card-2 px-5 py-4 font-mono text-[0.8125rem] ${className}`}>
       <div className="flex items-center justify-between text-[0.6875rem] text-muted">
         <span>{title}</span>
         <span className="flex items-center gap-2 text-mint">

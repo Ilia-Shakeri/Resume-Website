@@ -1,9 +1,10 @@
 import { Icon } from "@/components/Icon";
-import { SectionHeader } from "@/components/SectionHeader";
+import { Lines, SectionHeader } from "@/components/SectionHeader";
 import { TechIcon } from "@/components/TechIcon";
-import { toolkit, toolkitIntro } from "@/content/practice";
+import type { Content } from "@/content";
 
-export function Toolkit() {
+export function Toolkit({ content }: { content: Content }) {
+  const { toolkit, toolkitIntro, ui } = content;
   const count = toolkit.reduce((total, group) => total + group.tools.length, 0);
 
   return (
@@ -11,15 +12,8 @@ export function Toolkit() {
       <div className="container-site">
         <SectionHeader
           id="toolkit-title"
-          index="03"
-          label="Technical toolkit"
-          title={
-            <>
-              The right tools.
-              <br />
-              For the right problem.
-            </>
-          }
+          eyebrow={ui.toolkit.eyebrow}
+          title={<Lines lines={ui.toolkit.titleLines} />}
           aside={toolkitIntro}
         />
         <ul className="mt-14 grid gap-x-10 lg:mt-20 lg:grid-cols-2">
@@ -41,6 +35,7 @@ export function Toolkit() {
                 {group.tools.map((tool) => (
                   <li
                     key={tool.name}
+                    dir="ltr"
                     className="inline-flex items-center gap-2 rounded-md border border-line bg-card-2 px-3 py-2 text-[0.8125rem] text-ink transition-colors duration-200 hover:border-mint/60 hover:bg-mint-tint"
                   >
                     <TechIcon tool={tool} size={16} />
@@ -53,7 +48,7 @@ export function Toolkit() {
           ))}
         </ul>
         <p className="mt-6 font-mono text-[0.6875rem] text-muted">
-          {`// ${count} tools · brand icons from Simple Icons (CC0)`}
+          {ui.toolkit.footnote(count)}
         </p>
       </div>
     </section>

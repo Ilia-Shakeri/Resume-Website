@@ -1,36 +1,39 @@
 import { WhoamiPanel } from "@/components/WhoamiPanel";
-import { profile } from "@/content/profile";
+import { Lines } from "@/components/SectionHeader";
+import type { Content } from "@/content";
 
-export function About() {
+export function About({ content }: { content: Content }) {
+  const { profile, ui } = content;
+  const labels = ui.about.labels;
   const rows = [
-    { label: "Name", value: profile.name },
-    { label: "Role", value: profile.role },
-    { label: "Based in", value: profile.location },
-    { label: "Focus", value: profile.focus },
+    { label: labels.name, value: profile.name },
+    { label: labels.role, value: profile.role },
+    { label: labels.basedIn, value: profile.location },
+    { label: labels.focus, value: profile.focus },
   ];
 
   return (
     <section aria-labelledby="about-title" className="scroll-mt-24 py-20 lg:py-[120px]" id="about">
       <div className="container-site grid gap-12 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-[92px]">
         <div>
-          <p className="eyebrow">01 / The human layer</p>
+          <p className="eyebrow">{ui.about.eyebrow}</p>
           <figure data-reveal className="portrait group relative mt-10 overflow-hidden rounded-lg border border-line-strong bg-card">
             {/* eslint-disable-next-line @next/next/no-img-element -- static export; pre-sized WebP */}
             <img
               src="/images/ilia-shakeri.webp"
-              alt={`Portrait of ${profile.name}, smiling, outdoors`}
+              alt={ui.about.portraitAlt}
               width={640}
               height={640}
               loading="lazy"
               decoding="async"
               className="aspect-square h-auto w-full object-cover"
             />
-            <figcaption className="absolute bottom-3 left-3 rounded-sm bg-bg/75 px-2 py-1 font-mono text-[0.625rem] tracking-[0.06em] text-text uppercase backdrop-blur-sm">
+            <figcaption dir="ltr" className="absolute start-3 bottom-3 rounded-sm bg-bg/75 px-2 py-1 font-mono text-[0.625rem] tracking-[0.06em] text-text uppercase backdrop-blur-sm">
               ~/ilia-shakeri.webp
             </figcaption>
           </figure>
           <div className="mt-6" data-reveal>
-            <WhoamiPanel rows={rows} />
+            <WhoamiPanel rows={rows} localTimeLabel={labels.localTime} />
           </div>
           <p className="mt-10 font-mono text-[0.6875rem] leading-[1.7] text-muted">
             {"// "}
@@ -43,9 +46,7 @@ export function About() {
 
         <div className="lg:pt-2" data-reveal>
           <h2 id="about-title" className="text-[2.5rem] leading-[1.08] sm:text-5xl lg:text-[3.75rem]">
-            A systems thinker.
-            <br />
-            A builder at heart.
+            <Lines lines={ui.about.titleLines} />
           </h2>
           <p className="mt-10 text-lg leading-[1.75] text-text lg:text-[1.1875rem]">{profile.bio[0]}</p>
           <p className="mt-6 text-base leading-[1.75] text-text lg:text-[1.0625rem]">{profile.bio[1]}</p>
