@@ -23,7 +23,11 @@ export function getContent(locale: Locale): Content {
   return content[locale];
 }
 
-/** Path of the home page in a language ("/" or "/fa/"). */
-export function homePath(locale: Locale): string {
-  return locale === "fa" ? "/fa/" : "/";
+export type PageKey = "home" | "about" | "projects" | "experience" | "contact";
+export const pages: PageKey[] = ["home", "about", "projects", "experience", "contact"];
+
+/** Path of a page in a language, e.g. "/about/" or "/fa/about/". */
+export function pagePath(locale: Locale, page: PageKey): string {
+  const prefix = locale === "fa" ? "/fa" : "";
+  return page === "home" ? `${prefix}/` : `${prefix}/${page}/`;
 }

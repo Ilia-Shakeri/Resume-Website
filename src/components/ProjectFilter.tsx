@@ -41,7 +41,7 @@ export function ProjectFilter({ filters, label, children }: { filters: Filter[];
           );
         })}
       </div>
-      <ul ref={grid} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul ref={grid} data-stagger className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {children}
       </ul>
     </>

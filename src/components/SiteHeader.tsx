@@ -6,10 +6,17 @@ import { LanguageSwitch } from "@/components/LanguageSwitch";
 import type { Locale } from "@/content/types";
 import type { UiStrings } from "@/content/en/ui";
 
+type NavItem = { key: string; label: string; href: string };
+
 type Props = {
   locale: Locale;
   name: string;
   home: string;
+  nav: NavItem[];
+  /** Key of the page being shown, for aria-current. */
+  current: string;
+  /** The same page in each language, for the language switch. */
+  alternates: Record<Locale, string>;
   resumeHref: string;
   resumeDownloadName: string;
   ui: Pick<UiStrings, "nav" | "language">;
@@ -17,21 +24,15 @@ type Props = {
 
 export function Monogram() {
   return (
-    <span aria-hidden="true" dir="ltr" className="font-mono text-lg tracking-[0.35em] text-mint">
+    <span aria-hidden="true" dir="ltr" className="font-mono text-base tracking-[0.3em] text-mint">
       [/]
     </span>
   );
 }
 
-export function SiteHeader({ locale, name, home, resumeHref, resumeDownloadName, ui }: Props) {
+export function SiteHeader({ locale, name, home, nav, current, alternates, resumeHref, resumeDownloadName, ui }: Props) {
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
-  const nav = [
-    { label: ui.nav.about, href: `${home}#about` },
-    { label: ui.nav.projects, href: `${home}#projects` },
-    { label: ui.nav.experience, href: `${home}#experience` },
-    { label: ui.nav.contact, href: `${home}#contact` },
-  ];
 
   useEffect(() => {
     if (!open) return;
@@ -53,31 +54,40 @@ export function SiteHeader({ locale, name, home, resumeHref, resumeDownloadName,
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-bg/85 backdrop-blur-md">
-      <div className="container-site flex h-[72px] items-center justify-between gap-4 lg:h-[100px]">
-        <a href={`${home}#top`} className="flex items-center gap-3 rounded-sm" aria-label={`${name}, ${ui.nav.backToTop}`}>
+    <header className="site-header sticky top-0 z-50 border-b border-line bg-bg/80 backdrop-blur-md">
+      <div className="container-site flex h-16 items-center justify-between gap-4">
+        <a
+          href={home}
+          className="flex items-center gap-3 rounded-sm"
+          aria-label={`${name}, ${ui.nav.home}`}
+          aria-current={current === "home" ? "page" : undefined}
+        >
           <Monogram />
-          <span className="font-display text-lg font-medium text-ink">{name}</span>
+          <span className="font-display text-base font-medium text-ink">{name}</span>
         </a>
 
-        <div className="flex items-center gap-3 lg:gap-8">
-          <nav aria-label={ui.nav.primary} className="hidden items-center gap-8 lg:flex">
-            <ul className="flex items-center gap-7">
+        <div className="flex items-center gap-3 lg:gap-6">
+          <nav aria-label={ui.nav.primary} className="hidden items-center gap-6 lg:flex">
+            <ul className="flex items-center gap-6">
               {nav.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href} className="text-[0.9375rem] text-text transition-colors hover:text-ink">
+                <li key={item.key}>
+                  <a
+                    href={item.href}
+                    aria-current={current === item.key ? "page" : undefined}
+                    className="nav-link text-sm text-text transition-colors hover:text-ink aria-[current=page]:text-ink"
+                  >
                     {item.label}
                   </a>
                 </li>
               ))}
             </ul>
-            <a href={resumeHref} download={resumeDownloadName} className="btn btn-outline min-h-[3.375rem] px-5">
+            <a href={resumeHref} download={resumeDownloadName} className="btn btn-outline min-h-10 px-4 text-[0.8125rem]">
               {ui.nav.resume}
-              <Icon name="download" className="text-mint" />
+              <Icon name="download" size={16} className="text-mint" />
             </a>
           </nav>
 
-          <LanguageSwitch locale={locale} label={ui.language.label} />
+          <LanguageSwitch locale={locale} label={ui.language.label} paths={alternates} />
 
           <button
             ref={toggleRef}
@@ -93,11 +103,16 @@ export function SiteHeader({ locale, name, home, resumeHref, resumeDownloadName,
         </div>
       </div>
 
-      <nav id="mobile-nav" aria-label={ui.nav.mobile} hidden={!open} className="border-t border-line bg-bg lg:hidden">
+      <nav id="mobile-nav" aria-label={ui.nav.mobile} hidden={!open} className="mobile-nav border-t border-line bg-bg lg:hidden">
         <ul className="container-site flex flex-col py-3">
           {nav.map((item) => (
-            <li key={item.href}>
-              <a href={item.href} onClick={() => setOpen(false)} className="flex min-h-12 items-center border-b border-line text-base text-ink">
+            <li key={item.key}>
+              <a
+                href={item.href}
+                aria-current={current === item.key ? "page" : undefined}
+                onClick={() => setOpen(false)}
+                className="flex min-h-12 items-center border-b border-line text-base text-ink aria-[current=page]:text-mint"
+              >
                 {item.label}
               </a>
             </li>
@@ -110,6 +125,7 @@ export function SiteHeader({ locale, name, home, resumeHref, resumeDownloadName,
           </li>
         </ul>
       </nav>
+      <span aria-hidden="true" className="scroll-progress" />
     </header>
   );
 }

@@ -3,14 +3,13 @@
 import { useState } from "react";
 import type { Locale } from "@/content/types";
 
-const TARGETS: Record<Locale, string> = { en: "/", fa: "/fa/" };
-
 /**
  * EN | فا pill switch. The thumb slides to the chosen language before the page
- * changes; the current section (#hash) is kept, and the choice is remembered.
+ * changes to the same page in that language (keeping any #hash), and the
+ * choice is remembered.
  * Plain links underneath, so it works without JavaScript too.
  */
-export function LanguageSwitch({ locale, label }: { locale: Locale; label: string }) {
+export function LanguageSwitch({ locale, label, paths }: { locale: Locale; label: string; paths: Record<Locale, string> }) {
   const [active, setActive] = useState<Locale>(locale);
 
   const go = (event: React.MouseEvent<HTMLAnchorElement>, target: Locale) => {
@@ -23,7 +22,7 @@ export function LanguageSwitch({ locale, label }: { locale: Locale; label: strin
     }
     setActive(target);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const href = TARGETS[target] + window.location.hash;
+    const href = paths[target] + window.location.hash;
     window.setTimeout(() => window.location.assign(href), reduced ? 0 : 220);
   };
 
@@ -37,7 +36,7 @@ export function LanguageSwitch({ locale, label }: { locale: Locale; label: strin
       {(["en", "fa"] as const).map((target) => (
         <a
           key={target}
-          href={TARGETS[target]}
+          href={paths[target]}
           hrefLang={target}
           lang={target}
           aria-current={target === locale ? "page" : undefined}

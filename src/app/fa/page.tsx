@@ -1,8 +1,8 @@
-import { HomePage } from "@/components/HomePage";
-import { homeMetadata } from "@/lib/metadata";
+import { HomeView } from "@/components/views";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata = homeMetadata("fa");
+export const metadata = pageMetadata("fa", "home");
 
 export default function Page() {
-  return <HomePage locale="fa" />;
+  return <HomeView locale="fa" />;
 }

@@ -1,7 +1,7 @@
 import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
 import { ProjectFilter } from "@/components/ProjectFilter";
-import { Lines, SectionHeader } from "@/components/SectionHeader";
+import { SectionHeader } from "@/components/SectionHeader";
 import { TechIcon } from "@/components/TechIcon";
 import type { Content } from "@/content";
 import type { ProjectCategory } from "@/content/types";
@@ -27,20 +27,15 @@ export function Builds({ content }: { content: Content }) {
     .filter((filter) => filter.count > 0);
 
   return (
-    <section aria-labelledby="builds-title" id="builds" className="scroll-mt-24 py-20 lg:py-[120px]">
+    <section aria-labelledby="builds-title" id="builds" className="scroll-mt-20 py-10 pb-16 lg:py-14 lg:pb-24">
       <div className="container-site">
-        <SectionHeader
-          id="builds-title"
-          eyebrow={ui.builds.eyebrow}
-          title={<Lines lines={ui.builds.titleLines} />}
-          aside={ui.builds.aside}
-        />
+        <SectionHeader id="builds-title" title={ui.builds.title} />
 
-        <div className="mt-14 lg:mt-16" data-reveal>
+        <div className="mt-6" data-reveal>
           <ProjectFilter filters={filters} label={ui.builds.filterLabel}>
             {projects.map((project) => (
               <li key={project.name} data-category={project.category} className="project-card">
-                <article className="flex h-full flex-col rounded-xl border border-line bg-card-2 p-5 transition-colors duration-300 hover:border-mint/40 hover:bg-card">
+                <article className="spotlight flex h-full flex-col rounded-xl border border-line bg-card-2 p-5 transition duration-300 hover:-translate-y-0.5 hover:border-mint/40 hover:bg-card">
                   <div className="flex items-start gap-3">
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mint-tint text-mint">
                       <Icon name={CATEGORY_ICON[project.category]} size={16} />
@@ -94,8 +89,6 @@ export function Builds({ content }: { content: Content }) {
             ))}
           </ProjectFilter>
         </div>
-
-        <p className="mt-8 font-mono text-[0.6875rem] text-muted">{ui.builds.footnote}</p>
       </div>
     </section>
   );

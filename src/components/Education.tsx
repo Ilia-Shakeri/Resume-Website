@@ -1,37 +1,35 @@
 import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
+import { SectionHeader } from "@/components/SectionHeader";
 import type { Content } from "@/content";
 
 export function Education({ content }: { content: Content }) {
   const { education, qualifications, ui } = content;
   return (
-    <section aria-labelledby="education-title" id="education" className="scroll-mt-24 bg-surface py-20 lg:py-[120px]">
+    <section aria-labelledby="education-title" id="education" className="scroll-mt-20 py-10 lg:py-14">
       <div className="container-site">
-        <p className="eyebrow">{ui.education.eyebrow}</p>
-        <h2 data-reveal id="education-title" className="mt-4 text-[2.5rem] leading-[1.05] sm:text-5xl lg:text-[4rem]">
-          {ui.education.title}
-        </h2>
-        <div className="mt-12 grid gap-10 lg:grid-cols-[500px_minmax(0,1fr)] lg:gap-12">
-          <div data-reveal className="self-start rounded-2xl border border-line-strong p-6 sm:p-8">
+        <SectionHeader id="education-title" title={ui.education.title} />
+        <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[400px_minmax(0,1fr)] lg:gap-10">
+          <div data-reveal className="spotlight self-start rounded-2xl border border-line-strong bg-card p-6">
             <p className="flex items-center gap-3 font-mono text-xs tracking-[0.06em] text-mint uppercase">
               <Icon name="cap" size={20} />
               {ui.education.educationLabel}
             </p>
-            <h3 className="mt-7 text-[1.875rem] leading-tight">{education.degree}</h3>
-            {education.institution ? <p className="mt-4 text-lg text-text">{education.institution}</p> : null}
-            <p className="meta mt-4">{education.status}</p>
-            <p className="mt-6 border-t border-line pt-6 text-[0.9375rem] leading-[1.7] text-text">{education.note}</p>
+            <h3 className="mt-5 text-xl leading-tight">{education.degree}</h3>
+            {education.institution ? <p className="mt-3 text-text">{education.institution}</p> : null}
+            <p className="mt-2 text-sm text-muted">{education.status}</p>
+            <p className="mt-5 border-t border-line pt-5 text-sm leading-[1.7] text-text">{education.note}</p>
           </div>
 
           <ul className="border-t border-line">
             {qualifications.map((item) => (
-              <li key={item.title} data-reveal className="group relative flex gap-5 border-b border-line py-6">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-mint-tint text-mint">
-                  <Icon name="badge" size={20} />
+              <li key={item.title} data-reveal className="group relative flex gap-4 border-b border-line py-5">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-mint-tint text-mint">
+                  <Icon name="badge" size={18} />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-2xl leading-tight">{item.title}</h3>
-                  <p className="meta mt-2">
+                  <h3 className="text-lg leading-tight">{item.title}</h3>
+                  <p className="mt-1.5 text-xs text-muted">
                     {item.issuer} · {item.date}
                     {item.certId ? (
                       <>

@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import { CaseStudy } from "@/components/CaseStudy";
 import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
-import { Lines, SectionHeader } from "@/components/SectionHeader";
+import { SectionHeader } from "@/components/SectionHeader";
 import { TechIcon } from "@/components/TechIcon";
 import type { Content } from "@/content";
 import type { Venture } from "@/content/types";
@@ -13,10 +13,10 @@ function VentureCard({ venture, content }: { venture: Venture; content: Content 
 
   return (
     <article
-      data-reveal
+      id={venture.slug}
       aria-labelledby={titleId}
       style={{ "--accent": venture.accent } as CSSProperties}
-      className="flex flex-col rounded-2xl border border-line-strong bg-card p-6 transition-colors duration-300 hover:border-mint/40 sm:p-8"
+      className="spotlight flex scroll-mt-24 flex-col rounded-2xl border border-line-strong bg-card p-6 transition-colors duration-300 hover:border-mint/40 sm:p-7"
     >
       <div className="flex items-start gap-4">
         <span className="venture-logo flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border bg-bg p-2">
@@ -32,7 +32,7 @@ function VentureCard({ venture, content }: { venture: Venture; content: Content 
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-            <h3 id={titleId} className="text-2xl leading-tight">
+            <h3 id={titleId} className="text-xl leading-tight sm:text-[1.375rem]">
               {venture.name}
             </h3>
             <span className="venture-role rounded-full border px-2.5 py-0.5 font-mono text-[0.6875rem] tracking-[0.06em] uppercase">
@@ -57,7 +57,9 @@ function VentureCard({ venture, content }: { venture: Venture; content: Content 
           <div key={stat.label} className="flex flex-col-reverse bg-card-2 px-3 py-3">
             <dt className="mt-1 text-[0.6875rem] leading-snug text-muted">{stat.label}</dt>
             <dd className="font-display text-xl leading-none text-ink">
-              <bdi dir="ltr">{stat.value}</bdi>
+              <bdi dir="ltr" data-count={stat.value}>
+                {stat.value}
+              </bdi>
             </dd>
           </div>
         ))}
@@ -117,15 +119,10 @@ export function Ventures({ content }: { content: Content }) {
   const { ventures, ui } = content;
 
   return (
-    <section aria-labelledby="ventures-title" id="projects" className="scroll-mt-24 bg-surface py-20 lg:py-[120px]">
+    <section aria-labelledby="ventures-title" id="ventures" className="scroll-mt-20 py-8 lg:py-10">
       <div className="container-site">
-        <SectionHeader
-          id="ventures-title"
-          eyebrow={ui.ventures.eyebrow}
-          title={<Lines lines={ui.ventures.titleLines} />}
-          aside={ui.ventures.aside}
-        />
-        <div className="mt-14 grid grid-cols-1 gap-6 lg:mt-16 lg:grid-cols-2">
+        <SectionHeader id="ventures-title" title={ui.ventures.title} />
+        <div data-reveal data-stagger className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {ventures.map((venture) => (
             <VentureCard key={venture.slug} venture={venture} content={content} />
           ))}
