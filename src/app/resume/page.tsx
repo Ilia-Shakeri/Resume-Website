@@ -58,6 +58,11 @@ export default function ResumePage() {
           </div>
           <ul className="space-y-0.5 text-[0.75rem] sm:shrink-0 sm:text-right sm:whitespace-nowrap">
             <li>
+              <a href={site.url} className="underline-offset-2 hover:underline">{new URL(site.url).host}</a>
+              {" · "}
+              <a href={`${site.url}/experience/#work-samples`} className="underline-offset-2 hover:underline">Engineering samples</a>
+            </li>
+            <li>
               {profile.location} · {profile.availability}
             </li>
             <li>

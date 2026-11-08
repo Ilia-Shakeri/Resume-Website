@@ -1,0 +1,23 @@
+---
+- name: Create private directories inside the lab
+  ansible.builtin.file:
+    path: "{{ lab_root }}/{{ item }}"
+    state: directory
+    mode: "0700"
+  loop:
+    - ""
+    - config
+    - data
+    - units
+
+- name: Render a policy file with restricted permissions
+  ansible.builtin.template:
+    src: baseline.conf.j2
+    dest: "{{ lab_root }}/config/baseline.conf"
+    mode: "0640"
+
+- name: Render an inert service example for offline inspection
+  ansible.builtin.template:
+    src: resume-demo.service.j2
+    dest: "{{ lab_root }}/units/resume-demo.service"
+    mode: "0644"

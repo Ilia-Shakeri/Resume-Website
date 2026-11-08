@@ -103,6 +103,12 @@ export const ui = {
   experience: {
     focusLabel: "Focus areas",
   },
+  workSamples: {
+    title: "DevOps work samples",
+    lead: "A public-project workflow, a reproducible lab, and a real recovery account. Each states what is verified and what is a suggested procedure.",
+    read: "Read sample",
+    evidence: "Evidence and files",
+  },
   education: {
     title: "Education & training",
     educationLabel: "Education",

@@ -11,12 +11,14 @@ const structure = await pdf.getMarkInfo();
 assert.equal(structure?.Marked, true, "Résumé must be tagged");
 const outline = await pdf.getOutline();
 assert(outline?.length, "Résumé needs document outline");
-const texts = [], links = [];
+const texts = [], links = [], firstPageLinks = [];
 for (let number = 1; number <= pdf.numPages; number++) {
   const page = await pdf.getPage(number);
   const text = await page.getTextContent();
   texts.push(text.items.map((item) => (item.str ?? "") + (item.hasEOL ? "\n" : "")).join(""));
-  links.push(...(await page.getAnnotations()).filter((annotation) => annotation.subtype === "Link").map((annotation) => annotation.url));
+  const pageLinks = (await page.getAnnotations()).filter((annotation) => annotation.subtype === "Link").map((annotation) => annotation.url);
+  links.push(...pageLinks);
+  if (number === 1) firstPageLinks.push(...pageLinks);
 }
 const text = texts.join("\n");
 assert(text.includes("Ilia Shakeri"));
@@ -27,6 +29,14 @@ assert(!/\b(?:NaN|undefined|null)\b/.test(text));
 assert(links.some((url) => url?.includes("github.com/Ilia-Shakeri")));
 assert(links.some((url) => url?.includes("linkedin.com")));
 assert(links.includes("mailto:iliashkr@gmail.com"));
+const portfolioOrigin = new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://iliashakeri.ir").origin;
+assert(firstPageLinks.some((href) => {
+  try {
+    const url = new URL(href);
+    return url.origin === portfolioOrigin && url.pathname === "/" && !url.hash;
+  } catch { return false; }
+}), "PDF header needs a clickable portfolio home link");
+assert(links.includes(`${portfolioOrigin}/experience/#work-samples`), "PDF needs a direct link to the engineering samples");
 assert(links.includes("https://iliashakeri.ir/projects/#dolphin-crm"));
 assert(!links.some((url) => /^https:\/\/github\.com\/Ilia-Shakeri\/Dolphin(?:\/|$)/.test(url)), "Private source must not be a public résumé link");
 const language = bytes.toString("latin1").match(/\/Lang\s*\(([^)]+)\)/)?.[1];

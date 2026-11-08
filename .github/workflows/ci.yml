@@ -23,6 +23,16 @@ jobs:
       - run: npm ci
       - run: npm audit
       - run: npm test
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Verify Ansible lab and drift recovery
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: |
+          python -m venv .generated/work-samples/ansible-baseline/venv
+          .generated/work-samples/ansible-baseline/venv/bin/python -m pip install --disable-pip-version-check --index-url https://pypi.org/simple -r public/work-samples/ansible-baseline/requirements.txt
+          .generated/work-samples/ansible-baseline/venv/bin/python -B public/work-samples/ansible-baseline/verify.py --receipt qa-artifacts/work-samples/ansible-baseline.json
       - run: npm run check
         env:
           BUILD_BROWSER: bundled

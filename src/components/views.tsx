@@ -4,6 +4,7 @@ import { Contact } from "@/components/Contact";
 import { ContactCta, FeaturedTeasers } from "@/components/HomeSections";
 import { Education } from "@/components/Education";
 import { Experience } from "@/components/Experience";
+import { WorkSamples } from "@/components/WorkSamples";
 import { Hero } from "@/components/Hero";
 import { PageHeader } from "@/components/PageHeader";
 import { ResumeCta } from "@/components/ResumeCta";
@@ -53,6 +54,7 @@ export function ExperienceView({ locale }: { locale: Locale }) {
     <SiteShell locale={locale} page="experience">
       <PageHeader title={content.ui.pages.experience.title} lead={content.experienceSummary} />
       <Experience content={content} />
+      <WorkSamples content={content} />
       <Education content={content} />
       <ResumeCta content={content} locale={locale} />
     </SiteShell>

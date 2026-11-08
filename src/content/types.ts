@@ -132,6 +132,19 @@ export type ExperienceItem = {
   tags: string[];
 };
 
+export type WorkSampleId = "cicd" | "ansible" | "restore";
+
+/** Distinguishes public project evidence, a lab example, and a first-person incident account. */
+export type WorkSample = {
+  id: WorkSampleId;
+  title: string;
+  kind: string;
+  evidenceLabel: string;
+  intro: string;
+  sections: { heading: string; items: string[] }[];
+  links: LinkRef[];
+};
+
 export type Qualification = {
   title: string;
   issuer: string;

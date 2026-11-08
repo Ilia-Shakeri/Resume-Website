@@ -326,3 +326,31 @@ This review supersedes the older October Stackplore version and capability snaps
 - The pinned local-model profile is off by default and loopback-only. No remote profiles ship in this pinned preview. Hosted model-path validation names llama.cpp and a Qwen profile; support is scoped to the documented setup.
 - Primary sources: [resource conversation, lines 23–42](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/docs/v2/resource-conversation.md#L23-L42), [hosted validation, lines 16–39](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/docs/v2/hosted-validation.md#L16-L39), and [runbook boundaries, lines 48–88](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/docs/v2/runbooks.md#L48-L88).
 - Broader reviewed-runbook work, retrieval-quality assessment, pilot capacity and stable-v2 gates remain open. Do not compress this into “all alpha.6 work accepted”, stable v2 ready, proven root-cause automation, or a production deployment claim.
+
+## Work-sample evidence — 8 Nov 2026
+
+Three new samples live in `src/content/en/work-samples.ts` and `src/content/fa/work-samples.ts`, under `/experience/#work-samples` and its Persian route. The sources below support their scope. Repeatable checks and the boundary between local and hosted evidence are recorded in `docs/verification.md`.
+
+### Public project CI
+
+- Source: Nerkhbaan at `025ccbbb236f8c947eef6b0a822cda952033c00b`, [pinned workflow](https://github.com/Ilia-Shakeri/Nerkhbaan/blob/025ccbbb236f8c947eef6b0a822cda952033c00b/.github/workflows/ci.yml).
+- Historical receipt: [run 38236359607](https://github.com/Ilia-Shakeri/Nerkhbaan/actions/runs/38236359607), 12 Oct 2026, passed all 15 jobs at that same source revision. Public source and job results were checked on 8 Nov 2026. This is not a new November test run.
+- Five check groups: locked Node application builds and frontend contracts; Python static/unit/API-contract checks and Go checks; real TimescaleDB on PostgreSQL 16, plain PostgreSQL 17 and Redis integration; browser auth/alert checks plus Compose, monitoring and Nginx configuration checks; dependency/secret checks and seven commit-tagged container-image scans.
+- Integration covers repeated migrations, checksums, lease handover, token races, route smoke and an isolated restore drill. Image scans use the committed exception policy; do not turn this into an unrestricted “zero vulnerabilities” claim.
+- Jobs can run in parallel. These groups are not a claimed sequence of production deployment gates. The sample proves a public project's documented CI and the linked historical result, not employer pipeline stages or a new production deployment.
+- OTICAMP GitHub Actions use stays self-reported. Exact employer stages remain unknown; do not copy the public project's checks into the employment claim.
+
+### New files-only Ansible lab
+
+- Source: `public/work-samples/ansible-baseline/`. This is a new portfolio example dated 8 Nov 2026, not OTICAMP's private playbook or a record of employer machine changes. The fleet-hardening experience remains a separate self-reported claim.
+- The local play uses no privilege escalation. A path/owner/symlink guard confines managed files to a user-owned `/tmp/resume-ansible-*` tree. It renders private directories, a restricted policy file and an inert service-unit example. It does not install/start a unit or edit SSH, firewall, package, account or running-service settings.
+- The verifier defines guard tests and syntax checks, a first apply, a zero-change second apply, deliberate content/permission drift, check mode that must leave drift intact, a one-task repair and a zero-change final check. It checks file bytes and modes directly. Offline unit validation is conditional; missing `systemd-analyze` must be recorded as skipped.
+- Linux or WSL and Python 3.12 are the current CI target; the controller is pinned to `ansible-core==2.21.6`. Reproduction steps and standalone archive instructions are in the sample README. The 8 Nov WSL run passed with Python 3.12.3: four guards, syntax, task-change counts `3/0/1/1/0`, unchanged drift during check mode, repaired content/mode and offline unit validation. A README-only wording correction is recorded separately from execution-start hashes; executable source did not change. The downloadable ZIP contains the same 11 source files. This local receipt does not certify the hosted job; release acceptance requires that commit's CI receipt.
+- Receipts record state, source-file hashes, tool versions, actual change counts and skipped checks. A run writes a running state first and a failed state on failure, so an old pass cannot represent a new failed run. No sample receipt is published as employer compliance, measured fleet improvement or production hardening acceptance.
+
+### Real recovery account and proposed checklist
+
+- Ilia confirmed on 8 Nov 2026 that the hosting provider unexpectedly deleted the primary VPS and that he restored its services from backups. This is a first-hand account of a real recovery. No independent incident receipt was inspected.
+- The incident date, duration, exact sequence, loss window and validation method remain undocumented for this sample. Do not add an RTO/RPO, zero-data-loss result, timed recovery or reconstructed technical sequence.
+- The separate checklist is proposed guidance for a future recovery: prepare an isolated target, check backup integrity, restore dependencies, validate representative application/data behavior, then plan cutover and record results. It is not the procedure claimed to have been followed in the reported incident.
+- Related public proof is the pinned Nerkhbaan [CI restore drill](https://github.com/Ilia-Shakeri/Nerkhbaan/blob/025ccbbb236f8c947eef6b0a822cda952033c00b/scripts/ci-restore-drill.sh) and matching successful CI run above. That script restores into a new target, compares counts/hashes for four named tables (`users`, `alerts`, `canonical_quotes`, `market_prices`), checks migration presence and compares TimescaleDB metadata counts. It does not hash every database table or verify the employer recovery.

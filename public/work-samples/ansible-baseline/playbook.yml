@@ -1,0 +1,19 @@
+---
+- name: Render a confined local baseline example
+  hosts: lab
+  connection: local
+  become: false
+  gather_facts: false
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+  pre_tasks:
+    - name: Reject targets outside the private temporary lab
+      ansible.builtin.command:
+        argv:
+          - "{{ ansible_playbook_python }}"
+          - "{{ playbook_dir }}/guard_path.py"
+          - "{{ lab_root | default('') }}"
+      changed_when: false
+      check_mode: false
+  roles:
+    - local_baseline

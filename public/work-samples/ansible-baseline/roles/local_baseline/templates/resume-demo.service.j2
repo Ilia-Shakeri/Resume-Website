@@ -1,0 +1,19 @@
+# Lab example only. The playbook never installs or starts this unit.
+[Unit]
+Description=Confined resume baseline example
+ConditionPathIsDirectory={{ lab_root }}/data
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/true
+WorkingDirectory={{ lab_root }}/data
+EnvironmentFile={{ lab_root }}/config/baseline.conf
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths={{ lab_root }}/data
+UMask=0077
+CapabilityBoundingSet=
+RestrictSUIDSGID=yes
+LockPersonality=yes

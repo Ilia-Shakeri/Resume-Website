@@ -105,6 +105,12 @@ export const ui: UiStrings = {
   experience: {
     focusLabel: "حوزه‌های تمرکز",
   },
+  workSamples: {
+    title: "نمونه‌های عملی DevOps",
+    lead: "گردش‌کار یک پروژهٔ عمومی، نمونهٔ آزمایشگاهی قابل اجرا و روایت بازیابی واقعی. مرز شواهد و روش پیشنهادی کنار هر نمونه روشن است.",
+    read: "خواندن نمونه",
+    evidence: "شواهد و فایل‌ها",
+  },
   education: {
     title: "تحصیلات و آموزش",
     educationLabel: "تحصیلات",

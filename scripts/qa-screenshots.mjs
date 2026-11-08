@@ -332,6 +332,46 @@ try {
   await experience.screenshot({ path: `${outDir}/certificate-hover.png` });
   await experience.close();
 
+  // Evidence must remain readable with scripts blocked, including narrow RTL layouts.
+  for (const prefix of ["", "/fa"]) {
+    const samples = await browser.newPage({ viewport: { width: 320, height: 800 }, javaScriptEnabled: false, reducedMotion: "reduce" });
+    await samples.goto(`${url}${prefix}/experience/#work-samples`, { waitUntil: "networkidle" });
+    const cards = samples.locator("#work-samples article[data-sample]");
+    check(await cards.count() === 3, `${prefix || "/en"} has three work samples without scripts`);
+    for (const id of ["cicd", "ansible", "restore"]) {
+      const details = samples.locator(`#work-sample-${id} details`);
+      await details.locator("summary").focus();
+      await samples.keyboard.press("Enter");
+      check(await details.evaluate((el) => el.open) && await details.locator("h4").first().isVisible(), `${prefix || "/en"} ${id} sample opens with keyboard and without scripts`);
+    }
+    const fits = await samples.locator("#work-samples").evaluate((section) => {
+      const outside = [...section.querySelectorAll("h3, h4, li, summary, a")].some((el) => {
+        const rect = el.getBoundingClientRect();
+        return rect.left < -1 || rect.right > window.innerWidth + 1;
+      });
+      return !outside && document.documentElement.scrollWidth === window.innerWidth;
+    });
+    check(fits, `${prefix || "/en"} expanded work samples fit 320px`);
+    const files = await samples.locator("#work-samples a[href^='/work-samples/']").evaluateAll((links) => links.map((a) => a.getAttribute("href")));
+    for (const file of new Set(files)) {
+      const response = await samples.request.get(url + file);
+      check(response.ok() && (await response.body()).length > 0, `${prefix || "/en"} sample file loads: ${file}`);
+    }
+    await samples.screenshot({ path: `${outDir}/work-samples${prefix ? "-fa" : "-en"}-320.png`, fullPage: true });
+    await samples.close();
+
+    // The accessibility engine schedules scripts; run it in a separate script-enabled page.
+    const accessibleSamples = await browser.newPage({ viewport: { width: 320, height: 800 }, reducedMotion: "reduce" });
+    await accessibleSamples.goto(`${url}${prefix}/experience/#work-samples`, { waitUntil: "networkidle" });
+    for (const id of ["cicd", "ansible", "restore"]) await accessibleSamples.locator(`#work-sample-${id} summary`).click();
+    await accessibleSamples.evaluate(axeSource);
+    const sampleViolations = await accessibleSamples.evaluate(async () =>
+      (await window.axe.run(document.querySelector("#work-samples"), { runOnly: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] })).violations.map((entry) => entry.id),
+    );
+    check(sampleViolations.length === 0, `${prefix || "/en"} expanded work samples: axe ${sampleViolations.join(", ") || "no violations"}`);
+    await accessibleSamples.close();
+  }
+
   // Projects: both ventures render; the filter narrows the grid.
   const projects = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
   await projects.goto(`${url}/projects/`, { waitUntil: "networkidle" });
