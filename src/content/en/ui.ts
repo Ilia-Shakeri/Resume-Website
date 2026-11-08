@@ -2,9 +2,9 @@
 
 export const ui = {
   meta: {
-    title: "Ilia Shakeri — DevOps & Backend Engineer",
+    title: "Ilia Shakeri — DevOps Engineer",
     description:
-      "DevOps and backend engineer in Tehran. Python, Go, Linux, containers, CI/CD, and observability. Founder of Nerkhbaan, co-founder of Dolphin CRM, and Computer Science student.",
+      "DevOps engineer in Tehran. Linux, Docker, Ansible, GitHub Actions, monitoring, and backup recovery. Python and Go for automation and DevOps tooling.",
     ogLocale: "en_US",
   },
   skipLink: "Skip to content",
@@ -26,7 +26,7 @@ export const ui = {
     fa: "فارسی",
   },
   hero: {
-    available: "Open to remote opportunities",
+    available: "Open to remote DevOps roles",
     explore: "View projects",
     resume: "Download résumé",
     contact: "Contact me",
@@ -40,7 +40,7 @@ export const ui = {
     featured: "Featured projects",
     allProjects: "All projects",
     ctaTitle: "Have a role or a project in mind?",
-    ctaBody: "I’m open to remote DevOps, backend, and platform engineering roles.",
+    ctaBody: "I’m open to remote DevOps engineering roles.",
     ctaButton: "Get in touch",
   },
   pages: {

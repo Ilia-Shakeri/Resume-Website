@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 function Heading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="border-b border-[#c9d3cd] pb-1.5 font-mono text-[0.6875rem] font-semibold tracking-[0.12em] !text-[#2f6b4d] uppercase">
+    <h2 className="border-b border-[#c9d3cd] pb-1.5 font-mono text-[0.6875rem] font-semibold tracking-[0.12em] !text-[#2f6b4d] uppercase print:break-after-avoid">
       {children}
     </h2>
   );

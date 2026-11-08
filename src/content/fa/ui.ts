@@ -4,9 +4,9 @@ import type { UiStrings } from "../en/ui";
 
 export const ui: UiStrings = {
   meta: {
-    title: "ایلیا شاکری — مهندس DevOps و توسعه‌دهندهٔ بک‌اند",
+    title: "ایلیا شاکری — مهندس DevOps",
     description:
-      "مهندس DevOps و توسعه‌دهندهٔ بک‌اند در تهران و دانشجوی علوم کامپیوتر. لینوکس، Python، Go، Docker، CI/CD و مانیتورینگ. بنیان‌گذار نرخبان و هم‌بنیان‌گذار دلفین CRM.",
+      "مهندس DevOps در تهران؛ لینوکس، Docker، Ansible، GitHub Actions، مانیتورینگ و بازیابی بکاپ. Python و Go برای اتوماسیون و ابزارهای DevOps.",
     ogLocale: "fa_IR",
   },
   skipLink: "رفتن به محتوا",
@@ -28,7 +28,7 @@ export const ui: UiStrings = {
     fa: "فارسی",
   },
   hero: {
-    available: "آمادهٔ همکاری دورکاری",
+    available: "آمادهٔ همکاری دورکاری در DevOps",
     explore: "مشاهدهٔ پروژه‌ها",
     resume: "دانلود رزومه",
     contact: "تماس با من",
@@ -42,7 +42,7 @@ export const ui: UiStrings = {
     featured: "پروژه‌های شاخص",
     allProjects: "همهٔ پروژه‌ها",
     ctaTitle: "موقعیت شغلی یا پروژه‌ای در نظر دارید؟",
-    ctaBody: "برای همکاری دورکاری در نقش‌های DevOps، بک‌اند و مهندسی پلتفرم آماده‌ام.",
+    ctaBody: "برای همکاری دورکاری در نقش مهندس DevOps آماده‌ام.",
     ctaButton: "تماس با من",
   },
   pages: {

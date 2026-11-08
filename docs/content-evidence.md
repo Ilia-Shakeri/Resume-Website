@@ -3,6 +3,8 @@
 Every public-facing claim on the site, where it comes from, and how well it is verified.
 Content lives in `src/content/*.ts`; change it there.
 
+Entries retain their review dates. The 8 Nov 2026 DevOps-only brief and pinned Stackplore review below supersede older role-target and Stackplore snapshots; historical evidence is not a statement of current deployment or availability.
+
 **Status key:** ✅ verified in a primary source · 📄 from the résumé only (self-reported, not independently verifiable) · ⏳ time-sensitive, needs confirmation · ❌ excluded from the site
 
 Sources:
@@ -223,7 +225,9 @@ Cards show a kind (for example "Bash CLI"), a one-sentence summary, and two or t
 | "Security-focused DevOps Engineer (Certified)" | CV summary | ❌ excluded — no certification identified |
 | Comprehensive Data Science Program, University of Tehran (online), May 2026 – Aug 2027 (planned) | Stated by Ilia, 17 Oct 2026; syllabus spreadsheet supplied by Ilia (schedule from 25 Ordibehesht 1405) | Shown as an in-progress programme, not a certificate. Topic lists describe the syllabus; scheduled dates alone do not prove individual module completion. |
 
-## Ranking of project candidates
+## Ranking of project candidates — historical October snapshot
+
+This ranking records the earlier review; it is not the current project order or release status. See the 8 Nov 2026 pinned Stackplore review below.
 
 Scored 1–5 per criterion; stars and popularity were not used.
 
@@ -250,9 +254,9 @@ See `TODO_CONTENT.md`.
 
 `public/images/ilia-shakeri.webp`: a photo Ilia supplied and approved for the site on 17 Oct 2026. It is cropped to 640×640 and re-encoded as WebP with no EXIF, GPS or XMP metadata (21 KB), and it is referenced in the JSON-LD `image`. It is shown as a mint duotone that turns to full colour on hover.
 
-## Content review — 8 Nov 2026
+## Content review — 8 Nov 2026, before the DevOps-only brief
 
-- The public role and page title use **DevOps & Backend Engineer** consistently. The introduction is two sentences in each language.
+- At this earlier review, the public role used **DevOps & Backend Engineer**. The later DevOps-only brief below supersedes that positioning.
 - Nerkhbaan and Dolphin deployment and usage claims are explicitly dated to the October 2026 evidence above. They are historical records, not a live availability statement. The load-test and recovery limits remain visible.
 - Nerkhbaan's historical deployment domain remains plain text in the dated case study. It is not a primary outbound link because current availability was not verified; the public repository and local case study remain accessible.
 - Dolphin's former public source URL returned 404 without authentication during this review. The site labels its source private and links the public case study at `/projects/#dolphin-crm` (or `/fa/projects/#dolphin-crm`). The résumé links the same public case study.
@@ -265,3 +269,60 @@ See `TODO_CONTENT.md`.
 - Repository freshness is per repository: a failed refresh is labelled cached or unavailable, with the last successful read distinguished from the attempted check. A stable tag is not deployment proof.
 
 These notes describe source changes. Current product availability, employment, and study progress still require their own evidence.
+
+## User-confirmed DevOps scope — 8 Nov 2026
+
+This section records Ilia's new statements and publication brief. These are self-reported employment facts, not an independent employer, fleet, access, or production audit. This brief supersedes the earlier broad role-search positioning only; it does not invent a promotion, dates, measurements, or new project acceptance evidence.
+
+| Claim / decision | Source | Publication limit |
+| --- | --- | --- |
+| Target one DevOps-focused résumé and website | Ilia, 8 Nov 2026 | Do not create three role-specific résumés or frame Go/Python/backend/ML as separate current job targets. Relevant code can remain evidence of DevOps automation. |
+| Joined OTICAMP with a senior engineer's support; that engineer left after the first three months, after which Ilia took ownership of the company's DevOps work | Ilia, 8 Nov 2026; clarified in the follow-up reply | The official title has always been DevOps Engineer. “Junior” describes initial experience, not a separate formal title. No formal Senior, Lead, Head or management promotion is claimed. Do not infer an exact calendar handover month. |
+| Now owns DevOps work and company-server/VPS administration with full administrative access; fleet is two physical servers and approximately four to five VPS | Ilia, 8 Nov 2026; follow-up fleet count | Preserve the approximation. Service count and per-environment breakdown are unknown. Do not publish credentials, addresses or access details. Full access is not an independent security audit. |
+| Works across Internet-connected and air-gapped environments | Ilia, 8 Nov 2026 | Preserve the two-environment distinction; isolation design and compliance are not independently verified. |
+| Uses Ansible to harden all machines in the company scope described by Ilia | Ilia, 8 Nov 2026 | Fleet count is recorded above; no hardening benchmark, compliance certification or measured coverage result was supplied. |
+| Most services run in Docker | Ilia, 8 Nov 2026 | Keep “most”; do not change this to a fully containerized estate or infer production Kubernetes. |
+| Owns backups, monitoring, and critical/crisis alerts | Ilia, 8 Nov 2026 | Do not add RPO/RTO, response times, uptime or improvement percentages. |
+| Successfully restored the main VPS-hosted services from backups after the hosting provider unexpectedly deleted the primary VPS | Ilia's follow-up, 8 Nov 2026 | Real recovery, self-reported; no independent restore receipt was inspected. Public copy stays vendor-neutral. Do not claim a recovery duration, zero data loss, a measured RPO/RTO, or a specific validation method. |
+| Creates/maintains CI/CD pipelines and workflows with GitHub Actions | Ilia's follow-up, 8 Nov 2026 | Exact stages were not recalled. Omit unconfirmed build/test/security/deploy/rollback gates; this does not block naming the confirmed tool. GitLab is separately a hosted service, not evidence that employer CI uses GitLab CI. |
+| Administers DirectAdmin and cPanel hosting | Ilia, 8 Nov 2026 | Per-panel account, customer, site and domain counts are unknown. |
+| Operates Jira, Confluence, GitLab, a “Matrix stack”, Prometheus, Grafana, Nextcloud, MinIO, n8n, Zabbix and Dekploy | Ilia's named service list, 8 Nov 2026 | Record the service scope, not an invented architecture, scale, SLA, HA design or deployment method for every listed service. “Matrix stack” does not identify every component. |
+| Also operates PRTG and OPNsense | Ilia, 8 Nov 2026; both product names explicitly confirmed in the final follow-up | Earlier spellings “ptrg” and “opensence” are resolved. Naming the products does not establish their configuration, topology or scale. |
+
+### Resolved facts and omitted unknowns
+
+- Exact calendar handover month is not supplied; the confirmed relative timeline is after the first three months. Official title is resolved: always DevOps Engineer.
+- Fleet count is resolved as two physical servers and approximately four to five VPS. Service count and Internet/air-gapped breakdown remain unknown.
+- Employer CI tool is resolved as GitHub Actions. Exact stages were not recalled and must be omitted, not invented or treated as a blocker.
+- A real successful backup recovery is confirmed in the user statement. Its date, duration, validation details and loss window are not supplied; omit those measurements.
+- Product names are resolved: PRTG and OPNsense, explicitly confirmed in the final follow-up.
+- Stackplore source/release review is complete below for the pinned published preview. Broader capacity, quality and stable-v2 acceptance claims remain outside that evidence.
+
+
+## Stackplore source and release review — 8 Nov 2026
+
+This review supersedes the older October Stackplore version and capability snapshot above. It distinguishes the stable v1 line, the published v2 preview, and later unpublished work. The review used source and hosted receipts; no Stackplore service, local test suite or local build was run for this résumé update.
+
+| Claim / boundary | Primary source | Publication limit |
+| --- | --- | --- |
+| Published v2 preview is `v2.0.0-alpha.6.3`, pinned to `48b3aec446303926f6f8e0ad993a257cbf6fdd11` | [Pinned source](https://github.com/Ilia-Shakeri/Stackplore/tree/48b3aec446303926f6f8e0ad993a257cbf6fdd11), [published preview](https://github.com/Ilia-Shakeri/Stackplore/releases/tag/v2.0.0-alpha.6.3) | Scope new v2 claims to this reviewed preview. A preview is not stable v2 or production acceptance. |
+| Preview release has 39 assets; verification and publication jobs succeeded | [Verify run 42460315714](https://github.com/Ilia-Shakeri/Stackplore/actions/runs/42460315714), [release run 42460315807](https://github.com/Ilia-Shakeri/Stackplore/actions/runs/42460315807), published preview above | These receipts prove the tagged source passed those hosted workflows and publication occurred; they do not close every integration, capacity, quality or production gate. |
+| Stable v1 line has `v1.0.3`, source `656581cf05d4774358d5644a6e1af3c69a210f81` | [Pinned stable source](https://github.com/Ilia-Shakeri/Stackplore/tree/656581cf05d4774358d5644a6e1af3c69a210f81), [stable tag](https://github.com/Ilia-Shakeri/Stackplore/tree/v1.0.3), reviewed 8 Nov 2026 | Do not call Stackplore entirely pre-1.0. Keep stable v1 separate from the v2 preview. |
+| A later alpha.7 tag exists at source `94425f8`, but its publication failed and no matching GitHub release was found in this review | [Failed release run 42473994721](https://github.com/Ilia-Shakeri/Stackplore/actions/runs/42473994721) | Do not describe alpha.7 as a published release. A tag alone is not publication or deployment proof. |
+| Go backend, React/TypeScript interface, PostgreSQL, and bounded Docker/Kubernetes collection form a self-hosted operational workspace | Reviewed pinned source and [v2 runbooks](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/docs/v2/runbooks.md#L48-L88) | Describe implemented architecture and default read restrictions; do not imply observed enterprise production scale or unrestricted control. |
+| Telemetry requests read stored observations; optional, explicitly consented log reads can read the provider live | [Pinned README](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/README.md#L50) and the reviewed investigation flow | Do not claim every investigation read is stored data or that the log path performs unrestricted live commands. |
+| Kubernetes workload collection uses namespaced get/list access; optional node observations have cluster scope | Reviewed pinned Kubernetes provider and access configuration | Scope the namespace claim to workloads. Do not claim all Kubernetes observations or credentials are restricted to namespaces. |
+
+### Smart Analysis — reviewed v2 preview
+
+- The selected-resource typed incident report combines health, metrics, restart observations, alert transitions and workload history into a bounded timeline.
+- It presents possible causes with supporting and contrary references, missing evidence and suggested next checks. The report explicitly keeps cause unproven; aligned observations are not a proven root cause.
+- Implementation evidence: the pinned [report type/builder, lines 83–132](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/apps/api/internal/incidentreport/report.go#L83-L132) and [incident-report service, lines 12–65](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/apps/api/internal/assistantservice/incident_report.go#L12-L65). These source facts do not claim every later alpha feature or a stable-v2 acceptance result.
+
+### Smart Assistant — reviewed v2 preview
+
+- Scoped resource explanations and explicit investigations support English and Persian. Fixed permitted reads, checked citations and read/output budgets bound the work.
+- Investigations combine stored telemetry with optional, explicitly consented live log reads under fixed plans and budgets. Private investigation content is volatile, with owner, logout, cancellation, expiry, source and resource boundaries; this is not a claim about every operating-system or infrastructure retention layer.
+- The pinned local-model profile is off by default and loopback-only. No remote profiles ship in this pinned preview. Hosted model-path validation names llama.cpp and a Qwen profile; support is scoped to the documented setup.
+- Primary sources: [resource conversation, lines 23–42](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/docs/v2/resource-conversation.md#L23-L42), [hosted validation, lines 16–39](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/docs/v2/hosted-validation.md#L16-L39), and [runbook boundaries, lines 48–88](https://github.com/Ilia-Shakeri/Stackplore/blob/48b3aec446303926f6f8e0ad993a257cbf6fdd11/docs/v2/runbooks.md#L48-L88).
+- Broader reviewed-runbook work, retrieval-quality assessment, pilot capacity and stable-v2 gates remain open. Do not compress this into “all alpha.6 work accepted”, stable v2 ready, proven root-cause automation, or a production deployment claim.

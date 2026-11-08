@@ -51,7 +51,50 @@ Edit `src/content/en/*.ts` and `src/content/fa/*.ts`, then regenerate assets wit
 
 ## Review follow-up (8 Nov 2026)
 
-- Reconfirm current employment, remote-work availability, and study progress before changing their dates or status.
+- Current OTICAMP employment and responsibility were reconfirmed on 8 Nov 2026 below. Reconfirm remote-work availability and study progress before changing their status.
 - Product deployment and usage claims stay dated to October 2026 until fresh checks exist.
 - Dolphin source is private. Keep the public engineering case study as the portfolio evidence link; do not restore an inaccessible source-code button.
 - Keep the 73-tool site inventory, with the core set shown first. Add tools or change the core set only when supported by work or study evidence.
+
+## DevOps-only rewrite brief — 8 Nov 2026
+
+Confirmed directly by Ilia:
+
+- Keep one DevOps-focused résumé and website, with the current visual design. Do not make three separate job-target résumés.
+- At OTICAMP, began with a senior engineer's help; that engineer left after the first three months, after which Ilia took ownership of the company's DevOps work and server/VPS administration. Official title has always been DevOps Engineer; no formal Junior/Senior/Lead promotion is claimed.
+- Fleet: two physical servers and approximately four to five VPS. There are many services; exact service count is unknown.
+- Works with both Internet-connected and air-gapped environments.
+- Uses Ansible for hardening across all machines in the stated company scope. Most services run in Docker.
+- Owns backups, monitoring and critical/crisis alerts. Uses GitHub Actions for CI/CD pipelines/workflows; exact stages were not recalled and must be omitted.
+- Successfully restored the main VPS-hosted services from backups after unexpected deletion by the hosting provider. Keep public copy vendor-neutral; no recovery time, loss window, RPO/RTO or zero-data-loss claim was supplied.
+- Administers DirectAdmin and cPanel hosting.
+- Named services: Jira, Confluence, GitLab, “Matrix stack”, Prometheus, Grafana, Nextcloud, MinIO, n8n, Zabbix and Dekploy.
+- Also operates PRTG and OPNsense; Ilia explicitly confirmed both names in the final follow-up. Earlier spellings “ptrg” and “opensence” are resolved.
+
+Resolved in the follow-up reply:
+
+- Relative handover timing: after the first three months. Exact calendar month is not needed for the current copy.
+- Formal title: always DevOps Engineer.
+- Fleet: two physical servers and about four to five VPS.
+- CI tool: GitHub Actions.
+- Recovery example: successful restore from backups after the primary VPS was unexpectedly deleted by its hosting provider.
+- Product names: PRTG and OPNsense, both explicitly confirmed.
+
+Still unknown; omit rather than block truthful copy:
+
+1. Exact service count and per-environment fleet split.
+2. Specific CI stages, checks, release gates and rollback procedure.
+3. Recovery date, duration, validation method and any measured loss window.
+4. Future Stackplore claims beyond the pinned preview need new evidence. The source/release review below is complete; no local Stackplore service, test or build is part of this résumé edit.
+
+Do not add exact fleet totals beyond the stated approximation, uptime, response-time reductions, backup recovery times, cloud scale, production Kubernetes, or a formal promotion from these statements alone.
+
+## Stackplore source review resolved — 8 Nov 2026
+
+- Published preview: v2.0.0-alpha.6.3 at 48b3aec446303926f6f8e0ad993a257cbf6fdd11; 39 release assets. Hosted verify run 42460315714 and release run 42460315807 succeeded.
+- Stable v1.0.3 at 656581cf05d4774358d5644a6e1af3c69a210f81 remains a separate released line. The older October pre-1.0 description is historical.
+- Later alpha.7 source 94425f8 has failed publication run 42473994721 and no matching published release in this review. Do not publish it as a shipped preview.
+- The résumé may describe the pinned operational workspace, bounded collection, scoped typed incident timeline and optional local-model explanations/investigations, with the limits recorded in docs/content-evidence.md.
+- Keep stored telemetry distinct from optional, consented live log reads. Restrict the Kubernetes namespace claim to workloads; optional node observations can have cluster scope.
+- Leave broad runbook, retrieval-quality, pilot-capacity and stable-v2 readiness claims out until their own gates pass. Report hypotheses are not proven root causes; tagged builds are not production deployments.
+- Current copy remains a single DevOps-focused résumé/site. This review does not add an unrelated job-target résumé.

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-08T09:48:19.419Z",
+  "fetchedAt": "2026-11-08T12:01:52.522Z",
   "source": "public GitHub API",
   "repos": {
     "Nerkhbaan": {
@@ -8,15 +8,15 @@
       "latestTagDate": "2026-10-28T13:55:38Z",
       "latestPrerelease": null,
       "lastActivity": "2026-11-08T07:53:52Z",
-      "lastSuccessfulAt": "2026-11-08T09:48:19.419Z"
+      "lastSuccessfulAt": "2026-11-08T12:01:52.522Z"
     },
     "Stackplore": {
       "url": "https://github.com/Ilia-Shakeri/Stackplore",
       "latestTag": "v1.0.3",
       "latestTagDate": "2026-10-19T10:09:04Z",
-      "latestPrerelease": "v2.0.0-alpha.6.3",
-      "lastActivity": "2026-11-08T09:47:11Z",
-      "lastSuccessfulAt": "2026-11-08T09:48:19.419Z"
+      "latestPrerelease": "v2.0.0-alpha.7",
+      "lastActivity": "2026-11-08T12:00:54Z",
+      "lastSuccessfulAt": "2026-11-08T12:01:52.522Z"
     }
   }
 }

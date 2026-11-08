@@ -7,22 +7,22 @@ import type { Education, ExperienceItem, Profile, Qualification } from "../types
 export const profile: Profile = {
   name: "Ilia Shakeri",
   role: "DevOps Engineer",
-  headline: "DevOps & Backend Engineer",
-  stack: ["Linux", "Python", "Go", "Docker", "CI/CD", "Observability"],
+  headline: "DevOps Engineer",
+  stack: ["Linux", "Docker", "Ansible", "CI/CD", "Python", "Go"],
   intro:
-    "I build Python and Go backends and the Linux infrastructure they run on. Founder of Nerkhbaan and co-founder of Dolphin CRM.",
+    "I manage Linux servers, Docker deployments, CI/CD, monitoring, and backups. My work spans connected and air-gapped environments, with Ansible for hardening and Python and Go for services and tooling.",
   study: "Computer Science student (B.Sc.)",
   location: "Tehran, Iran",
   timeZone: "IRST · UTC+03:30",
-  availability: "Open to remote DevOps, backend & platform roles",
+  availability: "Open to remote DevOps roles",
   email: "iliashkr@gmail.com",
   github: { label: "github.com/Ilia-Shakeri", href: "https://github.com/Ilia-Shakeri" },
   linkedin: { label: "linkedin.com/in/ilia-shakeri", href: "https://www.linkedin.com/in/ilia-shakeri/" },
   telegram: { label: "@ilia_ssh", href: "https://t.me/ilia_ssh" },
-  focus: "Backend · Infrastructure · Automation",
+  focus: "Linux operations · Automation · Monitoring",
   languages: ["Persian (native)", "English (professional working)"],
   bio: [
-    "I develop backend services with Python and Go and manage the infrastructure they run on. My work includes Linux administration, containerized deployments, CI/CD, monitoring, security hardening, and backup recovery. When a product needs a frontend, I build it in React or Next.js.",
+    "My work centers on company-wide DevOps and Linux server operations: Docker services, GitHub Actions pipelines, Ansible hardening, monitoring, incident alerts, and backups. I work in both connected and air-gapped environments and administer hosting services with DirectAdmin and cPanel. Python and Go support my services and engineering tools.",
     "I prioritize reproducible deployments, tested recovery procedures, and operational evidence over assumptions. Outside work, I have played the piano for more than ten years.",
   ],
   principles: [
@@ -30,7 +30,7 @@ export const profile: Profile = {
     { title: "Make reliability visible.", detail: "Health checks, alerts, and evidence you can read." },
   ],
   contactMessage:
-    "Looking for a DevOps engineer or backend developer who treats deployments, backups, and alerts as engineering work? I’d like to hear about what you’re building.",
+    "Looking for a DevOps engineer for Linux operations, delivery pipelines, monitoring, and backups? I’d like to hear about your team and infrastructure.",
   remote: [
     { label: "Open to", value: "Remote roles with international teams and with companies in Iran" },
     { label: "Time zone", value: "Tehran, UTC+03:30 (no daylight saving)" },
@@ -42,14 +42,14 @@ export const profile: Profile = {
 };
 
 export const capabilities = [
-  "Backend services",
-  "Linux & hardening",
+  "Linux operations",
+  "Containers & hardening",
   "CI/CD & automation",
-  "Observability & recovery",
+  "Monitoring & backups",
 ];
 
 export const experienceSummary: string =
-  "A DevOps role at OTICAMP since June 2025, alongside Nerkhbaan and Dolphin CRM. The product deployment and usage records below were verified in October 2026.";
+  "DevOps work at OTICAMP since June 2025. After three months working with senior support, I took responsibility for company-wide DevOps and server operations. Product deployment and usage records below date to October 2026.";
 
 export const experience: ExperienceItem[] = [
   {
@@ -59,14 +59,16 @@ export const experience: ExperienceItem[] = [
     location: "Tehran, Iran",
     period: "Jun 2025 — Present",
     scope:
-      "Provisioning, hardening, and monitoring Linux infrastructure for internal and product services.",
+      "Started at junior level with senior support; after that engineer left following my first three months, took responsibility for company-wide DevOps across two physical servers and approximately 4–5 VPSs.",
     highlights: [
-      "Provision and harden Linux infrastructure with Ansible, keeping development and production configuration consistent.",
-      "Deploy and maintain Prometheus, Grafana, and Loki for infrastructure metrics and logs.",
-      "Built n8n automation that routes Prometheus alerts and Jira events to Matrix channels and direct messages.",
-      "Deploy and operate Keycloak for centralized authentication across internal services.",
+      "Recovered the primary VPS and its services from backups after the hosting provider deleted the instance.",
+      "Operate company services primarily with Docker across connected and air-gapped environments, including Jira, Confluence, GitLab, and Matrix.",
+      "Maintain Nextcloud, MinIO, n8n, and Dekploy services; administer DirectAdmin and cPanel hosting environments.",
+      "Apply Ansible hardening across all managed machines.",
+      "Own backups, monitoring, and critical-incident alerts; operate Prometheus, Grafana, Zabbix, PRTG, and OPNsense.",
+      "Build and maintain CI/CD pipelines and workflows using GitHub Actions.",
     ],
-    tags: ["Ansible", "Observability", "ChatOps", "Keycloak"],
+    tags: ["Linux", "Docker", "Ansible", "CI/CD", "Air-gapped"],
   },
   {
     title: "Founder & Engineer",
@@ -176,4 +178,4 @@ export const qualifications: Qualification[] = [
 ];
 
 export const resumeSummary: string =
-  "DevOps and backend engineer working with Python (FastAPI, Django), Go, Linux, Docker Compose, CI/CD, monitoring, and tested backup recovery. React and Next.js for product frontends. Founder of Nerkhbaan and co-founder of Dolphin CRM; production and usage evidence below dates to October 2026. B.Sc. Computer Science student taking the University of Tehran’s data science programme.";
+  "DevOps engineer responsible for OTICAMP's operations across two physical servers and approximately 4–5 VPSs, after taking over from a senior engineer three months into the role. Linux, Docker, Ansible hardening, GitHub Actions CI/CD, monitoring, and backup recovery in connected and air-gapped environments. Python and Go for services and tooling.";
