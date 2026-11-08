@@ -8,7 +8,7 @@ Historical results described an earlier VPS-based version. They do not certify t
 | --- | --- | --- |
 | Source | npm run lint; npm run typecheck | ESLint and TypeScript exit status |
 | Local helper and build rules | npm test | Confinement, malformed URL survival, HEAD/method/404, symlink boundary, public-data failure states, locale and policy tests |
-| Publishing export | npm run build | Exact build.txt/build-info.json, fresh PDF/OG, versioned assets, document locale and script hashes |
+| Publishing export | npm run build | Exact build.txt/build-info.json, fresh PDF/OG, versioned assets, document locale and script hashes; Linux CI forces BUILD_BROWSER=bundled to exercise the host browser lifecycle |
 | PDF and static artifacts | npm run check:artifacts | Tagged PDF, outline, readable extracted text, contact links, page count, PNG dimensions, language and policy |
 | Browser | npm run qa:screens | 80 EN/FA viewport captures, axe, links/headings, no-script/failed-script navigation, filter count, menu focus/resize/download/short height, clipboard denial, motion and 404 recovery |
 | Public external links | npm run check:links | qa-artifacts/link-check.json; broken and access-limited results separated |

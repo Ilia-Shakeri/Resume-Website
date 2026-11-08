@@ -15,12 +15,22 @@ export function browserCandidates(env = process.env, platform = process.platform
   return [...new Set(candidates.filter(Boolean))];
 }
 export async function launchBrowser() {
+  const mode = process.env.BUILD_BROWSER || "auto";
+  if (!["auto", "bundled"].includes(mode)) throw new Error("BUILD_BROWSER must be auto or bundled");
+  const bundled = mode === "bundled";
+  if (bundled && process.platform !== "linux") throw new Error("Bundled publishing browser requires Linux");
+  if (bundled) return launchBundledBrowser();
   const executablePath = browserCandidates().find((candidate) => existsSync(candidate));
   if (process.env.CHROMIUM_PATH && !existsSync(process.env.CHROMIUM_PATH)) throw new Error("CHROMIUM_PATH does not exist");
   if (executablePath) return chromium.launch({ executablePath });
   if (process.platform === "linux") {
-    const { default: serverChromium } = await import("@sparticuz/chromium");
-    return chromium.launch({ executablePath: await serverChromium.executablePath(), args: serverChromium.args, headless: true });
+    return launchBundledBrowser();
   }
   throw new Error("No browser found. Install Chrome or set CHROMIUM_PATH to Chrome/Chromium.");
+}
+async function launchBundledBrowser() {
+  const { default: serverChromium } = await import("@sparticuz/chromium");
+  const browser = await chromium.launch({ executablePath: await serverChromium.executablePath(), args: serverChromium.args, headless: true });
+  console.log(`Publishing browser: bundled Chromium ${browser.version()}`);
+  return browser;
 }

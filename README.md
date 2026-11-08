@@ -12,6 +12,8 @@ Typed copy lives in src/content/en/ and src/content/fa/. Edit both languages tog
 
 Use Node.js 22. Install Chrome or Edge locally; the browser helper discovers Windows, macOS and Linux paths. CHROMIUM_PATH can override detection. Linux build hosts also have a pinned compressed Chromium fallback.
 
+Each generated artifact owns a fresh browser process. Linux CI sets BUILD_BROWSER=bundled for the publishing build, so PDF and social-image generation exercise the same compressed browser used on Vercel even when system Chrome is installed. Both helpers close their preview server on failure too.
+
 PowerShell:
 
 ```powershell

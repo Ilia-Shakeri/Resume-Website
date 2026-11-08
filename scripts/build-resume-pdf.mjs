@@ -3,11 +3,12 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { launchBrowser } from "./browser.mjs";
 import { startStaticServer } from "./static-server.mjs";
-export async function buildResumePdf({ output = "out/resume/ilia-shakeri-resume.pdf", browser: suppliedBrowser } = {}) {
+export async function buildResumePdf({ output = "out/resume/ilia-shakeri-resume.pdf" } = {}) {
   await mkdir(path.dirname(output), { recursive: true });
   const { server, url } = await startStaticServer("out");
-  const browser = suppliedBrowser ?? await launchBrowser();
+  let browser;
   try {
+    browser = await launchBrowser();
     const page = await browser.newPage({ reducedMotion: "reduce" });
     const response = await page.goto(`${url}/resume/`, { waitUntil: "networkidle" });
     if (!response?.ok()) throw new Error(`Résumé route returned ${response?.status()}`);
@@ -20,8 +21,8 @@ export async function buildResumePdf({ output = "out/resume/ilia-shakeri-resume.
     console.log(`Tagged résumé: ${output} (${(await stat(output)).size} bytes)`);
     return pdf.length;
   } finally {
-    if (!suppliedBrowser) await browser.close();
-    await new Promise((resolve) => server.close(resolve));
+    try { await browser?.close(); }
+    finally { await new Promise((resolve) => server.close(resolve)); }
   }
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

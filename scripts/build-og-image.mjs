@@ -4,15 +4,16 @@ import { pathToFileURL } from "node:url";
 import { launchBrowser } from "./browser.mjs";
 import { startStaticServer } from "./static-server.mjs";
 const escape = (value) => String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
-export async function buildOgImage({ output = "out/og-image.png", browser: suppliedBrowser } = {}) {
+export async function buildOgImage({ output = "out/og-image.png" } = {}) {
   const html = await readFile("out/index.html", "utf8");
   const scripts = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)];
   const graph = scripts.flatMap((match) => { const value = JSON.parse(match[1]); return value["@graph"] ?? [value]; });
   const person = graph.find((entry) => entry["@type"] === "Person");
   if (!person?.name || !person.jobTitle) throw new Error("Home page lacks Person metadata for the social card");
   const { server, url } = await startStaticServer("out");
-  const browser = suppliedBrowser ?? await launchBrowser();
+  let browser;
   try {
+    browser = await launchBrowser();
     await mkdir(path.dirname(output), { recursive: true });
     const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1, reducedMotion: "reduce" });
     await page.goto(url);
@@ -24,8 +25,8 @@ export async function buildOgImage({ output = "out/og-image.png", browser: suppl
     await page.close();
     console.log(`Social card: ${output} (1200×630)`);
   } finally {
-    if (!suppliedBrowser) await browser.close();
-    await new Promise((resolve) => server.close(resolve));
+    try { await browser?.close(); }
+    finally { await new Promise((resolve) => server.close(resolve)); }
   }
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {

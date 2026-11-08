@@ -5,7 +5,6 @@ import { refreshGithub } from "./github-stats.mjs";
 import { filesIn, localizeHtml, secureHtml, fingerprintAssets } from "./build-utils.mjs";
 import { buildResumePdf } from "./build-resume-pdf.mjs";
 import { buildOgImage } from "./build-og-image.mjs";
-import { launchBrowser } from "./browser.mjs";
 import { generateToolIcons } from "./build-tool-icons.mjs";
 let sha = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GITHUB_SHA;
 if (!sha) { try { sha = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(); } catch { sha = "local-build"; } }
@@ -21,11 +20,9 @@ const sprite = await generateToolIcons();
 console.log(`Brand sprite: ${sprite.count} marks`);
 if (sprite.missingBrands.length) console.warn(`Neutral fallback: ${sprite.missingBrands.join(", ")}`);
 exportPages(false);
-const browser = await launchBrowser();
-try {
-  await buildResumePdf({ browser });
-  await buildOgImage({ browser });
-} finally { await browser.close(); }
+// Each artifact owns its browser: closing a context can end a single-process host browser.
+await buildResumePdf();
+await buildOgImage();
 const assets = await fingerprintAssets("out");
 await writeFile(".generated/asset-map.json", JSON.stringify(Object.fromEntries(assets), null, 2) + "\n");
 const generated = path.resolve(".generated");

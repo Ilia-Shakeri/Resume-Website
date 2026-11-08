@@ -25,6 +25,7 @@ jobs:
       - run: npm test
       - run: npm run check
         env:
+          BUILD_BROWSER: bundled
           NEXT_PUBLIC_SITE_URL: https://iliashakeri.ir
       - run: npm run check:artifacts
       - run: npm run qa:screens
