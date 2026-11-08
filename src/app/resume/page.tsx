@@ -137,7 +137,7 @@ export default function ResumePage() {
           ))}
           {chatops ? <article className="mt-3 break-inside-avoid">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-              <h3 className="text-[0.9375rem] font-semibold">{chatops.name}</h3>
+              <h3 className="text-[0.9375rem] font-semibold">{chatops.name.replaceAll("→", "to")}</h3>
               <a href={chatops.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
                 {chatops.links[0].href.replace("https://", "")}
               </a>

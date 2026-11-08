@@ -22,6 +22,7 @@ const text = texts.join("\n");
 assert(text.includes("Ilia Shakeri"));
 assert(/DevOps/i.test(text));
 assert(text.includes("iliashkr@gmail.com"));
+assert(text.includes("Prometheus & Jira to Matrix bridges"), "Printable ChatOps heading needs readable words without a host fallback glyph");
 assert(!/\b(?:NaN|undefined|null)\b/.test(text));
 assert(links.some((url) => url?.includes("github.com/Ilia-Shakeri")));
 assert(links.some((url) => url?.includes("linkedin.com")));
