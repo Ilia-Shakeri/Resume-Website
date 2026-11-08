@@ -1,6 +1,7 @@
 "use client";
 
 import { type ReactNode, useEffect, useRef, useState } from "react";
+import { useIsHydrated } from "@/lib/use-motion";
 
 type Filter = { key: string; label: string; count: number };
 
@@ -8,7 +9,8 @@ type Filter = { key: string; label: string; count: number };
  * Category chips over a server-rendered project grid. Cards carry
  * data-category; without JavaScript every card simply stays visible.
  */
-export function ProjectFilter({ filters, label, children }: { filters: Filter[]; label: string; children: ReactNode }) {
+export function ProjectFilter({ filters, label, resultTemplate, children }: { filters: Filter[]; label: string; resultTemplate: string; children: ReactNode }) {
+  const hydrated = useIsHydrated();
   const [active, setActive] = useState("all");
   const grid = useRef<HTMLUListElement>(null);
 
@@ -16,13 +18,16 @@ export function ProjectFilter({ filters, label, children }: { filters: Filter[];
     grid.current?.querySelectorAll<HTMLElement>(":scope > [data-category]").forEach((card) => {
       const show = active === "all" || card.dataset.category === active;
       card.hidden = !show;
-      if (show) card.classList.add("is-visible");
+      if (show) {
+        card.classList.add("is-visible");
+        card.classList.remove("reveal-pending");
+      }
     });
   }, [active]);
 
   return (
     <>
-      <div role="group" aria-label={label} className="flex flex-wrap gap-2">
+      {hydrated ? <div role="group" aria-label={label} className="flex flex-wrap gap-2">
         {filters.map((filter) => {
           const pressed = active === filter.key;
           return (
@@ -40,7 +45,10 @@ export function ProjectFilter({ filters, label, children }: { filters: Filter[];
             </button>
           );
         })}
-      </div>
+      </div> : null}
+      {hydrated ? <p role="status" className="sr-only">
+        {resultTemplate.replace("{{count}}", String(filters.find((filter) => filter.key === active)?.count ?? 0))}
+      </p> : null}
       <ul ref={grid} data-stagger className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {children}
       </ul>

@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.vercel/
 out/
 *.tsbuildinfo
 next-env.d.ts
@@ -8,3 +9,5 @@ next-env.d.ts
 .DS_Store
 npm-debug.log*
 qa-artifacts/
+
+.generated/

@@ -25,7 +25,7 @@ Edit `src/content/en/*.ts` and `src/content/fa/*.ts`, then regenerate assets wit
 - Repository counters were removed from the project cards; release tags and activity are read from GitHub at build time.
 - Product screenshots added (Nerkhbaan dashboard and sign-in; Dolphin dashboard and leads board).
 - No LPIC-2 certificate file, and no LPI exams taken: the training entries stay as courses.
-- AI-assisted development: not mentioned on the site; covered in interviews if asked.
+- Development methods: not discussed on the site; covered in interviews if asked.
 - Telegram link, Persian copy, and résumé PDF: checked by Ilia.
 - University of Tehran Comprehensive Data Science Program (online) added under Education, in progress.
 
@@ -36,7 +36,7 @@ Edit `src/content/en/*.ts` and `src/content/fa/*.ts`, then regenerate assets wit
 
 ## Still open
 
-1. **Data Science programme.** Update `education` in `src/content/*/profile.ts` as modules finish.
+1. **Data Science programme.** Confirm actual module progress before publishing any completed-module claim. Current lists describe the syllabus only.
 2. **Business impact.** No revenue or other customer metrics are published. Add them only with evidence and your approval.
 
 ## Left out on purpose (add only with evidence)
@@ -48,3 +48,10 @@ Edit `src/content/en/*.ts` and `src/content/fa/*.ts`, then regenerate assets wit
 ## Private repositories (not read)
 
 `Naharestan`, `Dolphin-Website`, `OTIC-Clockwork-OrangeHRM`, `Nerkhbaan-web` (archived), `Alerta`. Nothing about them is published.
+
+## Review follow-up (8 Nov 2026)
+
+- Reconfirm current employment, remote-work availability, and study progress before changing their dates or status.
+- Product deployment and usage claims stay dated to October 2026 until fresh checks exist.
+- Dolphin source is private. Keep the public engineering case study as the portfolio evidence link; do not restore an inaccessible source-code button.
+- Keep the 73-tool site inventory, with the core set shown first. Add tools or change the core set only when supported by work or study evidence.

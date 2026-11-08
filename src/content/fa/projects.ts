@@ -1,26 +1,27 @@
 import * as en from "../en/projects";
-import type { FeaturedProject, Project } from "../types";
+import type { FeaturedProject, FeaturedProjectId, Project, ProjectId } from "../types";
 
 // نسخهٔ فارسی src/content/en/projects.ts. لوگوها، ابزارها، لینک‌ها و اعداد
 // از نسخهٔ انگلیسی می‌آیند تا دو نسخه هیچ‌وقت از هم جدا نشوند.
 
-const [nerkhbaan, dolphin, stackplore] = en.featured;
+type FeaturedCopy = Pick<FeaturedProject, "role" | "category" | "period" | "status" | "summary" | "outcome" | "highlights" | "facts" | "factsSource" | "links" | "architecture" | "caseStudy" | "limitations"> &
+  Partial<Pick<FeaturedProject, "name" | "localName" | "screenshots">>;
 
-export const featured: FeaturedProject[] = [
-  {
-    ...nerkhbaan,
+const featuredText = {
+  nerkhbaan: {
     name: "نرخبان",
     localName: "Nerkhbaan",
     role: "بنیان‌گذار و تنها مهندس",
     category: "بک‌اند · DevOps · مهندسی محصول",
     period: "۲۰۲۶ — اکنون",
-    status: "فعال روی nerkhbaan.ir · بیش از ۱۰ کاربر فعال",
+    status: "ثبت پروداکشن و دست‌کم ۱۰ کاربر · اکتبر ۲۰۲۶",
     summary:
       "پلتفرم قیمت طلا، ارز و رمزارز با تاریخچه، هشدار قیمت و اپلیکیشن‌های وب، پنل مدیریت و دسکتاپ. هر قیمت منبع و زمان خودش را نشان می‌دهد و زمان انقضای مشخص دارد؛ بنابراین قیمت قدیمی هیچ‌وقت به‌جای قیمت روز نمایش داده نمی‌شود.",
+    outcome: "اکتبر ۲۰۲۶: هر ۲۷٬۰۰۰ درخواست در تست بار ایزولهٔ ۳۰ دقیقه‌ای موفق بود؛ p95 برابر ۳۲۳ میلی‌ثانیه ثبت شد.",
     highlights: [
       "ساخت کل محصول: API با FastAPI، لایهٔ داده با TimescaleDB و Redis، اپ وب و پنل مدیریت با React، اپ دسکتاپ با Electron و سرویس جانبی دریافت قیمت با Go.",
-      "اداره در پروداکشن روی Docker Compose: دو نمونهٔ API پشت Nginx، اجرای سرویس فقط پس از به‌روز بودن مایگریشن‌ها، و بکاپ زمان‌بندی‌شده با بازیابی آزموده.",
-      "هر نسخه از ۱۵ جاب CI عبور می‌کند؛ از جمله تست یکپارچگی روی TimescaleDB و Redis واقعی، تست مرورگر با Playwright و اسکن هفت ایمیج با Trivy.",
+      "استقرار در اکتبر ۲۰۲۶ روی Docker Compose: دو نمونهٔ API پشت Nginx، اجرای سرویس پس از به‌روز بودن مایگریشن‌ها و بکاپ زمان‌بندی‌شده با بازیابی آزموده.",
+      "نسخهٔ 2.8.1 از ۱۵ جاب CI عبور کرد؛ شامل تست یکپارچگی روی TimescaleDB و Redis واقعی، تست مرورگر با Playwright و اسکن هفت ایمیج با Trivy.",
     ],
     facts: [
       { value: "۱۰+", label: "کاربر فعال" },
@@ -46,10 +47,9 @@ export const featured: FeaturedProject[] = [
         caption: "صفحهٔ ورود (رابط فارسی)",
       },
     ],
-    factsSource: "تعداد کاربران تا اکتبر ۲۰۲۶. تست بار روی نسخه‌ای ایزوله از سیستم پروداکشن اجرا شد.",
+    factsSource: "شواهد مربوط به اکتبر ۲۰۲۶ است؛ تعداد کاربران خوداظهاری بود. تست بار روی نسخه‌ای ایزوله از سیستم پروداکشن اجرا شد.",
     links: [
-      { label: "nerkhbaan.ir", href: "https://nerkhbaan.ir/", primary: true },
-      { label: "سورس‌کد", href: "https://github.com/Ilia-Shakeri/Nerkhbaan" },
+      { label: "سورس‌کد", href: "https://github.com/Ilia-Shakeri/Nerkhbaan", primary: true },
     ],
     architecture: {
       caption: "مسیر یک قیمت از APIهای عمومی بازار تا کاربر.",
@@ -68,7 +68,7 @@ export const featured: FeaturedProject[] = [
         items: [
           "نمایش قیمت‌هایی که نماد، واحد، منبع و زمانشان مشخص است، بدون اینکه قیمت قدیمی به‌جای قیمت روز نمایش داده شود.",
           "واحد و عیار هیچ‌وقت تبدیل یا تخمین زده نمی‌شود: اگر قیمت مستقیم طلا نباشد، «ناموجود» می‌ماند.",
-          "روی یک سرور در ایران اجرا می‌شود؛ جایی که بعضی منابع دادهٔ خارجی در دسترس نیستند.",
+          "استقرار ثبت‌شدهٔ اکتبر ۲۰۲۶ روی یک سرور در ایران بود؛ جایی که بعضی منابع دادهٔ خارجی در دسترس نبودند.",
         ],
       },
       {
@@ -94,7 +94,7 @@ export const featured: FeaturedProject[] = [
         items: [
           "۱۵ جاب CI: بیلد قفل‌شدهٔ Node، تست واحد Python، سرویس Go، بررسی پیکربندی Compose و مانیتورینگ، تست مرورگر با Playwright، اسکن وابستگی‌ها و secretها، و اسکن هفت ایمیج با Trivy که با هر یافتهٔ HIGH یا CRITICAL شکست می‌خورد.",
           "تست یکپارچگی روی TimescaleDB و Redis واقعی اجرا می‌شود، مایگریشن‌ها را دو بار اعمال می‌کند تا idempotent بودنشان ثابت شود، checksum آن‌ها را بررسی می‌کند و یک تمرین بازیابی بکاپ هم اجرا می‌کند.",
-          "پروداکشن: Docker Compose روی یک سرور با دو نمونهٔ API. نسخهٔ 2.8.1 با افزایش موقت به سه نمونه و حذف نمونه‌های قدیمی یکی‌یکی منتشر شد.",
+          "پروداکشن اکتبر ۲۰۲۶: Docker Compose روی یک سرور با دو نمونهٔ API. نسخهٔ 2.8.1 با افزایش موقت به سه نمونه و حذف نمونه‌های قدیمی یکی‌یکی منتشر شد.",
         ],
       },
       {
@@ -122,16 +122,16 @@ export const featured: FeaturedProject[] = [
       "جاب فید به زمان‌بندی GitHub وابسته است که گاهی اجرای آن را چند ساعت به تأخیر انداخته است.",
     ],
   },
-  {
-    ...dolphin,
+  "dolphin-crm": {
     name: "دلفین CRM",
     localName: "Dolphin CRM",
     role: "هم‌بنیان‌گذار · توسعه‌دهندهٔ اصلی و مدیر فنی",
     category: "بک‌اند · امنیت · عملیات پروداکشن",
     period: "۲۰۲۶ — اکنون",
-    status: "در حال استفاده در بیش از دو شرکت",
+    status: "گزارش استفاده در دست‌کم دو شرکت · اکتبر ۲۰۲۶",
     summary:
       "یک CRM/ERP فارسی‌محور برای فروش، پیش‌فاکتور و فاکتور، پرداخت، انبار، تلفن و خدمات پس از فروش. یک کدبیس برای هر مشتری جداگانه مستقر می‌شود و هر نصب، مجموعه سرویس‌های مستقل خودش را روی Docker Compose دارد.",
+    outcome: "اکتبر ۲۰۲۶: ثبت بیش از ۳٬۶۰۰ تست خودکار و ۲۳ تست مرورگر؛ استفاده در دست‌کم دو شرکت خوداظهاری بود.",
     highlights: [
       "هدایت مهندسی اپلیکیشن Django و PostgreSQL: ۴۶ قابلیت قابل فعال‌سازی، رابط راست‌به‌چپ و پنل با به‌روزرسانی لحظه‌ای.",
       "طراحی مدل استقرار: مجموعه سرویس‌های مستقل برای هر نصب، مانیفست امضاشدهٔ قابلیت‌ها که در صورت مشکل اجرا را متوقف می‌کند، و نقش‌های پایگاه داده بدون دسترسی superuser با مجوز جدول‌به‌جدول.",
@@ -161,8 +161,8 @@ export const featured: FeaturedProject[] = [
         caption: "تابلوی سرنخ‌ها بر اساس وضعیت (دادهٔ نمایشی)",
       },
     ],
-    factsSource: "تعداد مشتریان تا اکتبر ۲۰۲۶. تست‌ها روی SQLite و PostgreSQL 16 اجرا می‌شوند، به‌علاوهٔ تست‌های مرورگر.",
-    links: [{ label: "سورس‌کد", href: "https://github.com/Ilia-Shakeri/Dolphin", primary: true }],
+    factsSource: "شواهد اکتبر ۲۰۲۶: تعداد مشتریان خوداظهاری بود؛ تست‌ها SQLite و PostgreSQL 16 و مرورگر را پوشش دادند. سورس‌کد خصوصی است.",
+    links: [{ label: "خواندن بررسی مهندسی", href: "/fa/projects/#dolphin-crm", primary: true }],
     architecture: {
       caption: "مسیر درخواست و سرویس‌های اطراف آن در یک نصب.",
       steps: [
@@ -240,14 +240,14 @@ export const featured: FeaturedProject[] = [
       "یکپارچه‌سازی تلفن (Asterisk/FreePBX) و پیامک پیاده‌سازی و با سیستم‌های شبیه‌سازی‌شده تست شده‌اند؛ آزمایش روی سیستم واقعی هنوز انجام نشده است.",
     ],
   },
-  {
-    ...stackplore,
+  stackplore: {
     role: "طراح و تنها مهندس",
     category: "مهندسی پلتفرم · ابزار DevOps",
     period: "۲۰۲۶ — اکنون",
-    status: "پیش از نسخهٔ ۱٫۰، در حال توسعهٔ فعال",
+    status: "در حال توسعهٔ فعال · نسخه‌های عمومی روی GitHub",
     summary:
       "یک ابزار self-hosted که فهرست سرویس‌ها، سلامت، توپولوژی، لاگ، متریک و رویدادهای Docker و Kubernetes را در یک API نسخه‌دار و یک رابط دوزبانهٔ فارسی و انگلیسی جمع می‌کند. به‌طور پیش‌فرض فقط‌خواندنی است و برای عیب‌یابی ساخته شده، نه برای کنترل زیرساخت.",
+    outcome: "سوابق اکتبر ۲۰۲۶ تست منابع را روی Docker Engine واقعی و کلاستر Kubernetes با kind ثبت می‌کنند؛ دسترسی پیش‌فرض فقط‌خواندنی است.",
     highlights: [
       "طراحی و ساخت API با Go، ساختار پایگاه دادهٔ PostgreSQL، اتصال به Docker و Kubernetes و رابط React، همه بر پایهٔ یک قرارداد OpenAPI.",
       "دسترسی حداقلی: Docker از طریق یک پراکسی mTLS فقط‌خواندنی و Kubernetes با RBAC محدود به get/list در namespaceهای انتخاب‌شده.",
@@ -282,14 +282,14 @@ export const featured: FeaturedProject[] = [
         ],
       },
       {
-        title: "در حال انجام (0.7.0)",
+        title: "کارهای باقی‌مانده در اکتبر ۲۰۲۶ (0.7.0)",
         items: [
           "یک ایمیج واحد بدون دسترسی root که هم رابط کاربری و هم API را ارائه می‌کند.",
           "بررسی‌های CI برای نصب تازه با Compose و نصب با Helm روی kind با اتصال TLS به PostgreSQL؛ نتیجهٔ آن‌ها هنوز ثبت نشده است.",
         ],
       },
       {
-        title: "برنامه‌ریزی‌شده پیش از ۱٫۰",
+        title: "برنامهٔ اکتبر ۲۰۲۶ برای پیش از ۱٫۰",
         items: [
           "تمرین بکاپ، بازیابی، ارتقا و بازگشت نسخه روی یک محیط پروداکشن واقعی.",
           "انتشار ایمیج همراه با SBOM، اسکن آسیب‌پذیری و امضا.",
@@ -312,17 +312,19 @@ export const featured: FeaturedProject[] = [
       },
     ],
     limitations: [
-      "آمادهٔ پروداکشن نیست: نسخهٔ ۱٫۰ به تمرین‌های روی محیط پروداکشن که در بالا آمده نیاز دارد.",
-      "فقط با یک نمونه اجرا می‌شود؛ ایمیج‌ها از سورس ساخته می‌شوند و هنوز منتشر نشده‌اند.",
+      "نسخهٔ بررسی‌شده در اکتبر ۲۰۲۶ آمادهٔ پروداکشن نبود؛ نسخهٔ ۱٫۰ به تمرین‌های ذکرشده روی محیط پروداکشن نیاز داشت.",
+      "آن نسخه فقط با یک نمونه اجرا می‌شد؛ ایمیج‌ها از سورس ساخته می‌شدند و هنوز منتشر نشده بودند.",
     ],
   },
-];
+} satisfies Record<FeaturedProjectId, FeaturedCopy>;
+
+export const featured: FeaturedProject[] = en.featured.map((project) => ({ ...project, ...featuredText[project.slug] }));
 
 const persianDigits = (text: string) => text.replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
 
 // متن فارسی هر پروژه؛ نام، ابزارها و آدرس لینک‌ها از نسخهٔ انگلیسی می‌آیند.
-const text: Record<string, Pick<Project, "kind" | "summary" | "highlights"> & { links?: string[] }> = {
-  "Prometheus & Jira → Matrix bridges": {
+const text: Record<ProjectId, Pick<Project, "kind" | "summary" | "highlights"> & { links?: string[] }> = {
+  chatops: {
     kind: "ورک‌فلوهای n8n",
     summary: "دو ورک‌فلوی n8n که هشدارهای Prometheus و به‌روزرسانی‌های Jira را به چت Matrix تیم می‌رسانند.",
     highlights: [
@@ -332,7 +334,7 @@ const text: Record<string, Pick<Project, "kind" | "summary" | "highlights"> & { 
     ],
     links: ["پل هشدار", "اعلان‌گر Jira"],
   },
-  "Matrix User Manager": {
+  "matrix-users": {
     kind: "ابزار ترمینالی Bash",
     summary: "منوی ترمینالی برای مدیریت کاربران سرور Synapse که روی Docker اجرا می‌شود.",
     highlights: [
@@ -341,7 +343,7 @@ const text: Record<string, Pick<Project, "kind" | "summary" | "highlights"> & { 
       "بکاپ پایگاه داده را هم شامل می‌شود.",
     ],
   },
-  LinSecGuard: {
+  linsecguard: {
     kind: "ابزار خط فرمان Bash",
     summary: "بررسی تعاملی امن‌سازی برای سرورهای لینوکس.",
     highlights: [
@@ -350,7 +352,7 @@ const text: Record<string, Pick<Project, "kind" | "summary" | "highlights"> & { 
       "تلاش‌های ناموفق ورود و به‌روزرسانی‌های امنیتی معوق را گزارش می‌دهد.",
     ],
   },
-  EasyCert: {
+  easycert: {
     kind: "ابزار خط فرمان Bash",
     summary: "رابط تعاملی OpenSSL برای یک مرجع صدور گواهی (CA) محلی.",
     highlights: [
@@ -358,7 +360,7 @@ const text: Record<string, Pick<Project, "kind" | "summary" | "highlights"> & { 
       "کانتینر Nginx یا Traefik را برای بارگذاری گواهی‌ها ری‌استارت می‌کند.",
     ],
   },
-  CipherCert: {
+  ciphercert: {
     kind: "اپلیکیشن دسکتاپ",
     summary: "تحلیلگر دسکتاپ برای گواهی‌های TLS.",
     highlights: [
@@ -367,7 +369,7 @@ const text: Record<string, Pick<Project, "kind" | "summary" | "highlights"> & { 
       "تاریخچهٔ اسکن را در SQLite نگه می‌دارد.",
     ],
   },
-  SysTrack: {
+  systrack: {
     kind: "Bash · cron",
     summary: "مانیتور منابع زمان‌بندی‌شده با cron برای سرورهای لینوکس.",
     highlights: [
@@ -376,7 +378,7 @@ const text: Record<string, Pick<Project, "kind" | "summary" | "highlights"> & { 
       "لاگ‌های خودش را می‌چرخاند.",
     ],
   },
-  "Automated Backup Script": {
+  "backup-script": {
     kind: "ابزار خط فرمان Bash",
     summary: "بکاپ‌گیری تعاملی و زمان‌بندی‌شده از پوشه‌ها.",
     highlights: [
@@ -384,7 +386,7 @@ const text: Record<string, Pick<Project, "kind" | "summary" | "highlights"> & { 
       "اجراها را لاگ می‌کند و بکاپ‌های قدیمی‌تر از هفت روز را پاک می‌کند.",
     ],
   },
-  "Clockwork OrangeHRM": {
+  clockwork: {
     kind: "خط فرمان + دسکتاپ",
     summary: "گزارش حضور و غیاب و حقوق از OrangeHRM نصب‌شده روی سرور خود سازمان.",
     highlights: [
@@ -397,7 +399,7 @@ const text: Record<string, Pick<Project, "kind" | "summary" | "highlights"> & { 
 };
 
 export const projects: Project[] = en.projects.map((project) => {
-  const fa = text[project.name];
+  const fa = text[project.id];
   return {
     ...project,
     year: persianDigits(project.year),

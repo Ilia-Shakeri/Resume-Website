@@ -1,5 +1,6 @@
 import { getContent, pagePath, type Locale } from "@/content";
 import { site } from "@/lib/site";
+import { assetPath } from "@/lib/assets";
 
 /**
  * schema.org Person and WebSite for the home page, built only from verified
@@ -20,7 +21,7 @@ export function personJsonLd(locale: Locale): string {
         jobTitle: profile.headline,
         description: ui.meta.description,
         url,
-        image: `${site.url}/images/ilia-shakeri.webp`,
+        image: `${site.url}${assetPath("/images/ilia-shakeri.webp")}`,
         email: `mailto:${profile.email}`,
         sameAs: [profile.github.href, profile.linkedin.href, profile.telegram.href],
         address: { "@type": "PostalAddress", addressLocality: "Tehran", addressCountry: "IR" },

@@ -32,9 +32,13 @@ export type Profile = {
 export type Locale = "en" | "fa";
 
 export type ProjectCategory = "ops" | "security" | "monitoring" | "apps";
+export type ProjectId = "chatops" | "matrix-users" | "linsecguard" | "systrack" | "backup-script" | "easycert" | "ciphercert" | "clockwork";
+export type FeaturedProjectId = "nerkhbaan" | "dolphin-crm" | "stackplore";
+export type ToolkitGroupId = "linux" | "containers" | "delivery" | "observability" | "security" | "data" | "languages" | "chatops";
 
 /** A repository card in "More projects". */
 export type Project = {
+  id: ProjectId;
   name: string;
   year: string;
   /** What it is, e.g. "Bash CLI" or "n8n workflows". */
@@ -56,7 +60,7 @@ export type CaseSection = { title: string; items: string[] };
 
 /** A featured project on /projects/ with its full engineering case study. */
 export type FeaturedProject = {
-  slug: string;
+  slug: FeaturedProjectId;
   name: string;
   /** Name in the other script, shown next to the name. */
   localName?: string;
@@ -70,6 +74,9 @@ export type FeaturedProject = {
   stage: "production" | "development";
   status: string;
   summary: string;
+  /** A dated result supported by the case-study evidence. */
+  outcome: string;
+  sourceVisibility?: "private";
   /** "My part": three short points. */
   highlights: string[];
   facts: { value: string; label: string }[];
@@ -101,6 +108,7 @@ export type Tool = {
 };
 
 export type ToolkitGroup = {
+  id: ToolkitGroupId;
   title: string;
   icon: ToolkitIcon;
   /** What the work in this area covers. */
@@ -108,6 +116,8 @@ export type ToolkitGroup = {
   /** Where it can be checked (projects, roles). */
   evidence: string;
   tools: Tool[];
+  /** Tool names to show first; the full inventory remains available. */
+  coreTools: string[];
 };
 
 export type ExperienceItem = {
@@ -139,7 +149,7 @@ export type Education = {
   institution?: string;
   status: string;
   note: string;
-  /** For programmes in progress: modules finished and still ahead. */
-  completed?: string[];
+  /** Topics on the programme syllabus, without claiming individual completion. */
+  covered?: string[];
   upcoming?: string[];
 };

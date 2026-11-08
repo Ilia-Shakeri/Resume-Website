@@ -5,21 +5,15 @@ import type { Locale } from "@/content/types";
 
 /**
  * EN | فا pill switch. The thumb slides to the chosen language before the page
- * changes to the same page in that language (keeping any #hash), and the
- * choice is remembered.
+ * changes to the same page in that language (keeping any #hash).
  * Plain links underneath, so it works without JavaScript too.
  */
 export function LanguageSwitch({ locale, label, paths }: { locale: Locale; label: string; paths: Record<Locale, string> }) {
   const [active, setActive] = useState<Locale>(locale);
 
   const go = (event: React.MouseEvent<HTMLAnchorElement>, target: Locale) => {
-    if (target === locale || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+    if (target === locale || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
     event.preventDefault();
-    try {
-      localStorage.setItem("lang", target);
-    } catch {
-      // Storage can be unavailable (private mode); the switch still works.
-    }
     setActive(target);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const href = paths[target] + window.location.hash;

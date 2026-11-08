@@ -7,7 +7,12 @@ import { site } from "@/lib/site";
 
 const { toolkit, education, experience, profile, qualifications, resumeSummary, featured, projects } =
   getContent("en");
-const [chatops, ...others] = projects;
+const chatops = projects.find((project) => project.id === "chatops");
+const others = projects.filter((project) => project.id !== "chatops");
+
+function publicProjectUrl(href: string): string {
+  return new URL(href, site.url).href;
+}
 
 export const metadata: Metadata = {
   title: "Résumé",
@@ -118,19 +123,19 @@ export default function ResumePage() {
                 <h3 className="text-[0.9375rem] font-semibold">
                   {project.name} · <span className="font-normal">{project.role}</span>
                 </h3>
-                <a href={project.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
-                  {project.links[0].href.replace("https://", "").replace(/\/$/, "")}
+                <a href={publicProjectUrl(project.links[0].href)} className="break-all font-mono text-[0.6875rem] text-[#4b5753]">
+                  {publicProjectUrl(project.links[0].href).replace("https://", "").replace(/\/$/, "")}
                 </a>
               </div>
               <p className="mt-0.5">
-                {project.summary} <span className="text-[#4b5753]">Status: {project.status}.</span>
+                {project.summary} <span className="text-[#4b5753]">Status: {project.status}.{project.sourceVisibility === "private" ? " Source code private; public case study linked above." : ""}</span>
               </p>
               <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">
                 {project.tools.map((tool) => tool.name).join(" · ")}
               </p>
             </article>
           ))}
-          <article className="mt-3 break-inside-avoid">
+          {chatops ? <article className="mt-3 break-inside-avoid">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4">
               <h3 className="text-[0.9375rem] font-semibold">{chatops.name}</h3>
               <a href={chatops.links[0].href} className="font-mono text-[0.6875rem] text-[#4b5753]">
@@ -143,7 +148,7 @@ export default function ResumePage() {
             <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">
               {chatops.tools.map((tool) => tool.name).join(" · ")}
             </p>
-          </article>
+          </article> : null}
           <p className="mt-3 break-inside-avoid">
             <span className="font-semibold">Also: </span>
             {others.map((project, index) => (
@@ -160,9 +165,9 @@ export default function ResumePage() {
           </Heading>
           <dl className="mt-2 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
             {toolkit.map((group) => (
-              <div key={group.title}>
+              <div key={group.id}>
                 <dt className="font-semibold">{group.title}</dt>
-                <dd className="text-[#36403c]">{group.tools.map((tool) => tool.name).join(", ")}</dd>
+                <dd className="text-[#36403c]">{group.coreTools.join(", ")}</dd>
               </div>
             ))}
           </dl>

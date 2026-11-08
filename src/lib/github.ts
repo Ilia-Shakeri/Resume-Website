@@ -1,31 +1,23 @@
-import data from "@/content/github.json";
+import committed from "@/content/github.json";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import type { Locale } from "@/content/types";
-
-// Release and activity figures for the featured repositories, refreshed by
-// scripts/github-stats.mjs before each deploy (see .github/workflows/deploy.yml).
-
 export type RepoActivity = {
-  url: string;
-  latestTag: string | null;
-  latestTagDate: string | null;
-  lastActivity: string | null;
+  url: string; latestTag: string | null; latestTagDate: string | null; lastActivity: string | null;
+  latestPrerelease?: string | null; status?: "current" | "cached" | "unavailable"; checkedAt?: string; lastSuccessfulAt?: string | null;
 };
-
-const repos: Record<string, RepoActivity> = data.repos;
-
+type Snapshot = { fetchedAt: string; repos: Record<string, RepoActivity> };
+let data: Snapshot = committed;
+try { data = JSON.parse(readFileSync(path.join(process.cwd(), ".generated/github.json"), "utf8")) as Snapshot; } catch { /* Development can use the dated committed public snapshot. */ }
 export function repoActivity(name: string | undefined): RepoActivity | undefined {
-  return name ? repos[name] : undefined;
+  const repo = name ? data.repos[name] : undefined;
+  return repo ? {
+    ...repo,
+    status: repo.status ?? "cached",
+    lastSuccessfulAt: "lastSuccessfulAt" in repo ? repo.lastSuccessfulAt : data.fetchedAt,
+  } : undefined;
 }
-
-/** When the figures were last read from GitHub. */
 export const githubCheckedAt = data.fetchedAt;
-
-/** "15 Oct 2026" / "۱۵ اکتبر ۲۰۲۶" (Gregorian in both languages, like the rest of the site). */
 export function formatDate(iso: string, locale: Locale): string {
-  return new Intl.DateTimeFormat(locale === "fa" ? "fa-IR-u-ca-gregory" : "en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "Asia/Tehran",
-  }).format(new Date(iso));
+  return new Intl.DateTimeFormat(locale === "fa" ? "fa-IR-u-ca-gregory" : "en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Tehran" }).format(new Date(iso));
 }

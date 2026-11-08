@@ -40,7 +40,7 @@ export function Contact({ content }: { content: Content }) {
             <Icon name="arrow-up-right" size={20} className="shrink-0" />
           </a>
           <div className="mt-5">
-            <CopyButton value={profile.email} label={ui.contact.copy} copiedLabel={ui.contact.copied} />
+            <CopyButton value={profile.email} label={ui.contact.copy} copiedLabel={ui.contact.copied} errorLabel={ui.contact.copyError} />
           </div>
           <div className="mt-8 flex items-end justify-between gap-6 border-t border-line pt-6">
             <div>

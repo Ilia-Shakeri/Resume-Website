@@ -2,9 +2,9 @@
 
 export const ui = {
   meta: {
-    title: "Ilia Shakeri — DevOps Engineer & Full-Stack Developer",
+    title: "Ilia Shakeri — DevOps & Backend Engineer",
     description:
-      "DevOps engineer and full-stack developer (mostly backend) in Tehran, studying Computer Science. Linux, containers, CI/CD, monitoring, Python, and Go. Founder of Nerkhbaan, co-founder of Dolphin CRM.",
+      "DevOps and backend engineer in Tehran. Python, Go, Linux, containers, CI/CD, and observability. Founder of Nerkhbaan, co-founder of Dolphin CRM, and Computer Science student.",
     ogLocale: "en_US",
   },
   skipLink: "Skip to content",
@@ -62,10 +62,13 @@ export const ui = {
       localTime: "Local time",
     },
     terminalBadge: "REPLAY",
-    terminalCaption: "A replay of the commands I use to check this site’s deployment. It is not live output; the build ID is the one currently deployed.",
+    terminalCaption: "A replay of a static Vercel deployment check, not a live health probe. The build ID comes from this site's build marker.",
+    terminalTitle: "iliashakeri.ir · static deploy check",
+    terminalOutput: "Static HTML, CSS, and JavaScript · hosted on Vercel",
     expertiseTitle: "Expertise & tools",
     evidenceLabel: "Where it shows",
     toolsLabel: "tools",
+    moreTools: "More tools used",
   },
   ventures: {
     title: "Featured projects",
@@ -76,18 +79,25 @@ export const ui = {
     category: "Category",
     status: "Status",
     evidence: "Evidence",
-    stage: { production: "In production", development: "In development" },
+    stage: { production: "Production verified · Oct 2026", development: "In development" },
+    jumpLabel: "Jump to a project",
+    outcome: "Verified result",
+    privateSource: "Source private · public case study below",
     architecture: "Architecture",
     caseStudy: "Engineering case study",
     limitations: "Known limitations",
     details: "Read the case study",
     screenshotsLabel: "Screenshots",
     openFull: " (open full-size image)",
-    github: { label: "GitHub", release: "Latest release tag", updated: "Last updated", checked: "Read from GitHub on" },
+    github: {
+      label: "GitHub", release: "Latest stable tag", prerelease: "Latest prerelease tag", updated: "Last updated",
+      checked: "Last successful read", attempted: "Last checked", cached: "Showing saved data; live refresh unavailable", unavailable: "Public repository data unavailable",
+    },
   },
   builds: {
     title: "More projects",
     filterLabel: "Filter projects",
+    resultCount: "{{count}} projects shown",
     filters: { all: "All", ops: "Automation & ops", security: "Security", monitoring: "Monitoring", apps: "Apps" },
   },
   experience: {
@@ -97,8 +107,8 @@ export const ui = {
     title: "Education & training",
     educationLabel: "Education",
     certId: "Cert ID",
-    completedLabel: "Completed modules",
-    upcomingLabel: "Still ahead",
+    coveredLabel: "Programme topics",
+    upcomingLabel: "Further planned topics",
     viewCertificate: "View certificate",
     trainingLabel: "Training courses",
     trainingNote: "Course-completion certificates from training providers. These are not official LPI certifications.",
@@ -116,6 +126,7 @@ export const ui = {
     elsewhere: "Profiles",
     copy: "Copy email",
     copied: "Copied",
+    copyError: "Copy failed. Select the email and copy it.",
     remote: "Remote work",
   },
   footer: {

@@ -3,6 +3,7 @@ import { ExternalLink } from "@/components/ExternalLink";
 import { Icon } from "@/components/Icon";
 import { pagePath, type Content, type Locale } from "@/content";
 import { site } from "@/lib/site";
+import { assetPath } from "@/lib/assets";
 
 export function Hero({ content, locale }: { content: Content; locale: Locale }) {
   const { profile, capabilities, ui } = content;
@@ -25,7 +26,7 @@ export function Hero({ content, locale }: { content: Content; locale: Locale }) 
           <div className="portrait-ring rounded-full p-[3px] lg:rounded-[2rem]">
             {/* eslint-disable-next-line @next/next/no-img-element -- static export; pre-sized WebP */}
             <img
-              src="/images/ilia-shakeri.webp"
+              src={assetPath("/images/ilia-shakeri.webp")}
               alt={ui.hero.portraitAlt}
               width={640}
               height={640}
@@ -45,7 +46,7 @@ export function Hero({ content, locale }: { content: Content; locale: Locale }) 
             {/* Phones show the portrait beside the name; larger screens show the big one. */}
             {/* eslint-disable-next-line @next/next/no-img-element -- static export; pre-sized WebP */}
             <img
-              src="/images/ilia-shakeri.webp"
+              src={assetPath("/images/ilia-shakeri.webp")}
               alt=""
               width={640}
               height={640}

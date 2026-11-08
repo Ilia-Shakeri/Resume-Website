@@ -8,6 +8,8 @@ import type { ToolkitGroup } from "../types";
 
 export const toolkit: ToolkitGroup[] = [
   {
+    id: "linux",
+    coreTools: ["Linux", "Ansible", "systemd"],
     title: "Linux & infrastructure",
     icon: "server",
     detail: "Provisioning, hardening, and configuration management with Ansible.",
@@ -25,6 +27,8 @@ export const toolkit: ToolkitGroup[] = [
     ],
   },
   {
+    id: "containers",
+    coreTools: ["Docker", "Docker Compose", "Kubernetes", "Helm"],
     title: "Containers & orchestration",
     icon: "boxes",
     detail: "Docker Compose production stacks, non-root hardened images, and Helm charts.",
@@ -38,6 +42,8 @@ export const toolkit: ToolkitGroup[] = [
     ],
   },
   {
+    id: "delivery",
+    coreTools: ["GitHub Actions", "Git", "GNU Bash"],
     title: "Delivery & automation",
     icon: "branch",
     detail: "GitHub Actions pipelines with integration tests, browser tests, and image scans; Bash and n8n automation.",
@@ -53,6 +59,8 @@ export const toolkit: ToolkitGroup[] = [
     ],
   },
   {
+    id: "observability",
+    coreTools: ["Prometheus", "Grafana", "Loki"],
     title: "Monitoring & observability",
     icon: "pulse",
     detail: "Metrics, alert rules, and logs, with alerts routed to team chat.",
@@ -68,6 +76,8 @@ export const toolkit: ToolkitGroup[] = [
     ],
   },
   {
+    id: "security",
+    coreTools: ["Nginx", "Keycloak", "Trivy", "UFW / iptables"],
     title: "Web, network & security",
     icon: "shield",
     detail: "Reverse proxies and TLS, least-privilege access, MFA, vulnerability scans, and backups verified by restoring them.",
@@ -86,6 +96,8 @@ export const toolkit: ToolkitGroup[] = [
     ],
   },
   {
+    id: "data",
+    coreTools: ["PostgreSQL", "TimescaleDB", "Redis"],
     title: "Data & messaging",
     icon: "database",
     detail: "Schema migrations, TimescaleDB history, database role separation, Redis leases, caching, and outboxes.",
@@ -103,6 +115,8 @@ export const toolkit: ToolkitGroup[] = [
     ],
   },
   {
+    id: "languages",
+    coreTools: ["Python", "Go", "FastAPI", "Django"],
     title: "Languages & frameworks",
     icon: "code",
     detail: "APIs and services in Python (FastAPI, Django) and Go; React and Next.js when a product needs a frontend.",
@@ -132,6 +146,8 @@ export const toolkit: ToolkitGroup[] = [
     ],
   },
   {
+    id: "chatops",
+    coreTools: ["Matrix", "Jira", "Telegram Bot API"],
     title: "Collaboration & ChatOps",
     icon: "chat",
     detail: "Prometheus alerts and Jira updates delivered to team chat, plus chat-server administration.",

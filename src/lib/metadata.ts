@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getContent, pagePath, type Locale, type PageKey } from "@/content";
+import { assetPath } from "@/lib/assets";
 
 /** Metadata for one page in one language, with hreflang alternates. */
 export function pageMetadata(locale: Locale, page: PageKey): Metadata {
@@ -30,13 +31,13 @@ export function pageMetadata(locale: Locale, page: PageKey): Metadata {
       locale: ui.meta.ogLocale,
       alternateLocale: locale === "fa" ? ["en_US"] : ["fa_IR"],
       url: path,
-      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: ui.meta.title }],
+      images: [{ url: assetPath("/og-image.png"), width: 1200, height: 630, alt: ui.meta.title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ["/og-image.png"],
+      images: [assetPath("/og-image.png")],
     },
   };
 }

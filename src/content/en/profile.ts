@@ -10,7 +10,7 @@ export const profile: Profile = {
   headline: "DevOps & Backend Engineer",
   stack: ["Linux", "Python", "Go", "Docker", "CI/CD", "Observability"],
   intro:
-    "I build backend systems and operate them in production. My work spans Python and Go services, Linux infrastructure, CI/CD, and observability, from development and deployment to monitoring and recovery. Founder of Nerkhbaan and co-founder of Dolphin CRM.",
+    "I build Python and Go backends and the Linux infrastructure they run on. Founder of Nerkhbaan and co-founder of Dolphin CRM.",
   study: "Computer Science student (B.Sc.)",
   location: "Tehran, Iran",
   timeZone: "IRST · UTC+03:30",
@@ -49,7 +49,7 @@ export const capabilities = [
 ];
 
 export const experienceSummary: string =
-  "A DevOps role at OTICAMP since June 2025, alongside two products I build and run myself: Nerkhbaan, which I founded, and Dolphin CRM, which I co-founded.";
+  "A DevOps role at OTICAMP since June 2025, alongside Nerkhbaan and Dolphin CRM. The product deployment and usage records below were verified in October 2026.";
 
 export const experience: ExperienceItem[] = [
   {
@@ -74,10 +74,10 @@ export const experience: ExperienceItem[] = [
     organization: "Nerkhbaan",
     location: "Tehran, Iran",
     period: "2026 — Present",
-    scope: "Founded a live gold, currency, and crypto price platform used by 10+ people; I am its only engineer and run it in production.",
+    scope: "Founded and engineered a gold, currency, and crypto price platform. October 2026 records document its production deployment and 10+ users.",
     highlights: [
       "Built the FastAPI, TimescaleDB, and Redis backend, a Go feed sidecar, the React web and admin apps, and an Electron desktop app.",
-      "Run it on Docker Compose with two API replicas behind Nginx; release 2.8.1 passed 15 CI jobs, including integration tests, browser tests, and Trivy image scans.",
+      "Deployed release 2.8.1 in October 2026 on Docker Compose with two API replicas behind Nginx, after 15 CI jobs including integration, browser, and Trivy checks.",
       "Load-tested an isolated copy of the stack: 27,000 of 27,000 requests succeeded over 30 minutes, p95 323 ms.",
     ],
     tags: ["Product", "FastAPI", "CI/CD", "Prometheus"],
@@ -88,7 +88,7 @@ export const experience: ExperienceItem[] = [
     organization: "Dolphin CRM",
     location: "Tehran, Iran",
     period: "2026 — Present",
-    scope: "Co-founded a Persian-first CRM/ERP that is now used by 2+ companies. I lead its development and IT operations.",
+    scope: "Co-founded a Persian-first CRM/ERP and lead its development and IT operations. Usage at 2+ companies was reported in October 2026.",
     highlights: [
       "Lead development of the Django and PostgreSQL application: 46 feature flags and about 3,640 automated tests.",
       "Designed the deployment model: an isolated Compose stack per installation, a signed feature manifest, and non-superuser database roles with per-table grants.",
@@ -122,8 +122,8 @@ export const education: Education[] = [
     degree: "Comprehensive Data Science Program",
     institution: "University of Tehran (online)",
     status: "In progress · May 2026 – Aug 2027 (planned)",
-    note: "A part-time programme of about 360 hours over a year, taken alongside my degree and work.",
-    completed: ["Statistics and linear algebra", "Data analysis in Excel", "Data science foundations", "SQL Server", "Power BI"],
+    note: "A part-time programme of about 360 hours, taken alongside my degree and work. The lists describe the syllabus, not completion status.",
+    covered: ["Statistics and linear algebra", "Data analysis in Excel", "Data science foundations", "SQL Server", "Power BI"],
     upcoming: [
       "R",
       "Tableau",
@@ -176,4 +176,4 @@ export const qualifications: Qualification[] = [
 ];
 
 export const resumeSummary: string =
-  "DevOps and backend engineer. I build services in Python (FastAPI, Django) and Go and operate them in production: Linux administration, Docker Compose deployments, CI pipelines with security gates, monitoring, and tested backup recovery. React and Next.js when a product needs a frontend. Founder of Nerkhbaan (10+ users) and co-founder of Dolphin CRM (used by 2+ companies). Studying for a B.Sc. in Computer Science and taking the University of Tehran’s data science programme.";
+  "DevOps and backend engineer working with Python (FastAPI, Django), Go, Linux, Docker Compose, CI/CD, monitoring, and tested backup recovery. React and Next.js for product frontends. Founder of Nerkhbaan and co-founder of Dolphin CRM; production and usage evidence below dates to October 2026. B.Sc. Computer Science student taking the University of Tehran’s data science programme.";

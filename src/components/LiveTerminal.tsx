@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useIsActive, usePrefersReducedMotion } from "@/lib/use-motion";
+import { useIsActive, useIsHydrated, usePrefersReducedMotion } from "@/lib/use-motion";
 
 export type TerminalLine = { kind: "cmd" | "out" | "ok"; text: string };
 
@@ -40,11 +40,12 @@ function Line({ line, typing = false }: { line: TerminalLine; typing?: boolean }
 
 /**
  * A terminal that types its script in a loop. It runs only while on screen and
- * the tab is visible, shows the full transcript statically with reduced motion
+ * the tab is visible, shows a static view with reduced motion
  * or without JavaScript, and exposes the transcript to screen readers once.
  */
 export function LiveTerminal({ title, badge, lines, rows = 4, className = "" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
+  const hydrated = useIsHydrated();
   const reduced = usePrefersReducedMotion();
   const active = useIsActive(ref);
   const [shown, setShown] = useState<TerminalLine[]>([]);
@@ -108,15 +109,8 @@ export function LiveTerminal({ title, badge, lines, rows = 4, className = "" }: 
         ))}
       </div>
 
-      {/* Static transcript: shown until JavaScript takes over (html.js). */}
-      <div aria-hidden="true" className="terminal-static mt-3 space-y-1.5">
-        {lines.slice(-rows).map((line, index) => (
-          <Line key={index} line={line} />
-        ))}
-      </div>
-
-      <div aria-hidden="true" className="terminal-live mt-3 space-y-1.5" style={{ minHeight: `${rows * 1.625}rem` }}>
-        {reduced
+      <div aria-hidden="true" className="mt-3 space-y-1.5" style={{ minHeight: `${rows * 1.625}rem` }}>
+        {!hydrated || reduced
           ? lines.slice(-rows).map((line, index) => <Line key={index} line={line} />)
           : (
             <>

@@ -38,6 +38,15 @@ try {
         [...document.querySelectorAll("main *:not(svg *)")]
           .filter((el) => !el.closest("[aria-hidden='true']"))
           .filter((el) => {
+            for (let parent = el.parentElement; parent; parent = parent.parentElement) {
+              if (parent.tagName === "DETAILS" && !parent.open) {
+                const summary = [...parent.children].find((child) => child.tagName === "SUMMARY");
+                if (!summary?.contains(el)) return false;
+              }
+            }
+            return typeof el.checkVisibility !== "function" || el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true });
+          })
+          .filter((el) => {
             const rect = el.getBoundingClientRect();
             return rect.width > 0 && (rect.left < -1 || rect.right > window.innerWidth + 1);
           })
@@ -49,6 +58,15 @@ try {
         [...document.querySelectorAll("a, button, summary")]
           .filter((el) => !el.closest(".sr-only") && !el.matches(".sr-only, .stretched-link") && el.getClientRects().length)
           .filter((el) => {
+            for (let parent = el.parentElement; parent; parent = parent.parentElement) {
+              if (parent.tagName === "DETAILS" && !parent.open) {
+                const summary = [...parent.children].find((child) => child.tagName === "SUMMARY");
+                if (!summary?.contains(el)) return false;
+              }
+            }
+            return typeof el.checkVisibility !== "function" || el.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true });
+          })
+          .filter((el) => {
             const rect = el.getBoundingClientRect();
             return rect.width < 24 || rect.height < 24;
           })
@@ -58,7 +76,7 @@ try {
       const ok = overflow <= 0 && clipped.length === 0 && errors.length === 0 && small.length === 0;
       check(ok, `${path} ${width}px: overflow ${overflow}, clipping ${clipped.join(", ") || "none"}, small targets ${small.join(", ") || "none"}, errors ${errors.join(" | ") || "none"}`);
       if (width === 375 || width === 1440) {
-        await page.addScriptTag({ content: axeSource });
+        await page.evaluate(axeSource);
         const violations = await page.evaluate(async () =>
           (await window.axe.run(document, { runOnly: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] })).violations.map(
             (v) => `${v.id} (${v.nodes.length})`,
@@ -125,6 +143,8 @@ try {
   await fa.goto(`${url}/fa/projects/`, { waitUntil: "networkidle" });
   const [lang, dir] = await fa.evaluate(() => [document.documentElement.lang, document.documentElement.dir]);
   check(lang === "fa" && dir === "rtl", `/fa/projects/: <html lang="${lang}" dir="${dir}">`);
+  const rawFa = await (await fa.request.get(url + "/fa/projects/")).text();
+  check(/<html[^>]*lang="fa"[^>]*dir="rtl"/.test(rawFa), "Persian document locale exists in raw HTML before scripts");
   const faHeading = await fa.locator("#ventures-title").innerText();
   check(/شاخص/.test(faHeading), `/fa/projects/: Persian content rendered ("${faHeading}")`);
   const hreflang = await fa.$$eval("link[rel='alternate'][hreflang]", (links) => links.map((l) => `${l.hreflang}=${new URL(l.href).pathname}`).sort().join(","));
@@ -161,7 +181,24 @@ try {
     }));
     check(state.hidden === 0 && state.resume && state.mail, `${path} without JavaScript: ${state.hidden} hidden blocks, résumé link ${state.resume}, email link ${state.mail}`);
   }
+  for (const pathname of ["/", "/fa/"]) {
+    await noJs.goto(url + pathname, { waitUntil: "load" });
+    await noJs.locator("#mobile-menu > summary").click();
+    check(await noJs.locator("#mobile-nav").isVisible(), pathname + " native mobile navigation works without scripts");
+    const target = pathname === "/" ? "/projects/" : "/fa/projects/";
+    await noJs.locator('#mobile-nav a[href="' + target + '"]').click();
+    await noJs.waitForURL("**" + target);
+    check(new URL(noJs.url()).pathname === target, "no-script mobile link reaches " + target);
+    check(await noJs.locator("#builds button[aria-pressed]").count() === 0, "no-script page hides inactive filter buttons");
+  }
   await noJs.close();
+  const blocked = await browser.newPage({ viewport: { width: 375, height: 812 } });
+  await blocked.route("**/_next/**/*.js", (route) => route.abort());
+  await blocked.goto(url + "/fa/", { waitUntil: "load" });
+  await blocked.locator("#mobile-menu > summary").click();
+  check(await blocked.locator("#mobile-nav").isVisible(), "failed script download still leaves native menu usable");
+  check(await blocked.evaluate(() => document.documentElement.lang === "fa" && [...document.querySelectorAll("main [data-reveal]")].every((element) => getComputedStyle(element).opacity !== "0")), "failed scripts preserve Persian locale and visible content");
+  await blocked.close();
 
   // Language switch keeps the page and the section.
   const sw = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -178,18 +215,32 @@ try {
 
   const mobile = await browser.newPage({ viewport: { width: 375, height: 800 } });
   await mobile.goto(`${url}/`, { waitUntil: "networkidle" });
-  const toggle = mobile.locator("button[aria-controls='mobile-nav']");
+  const toggle = mobile.locator("#mobile-menu > summary");
   await toggle.click();
-  check((await toggle.getAttribute("aria-expanded")) === "true", "mobile menu opens (aria-expanded=true)");
+  check(await mobile.locator("#mobile-menu").evaluate((menu) => menu.open), "native mobile menu opens");
   check(await mobile.locator("#mobile-nav").isVisible(), "mobile menu panel visible");
   await mobile.waitForTimeout(400);
   await mobile.screenshot({ path: `${outDir}/mobile-menu-open.png` });
   await mobile.keyboard.press("Escape");
-  check((await toggle.getAttribute("aria-expanded")) === "false", "Escape closes mobile menu");
+  check(!(await mobile.locator("#mobile-menu").evaluate((menu) => menu.open)), "Escape closes mobile menu");
   await toggle.click();
   await mobile.locator("#mobile-nav a[href='/projects/']").click();
   await mobile.waitForURL("**/projects/");
   check(new URL(mobile.url()).pathname === "/projects/", "mobile menu link opens the projects page");
+  await mobile.setViewportSize({ width: 320, height: 180 });
+  await mobile.goto(url, { waitUntil: "networkidle" });
+  await toggle.click();
+  const menuFits = await mobile.locator("#mobile-nav").evaluate((nav) => nav.clientHeight <= window.innerHeight - 64 && getComputedStyle(nav).overflowY === "auto");
+  check(menuFits, "short mobile viewport keeps menu scrollable");
+  const download = mobile.waitForEvent("download");
+  await mobile.locator("#mobile-nav a[download]").click();
+  await download;
+  check(!(await mobile.locator("#mobile-menu").evaluate((menu) => menu.open)), "mobile résumé download closes menu");
+  check(await toggle.evaluate((summary) => document.activeElement === summary), "download restores focus to menu toggle");
+  await toggle.click();
+  await mobile.setViewportSize({ width: 1440, height: 900 });
+  await mobile.waitForTimeout(100);
+  check(!(await mobile.locator("#mobile-menu").evaluate((menu) => menu.open)), "desktop resize closes mobile menu");
   await mobile.close();
 
   const keyboard = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -202,14 +253,15 @@ try {
   const reduced = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
   await reduced.goto(`${url}/`, { waitUntil: "networkidle" });
   await reduced.waitForTimeout(500);
-  const duration = await reduced.$eval(".loop-flow", (el) => getComputedStyle(el).animationDuration);
+  const duration = await reduced.$eval(".portrait-ring", (el) => getComputedStyle(el).animationDuration);
   const scroll = await reduced.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior);
   const loopPaused = await reduced.$eval("svg[aria-labelledby='devops-loop-title']", (svg) => svg.animationsPaused());
+  const smil = await reduced.locator("svg[aria-labelledby='devops-loop-title'] animate, svg[aria-labelledby='devops-loop-title'] animateMotion").count();
   const hidden = await reduced.$$eval("[data-reveal], [data-stagger] > *, .enter", (els) => els.filter((el) => getComputedStyle(el).opacity !== "1").length);
   const vtName = await reduced.$eval(".site-header", (el) => getComputedStyle(el).viewTransitionName);
   check(
-    parseFloat(duration) < 0.1 && scroll === "auto" && loopPaused && hidden === 0 && vtName === "none",
-    `reduced motion: css ${duration}, scroll ${scroll}, loop paused ${loopPaused}, hidden ${hidden}, page transition ${vtName}`,
+    parseFloat(duration) < 0.1 && scroll === "auto" && loopPaused && smil === 0 && hidden === 0 && vtName === "none",
+    `reduced motion: css ${duration}, scroll ${scroll}, loop paused ${loopPaused}, SMIL ${smil}, hidden ${hidden}, page transition ${vtName}`,
   );
   await reduced.close();
 
@@ -237,26 +289,35 @@ try {
 
   const about = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await about.goto(`${url}/about/`, { waitUntil: "networkidle" });
-  const terminal = about.locator("#about .terminal-live");
+  const terminal = about.locator("#about figure > div");
   await terminal.scrollIntoViewIfNeeded();
   const before = await terminal.innerText();
-  await about.waitForTimeout(1800);
+  await about.waitForFunction((previous) => document.querySelector("#about figure > div")?.innerText !== previous, before, { timeout: 8000 });
   const after = await terminal.innerText();
   check(before !== after, "about terminal is typing");
   // The whoami panel types only while on screen; the clock appears once it finishes.
   await about.evaluate(() => window.scrollTo(0, 0));
-  await about.waitForTimeout(4000);
+  await about.waitForFunction(() => {
+    const clock = document.querySelector("#about dd .tabular-nums");
+    return clock && /\d{2}:\d{2}:\d{2}/.test(clock.textContent) && getComputedStyle(clock.closest("dd").parentElement).opacity === "1";
+  }, null, { timeout: 8000 });
   const clock = await about.locator("#about dd .tabular-nums").innerText();
   check(/\d{2}:\d{2}:\d{2}/.test(clock), `whoami local clock ticking (${clock})`);
   const farBelow = await about.$eval("#expertise ul[data-stagger] > li:last-child", (el) => getComputedStyle(el).opacity);
   check(farBelow === "0", `off-screen content hidden before scrolling (opacity ${farBelow})`);
   await about.locator("#expertise").scrollIntoViewIfNeeded();
   await about.waitForTimeout(1200);
-  const revealed = await about.$eval("#expertise ul[data-reveal]", (el) => [el.classList.contains("is-visible"), getComputedStyle(el.firstElementChild).opacity]);
+  const revealed = await about.$eval("#expertise ul[data-stagger] > li", (el) => [el.classList.contains("is-visible"), getComputedStyle(el).opacity]);
   check(revealed[0] && revealed[1] === "1", `section fades in on scroll (opacity ${revealed[1]})`);
-  const icons = await about.$$eval("#expertise svg[role='img']", (els) => els.length);
+  const icons = await about.$$eval("#expertise .tool-chip svg", (els) => els.length);
   const chips = await about.$$eval("#expertise li li", (els) => els.length);
-  check(icons >= 50, `expertise: ${chips} tools, ${icons} brand icons`);
+  check(chips === 73 && icons === 27, `expertise: ${chips} retained tools, ${icons} core brand icons`);
+  await about.evaluate(() => window.scrollTo(0, 0));
+  await about.waitForTimeout(100);
+  check(await about.$eval("#expertise ul[data-stagger] > li", (card) => card.classList.contains("is-visible") && !card.classList.contains("reveal-pending")), "revealed card remains revealed after leaving viewport");
+  await about.setViewportSize({ width: 320, height: 180 });
+  await about.locator("#expertise ul[data-stagger] > li").first().scrollIntoViewIfNeeded();
+  check(await about.$eval("#expertise ul[data-stagger] > li", (card) => getComputedStyle(card).opacity === "1"), "tall tool card remains fully visible in a short viewport");
   await about.close();
 
   const experience = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -286,7 +347,26 @@ try {
     els.filter((el) => !el.hidden).map((el) => el.dataset.category),
   );
   check(security.length > 0 && security.length < total && security.every((c) => c === "security"), `project filter: ${total} → ${security.length} security`);
+  const resultStatus = await projects.locator("#builds [role=status]").innerText();
+  check(resultStatus.includes(String(security.length)), "filter announces visible result count");
+  check(await projects.locator("#builds [hidden]").evaluateAll((cards) => cards.every((card) => getComputedStyle(card).display === "none")), "filtered cards leave no visible boxes");
   await projects.close();
+  const denied = await browser.newPage({ viewport: { width: 375, height: 812 } });
+  await denied.addInitScript(() => Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText: async () => { throw new DOMException("Denied", "NotAllowedError"); } } }));
+  await denied.goto(url + "/contact/", { waitUntil: "networkidle" });
+  await denied.locator("main button").first().click();
+  const copyError = await denied.locator("main [role=status]").innerText();
+  check(copyError.length > 0 && /select|copy|clipboard/i.test(copyError), "clipboard denial shows a visible manual-copy fallback");
+  await denied.close();
+  const policy = await browser.newPage();
+  await policy.goto(url, { waitUntil: "networkidle" });
+  await policy.evaluate(() => { const script = document.createElement("script"); script.textContent = "window.unlistedInlineCanary = true"; document.head.appendChild(script); });
+  check(await policy.evaluate(() => window.unlistedInlineCanary === undefined), "CSP rejects an unlisted inline script while site controls hydrate");
+  for (const pathname of ["/missing-audit-page/", "/fa/missing-audit-page/"]) {
+    const response = await policy.goto(url + pathname, { waitUntil: "networkidle" });
+    check(response.status() === 404 && await policy.locator('a[href="/fa/"]').count() > 0, pathname + " returns 404 with Persian recovery link");
+  }
+  await policy.close();
 
   const resume = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await resume.goto(`${url}/resume/`, { waitUntil: "networkidle" });

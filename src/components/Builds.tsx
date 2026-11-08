@@ -32,7 +32,7 @@ export function Builds({ content }: { content: Content }) {
         <SectionHeader id="builds-title" title={ui.builds.title} />
 
         <div className="mt-6" data-reveal>
-          <ProjectFilter filters={filters} label={ui.builds.filterLabel}>
+          <ProjectFilter filters={filters} label={ui.builds.filterLabel} resultTemplate={ui.builds.resultCount}>
             {projects.map((project) => (
               <li key={project.name} data-category={project.category} className="project-card">
                 <article className="spotlight flex h-full flex-col rounded-xl border border-line bg-card-2 p-5 transition duration-300 hover:-translate-y-0.5 hover:border-mint/40 hover:bg-card">

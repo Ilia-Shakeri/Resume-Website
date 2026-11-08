@@ -6,7 +6,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { TechIcon } from "@/components/TechIcon";
 import type { Content, Locale } from "@/content";
 import type { FeaturedProject } from "@/content/types";
-import { formatDate, githubCheckedAt, repoActivity } from "@/lib/github";
+import { formatDate, repoActivity } from "@/lib/github";
 
 export function ProjectLogo({ project, size }: { project: FeaturedProject; size: "sm" | "md" }) {
   const box = size === "md" ? "h-14 w-14 p-2" : "h-12 w-12 p-1.5";
@@ -29,7 +29,7 @@ export function ProjectLogo({ project, size }: { project: FeaturedProject; size:
   );
 }
 
-/** "In production" only where the live deployment is documented; everything else says "In development". */
+/** Deployment status is dated to the supporting evidence. */
 export function StagePill({ stage, labels }: { stage: FeaturedProject["stage"]; labels: Content["ui"]["ventures"]["stage"] }) {
   return stage === "production" ? (
     <span className="inline-flex items-center gap-1.5 rounded-full border border-mint/40 bg-mint-tint px-2.5 py-0.5 text-xs text-mint">
@@ -78,6 +78,9 @@ function FeaturedCard({ project, content, locale }: { project: FeaturedProject; 
         </div>
 
         <p className="mt-5 max-w-[780px] text-base leading-relaxed text-text">{project.summary}</p>
+        <p className="mt-4 max-w-[780px] border-s-2 border-mint/60 ps-3 text-sm leading-relaxed text-ink">
+          <span className="font-medium text-mint">{ui.outcome}: </span>{project.outcome}
+        </p>
 
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
           <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm sm:grid-cols-[auto_minmax(0,1fr)]">
@@ -89,40 +92,56 @@ function FeaturedCard({ project, content, locale }: { project: FeaturedProject; 
             <dd className="text-ink">
               <bdi>{project.status}</bdi>
             </dd>
-            {activity && (activity.latestTag || activity.lastActivity) ? (
+            {activity ? (
               <>
                 <dt className="text-muted">{ui.github.label}</dt>
                 <dd className="text-ink">
-                  {activity.latestTag ? (
+                  {activity.status !== "unavailable" && activity.latestTag ? (
                     <span className="me-4 inline-block">
                       {ui.github.release} <bdi dir="ltr" className="font-mono text-[0.8125rem]">{activity.latestTag}</bdi>
                       {activity.latestTagDate ? <span className="text-muted"> · {formatDate(activity.latestTagDate, locale)}</span> : null}
                     </span>
                   ) : null}
-                  {activity.lastActivity ? (
+                  {activity.status !== "unavailable" && activity.latestPrerelease ? (
+                    <span className="me-4 inline-block">
+                      {ui.github.prerelease} <bdi dir="ltr" className="font-mono text-[0.8125rem]">{activity.latestPrerelease}</bdi>
+                    </span>
+                  ) : null}
+                  {activity.status !== "unavailable" && activity.lastActivity ? (
                     <span className="inline-block">
                       {ui.github.updated} <span className="text-muted">{formatDate(activity.lastActivity, locale)}</span>
                     </span>
                   ) : null}
-                  <span className="mt-0.5 block text-xs text-muted">
-                    {ui.github.checked} {formatDate(githubCheckedAt, locale)}
-                  </span>
+                  {activity.status === "cached" ? <span className="mt-1 block text-xs text-muted">{ui.github.cached}</span> : null}
+                  {activity.status === "unavailable" ? <span className="block text-sm text-muted">{ui.github.unavailable}</span> : null}
+                  {activity.lastSuccessfulAt ? (
+                    <span className="mt-0.5 block text-xs text-muted">{ui.github.checked} {formatDate(activity.lastSuccessfulAt, locale)}</span>
+                  ) : null}
+                  {activity.checkedAt && activity.status !== "current" ? (
+                    <span className="mt-0.5 block text-xs text-muted">{ui.github.attempted} {formatDate(activity.checkedAt, locale)}</span>
+                  ) : null}
                 </dd>
               </>
             ) : null}
             <dt className="text-muted">{ui.evidence}</dt>
             <dd className="flex flex-wrap gap-x-5 gap-y-1">
-              {project.links.map((link) => (
-                <ExternalLink
-                  key={link.href}
-                  href={link.href}
-                  newTabLabel={content.ui.external}
-                  className="link-row inline-flex min-h-6 items-center gap-1.5 text-mint"
-                >
+              {project.links.filter((link) => project.sourceVisibility !== "private" || !link.href.startsWith("/")).map((link) => link.href.startsWith("/") ? (
+                <a key={link.href} href={link.href} className="link-row inline-flex min-h-11 items-center gap-1.5 text-mint">
                   <bdi>{link.label}</bdi>
-                  <Icon name="arrow-up-right" size={14} className="rtl-flip" />
-                </ExternalLink>
+                  <Icon name="arrow-right" size={14} className="rtl-flip" />
+                </a>
+              ) : (
+                  <ExternalLink
+                    key={link.href}
+                    href={link.href}
+                    newTabLabel={content.ui.external}
+                    className="link-row inline-flex min-h-11 items-center gap-1.5 text-mint"
+                  >
+                    <bdi>{link.label}</bdi>
+                    <Icon name="arrow-up-right" size={14} className="rtl-flip" />
+                  </ExternalLink>
               ))}
+              {project.sourceVisibility === "private" ? <span className="basis-full text-xs text-muted">{ui.privateSource}</span> : null}
             </dd>
           </dl>
 
@@ -259,6 +278,13 @@ export function FeaturedProjects({ content, locale }: { content: Content; locale
     <section aria-labelledby="ventures-title" id="ventures" className="scroll-mt-20 py-8 lg:py-10">
       <div className="container-site">
         <SectionHeader id="ventures-title" title={content.ui.ventures.title} />
+        <nav aria-label={content.ui.ventures.jumpLabel} className="mt-5 flex flex-wrap gap-2">
+          {content.featured.map((project) => (
+            <a key={project.slug} href={`#${project.slug}`} className="inline-flex min-h-11 items-center rounded-full border border-line-strong px-4 py-2 text-sm text-mint hover:border-mint/50 hover:bg-card-2">
+              {project.name}
+            </a>
+          ))}
+        </nav>
         <div className="mt-6 space-y-6">
           {content.featured.map((project) => (
             <FeaturedCard key={project.slug} project={project} content={content} locale={locale} />

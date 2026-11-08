@@ -17,14 +17,15 @@ export const featured: FeaturedProject[] = [
     category: "Backend · DevOps · Product engineering",
     period: "2026 — Present",
     stage: "production",
-    status: "Live at nerkhbaan.ir · 10+ active users",
+    status: "Production and 10+ users documented · October 2026",
     repo: "Nerkhbaan",
     summary:
       "A price platform for gold, currencies, and crypto with history, alerts, and web, admin, and desktop apps. Every quote names its source and time and carries an explicit expiry, so an outdated price is never shown as current.",
+    outcome: "October 2026: 27,000 of 27,000 requests passed a 30-minute isolated load test, with p95 latency of 323 ms.",
     highlights: [
       "Built the whole product: FastAPI API, TimescaleDB and Redis data layer, React web and admin apps, an Electron desktop app, and a Go feed sidecar.",
-      "Run it in production on Docker Compose: two API replicas behind Nginx, migrations gated by readiness, and scheduled backups with a tested restore.",
-      "Every release passes 15 CI jobs, including integration tests on real TimescaleDB and Redis, Playwright browser tests, and Trivy scans of seven images.",
+      "Deployed it in October 2026 on Docker Compose: two API replicas behind Nginx, migrations gated by readiness, and scheduled backups with a tested restore.",
+      "Release 2.8.1 passed 15 CI jobs, including integration tests on real TimescaleDB and Redis, Playwright browser tests, and Trivy scans of seven images.",
     ],
     facts: [
       { value: "10+", label: "Active users" },
@@ -50,7 +51,7 @@ export const featured: FeaturedProject[] = [
         caption: "Sign-in page (Persian interface)",
       },
     ],
-    factsSource: "User count as of October 2026. The load test ran on an isolated copy of the production stack.",
+    factsSource: "Evidence recorded in October 2026; user count was self-reported. The load test used an isolated copy of the production stack.",
     tools: [
       { name: "FastAPI", brand: "siFastapi" },
       { name: "TimescaleDB", brand: "siTimescale" },
@@ -65,8 +66,7 @@ export const featured: FeaturedProject[] = [
       { name: "Trivy", brand: "siTrivy" },
     ],
     links: [
-      { label: "nerkhbaan.ir", href: "https://nerkhbaan.ir/", primary: true },
-      { label: "Source code", href: `${GH}/Nerkhbaan` },
+      { label: "Source code", href: `${GH}/Nerkhbaan`, primary: true },
     ],
     architecture: {
       caption: "How a price travels from public market APIs to users.",
@@ -85,7 +85,7 @@ export const featured: FeaturedProject[] = [
         items: [
           "Show prices where every number states its instrument, unit, source, and time, and never present an outdated price as current.",
           "Units and purities are never converted or estimated: a missing direct gold price stays unavailable.",
-          "Runs on a single server in Iran, where some foreign data providers are not reachable.",
+          "The documented October 2026 deployment ran on one server in Iran, where some foreign data providers were not reachable.",
         ],
       },
       {
@@ -111,7 +111,7 @@ export const featured: FeaturedProject[] = [
         items: [
           "15 CI jobs: locked Node builds, Python unit tests, the Go sidecar, Compose and monitoring config checks, Playwright browser tests, dependency and secret scans, and Trivy scans of seven images that fail on any HIGH or CRITICAL finding.",
           "Integration tests run on real TimescaleDB and Redis, apply migrations twice to prove they are idempotent, verify migration checksums, and run a restore drill.",
-          "Production is Docker Compose on one host with two API replicas. Release 2.8.1 was rolled out by scaling to three replicas and removing the old ones one at a time.",
+          "The October 2026 production deployment used Docker Compose on one host with two API replicas. Release 2.8.1 was rolled out by scaling to three replicas and removing the old ones one at a time.",
         ],
       },
       {
@@ -149,10 +149,11 @@ export const featured: FeaturedProject[] = [
     category: "Backend · Security · Production operations",
     period: "2026 — Present",
     stage: "production",
-    status: "In use at 2+ companies",
-    repo: "Dolphin",
+    status: "Use at 2+ companies reported · October 2026",
+    sourceVisibility: "private",
     summary:
       "A Persian-first CRM/ERP for sales, quotations and invoicing, payments, inventory, telephony, and after-sales. One codebase is deployed separately for each customer, and each installation runs as its own isolated Docker Compose stack.",
+    outcome: "October 2026: 3,600+ automated tests and 23 browser tests recorded; use at 2+ companies was self-reported.",
     highlights: [
       "Lead the engineering of the Django and PostgreSQL application: 46 feature flags, a right-to-left interface, and server-sent live updates.",
       "Designed the deployment model: an isolated stack per installation, a signed feature manifest that fails closed, and non-superuser database roles with per-table grants.",
@@ -182,7 +183,7 @@ export const featured: FeaturedProject[] = [
         caption: "Leads board by status (demo data)",
       },
     ],
-    factsSource: "Customer count as of October 2026. Tests run on SQLite and PostgreSQL 16, plus browser tests.",
+    factsSource: "October 2026 evidence: customer count was self-reported; tests covered SQLite and PostgreSQL 16, plus browser tests. Source code is private.",
     tools: [
       { name: "Django", brand: "siDjango" },
       { name: "Python", brand: "siPython" },
@@ -194,7 +195,7 @@ export const featured: FeaturedProject[] = [
       { name: "Selenium", brand: "siSelenium" },
       { name: "GNU Bash", brand: "siGnubash" },
     ],
-    links: [{ label: "Source code", href: `${GH}/Dolphin`, primary: true }],
+    links: [{ label: "Read case study", href: "/projects/#dolphin-crm", primary: true }],
     architecture: {
       caption: "Request path and the services around it in one installation.",
       steps: [
@@ -280,10 +281,11 @@ export const featured: FeaturedProject[] = [
     category: "Platform engineering · DevOps tooling",
     period: "2026 — Present",
     stage: "development",
-    status: "Pre-1.0, in active development",
+    status: "In active development · public versions on GitHub",
     repo: "Stackplore",
     summary:
       "A self-hosted workspace that brings Docker and Kubernetes inventory, health, topology, logs, metrics, and events into one versioned API and an English/Persian interface. It is read-only by default and built for troubleshooting, not as a control plane.",
+    outcome: "The October 2026 snapshot records provider checks against a real Docker Engine and Kubernetes kind cluster, with read-only access by default.",
     highlights: [
       "Designed and built the Go API, PostgreSQL schema, provider adapters, and the React interface from one OpenAPI contract.",
       "Kept access least-privilege: Docker through a read-only mTLS proxy, Kubernetes through get/list RBAC in the namespaces you choose.",
@@ -328,14 +330,14 @@ export const featured: FeaturedProject[] = [
         ],
       },
       {
-        title: "In progress (0.7.0)",
+        title: "Pending in October 2026 (0.7.0)",
         items: [
           "A single non-root image that serves both the interface and the API.",
           "CI checks for a fresh Compose install and a Helm install on kind with TLS to PostgreSQL; results are not recorded yet.",
         ],
       },
       {
-        title: "Planned before 1.0",
+        title: "Planned in October 2026 before 1.0",
         items: [
           "Backup, restore, upgrade, and rollback drills on a real production target.",
           "Published images with an SBOM, vulnerability scans, and signing.",
@@ -358,14 +360,15 @@ export const featured: FeaturedProject[] = [
       },
     ],
     limitations: [
-      "Not production-ready: 1.0 requires the production-target drills listed above.",
-      "Runs as a single replica; images are built from source and not yet published.",
+      "The October 2026 snapshot was not production-ready: 1.0 required the production-target drills listed above.",
+      "That snapshot ran as a single replica; images were built from source and not yet published.",
     ],
   },
 ];
 
 export const projects: Project[] = [
   {
+    id: "chatops",
     name: "Prometheus & Jira → Matrix bridges",
     year: "2025",
     kind: "n8n workflows",
@@ -388,6 +391,7 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: "matrix-users",
     name: "Matrix User Manager",
     year: "2025",
     kind: "Bash TUI",
@@ -406,6 +410,7 @@ export const projects: Project[] = [
     links: [{ label: "Source", href: `${GH}/Matrix-User-Manager` }],
   },
   {
+    id: "linsecguard",
     name: "LinSecGuard",
     year: "2025",
     kind: "Bash CLI",
@@ -423,6 +428,7 @@ export const projects: Project[] = [
     links: [{ label: "Source", href: `${GH}/LinSecGuard` }],
   },
   {
+    id: "systrack",
     name: "SysTrack",
     year: "2025",
     kind: "Bash · cron",
@@ -440,6 +446,7 @@ export const projects: Project[] = [
     links: [{ label: "Source", href: `${GH}/SysTrack` }],
   },
   {
+    id: "backup-script",
     name: "Automated Backup Script",
     year: "2025",
     kind: "Bash CLI",
@@ -453,6 +460,7 @@ export const projects: Project[] = [
     links: [{ label: "Source", href: `${GH}/Automated-Backup-Script` }],
   },
   {
+    id: "easycert",
     name: "EasyCert",
     year: "2025",
     kind: "Bash CLI",
@@ -470,6 +478,7 @@ export const projects: Project[] = [
     links: [{ label: "Source", href: `${GH}/EasyCert` }],
   },
   {
+    id: "ciphercert",
     name: "CipherCert",
     year: "2026",
     kind: "Desktop app",
@@ -488,6 +497,7 @@ export const projects: Project[] = [
     links: [{ label: "Source", href: `${GH}/CipherCert-App` }],
   },
   {
+    id: "clockwork",
     name: "Clockwork OrangeHRM",
     year: "2026",
     kind: "CLI + desktop app",

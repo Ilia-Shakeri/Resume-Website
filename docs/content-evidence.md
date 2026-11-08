@@ -126,9 +126,9 @@ The three featured projects were re-checked against their repositories on 17 Oct
 | Implemented / in progress / planned lists | README "Implemented" and "Still required for 1.0"; roadmap; CHANGELOG |
 | Security | `deploy/Dockerfile.api` (UID 10001), Helm `cluster-reader.yaml` (get/list only), `compose.docker.yaml` (mTLS proxy) |
 
-The site does not claim a 0.7.0 release, published images, production readiness, or a hosted demo.
+The October 2026 case study did not claim a 0.7.0 release, published images, production readiness, or a hosted demo. The release row is a separate dated public-repository lookup.
 
-**Authorship.** All three repositories have a single human author (Ilia). Most Dolphin commits carry AI co-author trailers, and Nerkhbaan's branch names suggest AI tooling. The site makes no claim either way; see TODO_CONTENT.md.
+**Authorship.** The reviewed repository histories credit Ilia's engineering work. Roles on the site are based on his confirmation and the linked implementation evidence.
 
 **Logos** are the products' own marks: Dolphin `docs/brand-source/logos/DarkMode_Logo.png`, Nerkhbaan `apps/web/src/logo/logo.png`.
 
@@ -221,7 +221,7 @@ Cards show a kind (for example "Bash CLI"), a one-sentence summary, and two or t
 | LPIC-1 training course, CanDo IT Academy, issued 29 Jan 2025 (course 22 Oct 2024 – 21 Jan 2025), Cert ID 03/17758 | `references/LPIC1.pdf` — a CanDo "Certificate of Excellence" for completing the requirements for "Linux Professional Institute Certification 1" | ✅ as a **course**. The document is issued by CanDo, not LPI (no LPI ID or verification code), so it is not presented as an LPI certification. Ilia chose this labelling on 13 Oct 2026. |
 | LPIC-2 training course, TOSINSO, Jun 2025 | CV only; no certificate file | 📄 shown as a course, without a certificate link |
 | "Security-focused DevOps Engineer (Certified)" | CV summary | ❌ excluded — no certification identified |
-| Comprehensive Data Science Program, University of Tehran (online), May 2026 – Aug 2027 (planned), about halfway | Stated by Ilia, 17 Oct 2026; syllabus spreadsheet supplied by Ilia (schedule from 25 Ordibehesht 1405) | ✅ shown as an in-progress programme, not a certificate. "Completed" modules are those scheduled before 17 Oct 2026 (statistics, Excel, data-science foundations, SQL Server, Power BI) |
+| Comprehensive Data Science Program, University of Tehran (online), May 2026 – Aug 2027 (planned) | Stated by Ilia, 17 Oct 2026; syllabus spreadsheet supplied by Ilia (schedule from 25 Ordibehesht 1405) | Shown as an in-progress programme, not a certificate. Topic lists describe the syllabus; scheduled dates alone do not prove individual module completion. |
 
 ## Ranking of project candidates
 
@@ -249,3 +249,19 @@ See `TODO_CONTENT.md`.
 ## Portrait
 
 `public/images/ilia-shakeri.webp`: a photo Ilia supplied and approved for the site on 17 Oct 2026. It is cropped to 640×640 and re-encoded as WebP with no EXIF, GPS or XMP metadata (21 KB), and it is referenced in the JSON-LD `image`. It is shown as a mint duotone that turns to full colour on hover.
+
+## Content review — 8 Nov 2026
+
+- The public role and page title use **DevOps & Backend Engineer** consistently. The introduction is two sentences in each language.
+- Nerkhbaan and Dolphin deployment and usage claims are explicitly dated to the October 2026 evidence above. They are historical records, not a live availability statement. The load-test and recovery limits remain visible.
+- Nerkhbaan's historical deployment domain remains plain text in the dated case study. It is not a primary outbound link because current availability was not verified; the public repository and local case study remain accessible.
+- Dolphin's former public source URL returned 404 without authentication during this review. The site labels its source private and links the public case study at `/projects/#dolphin-crm` (or `/fa/projects/#dolphin-crm`). The résumé links the same public case study.
+- On the project card, the private-source note leads into the native case-study disclosure rather than a link back to the same card.
+- The study topic list no longer claims completed modules. Confirmation of actual progress is still needed before any completion claim.
+- Persian user/company counts use inclusive lower bounds matching the English values.
+- Featured projects, smaller projects, and toolkit translations use stable typed IDs rather than names or array positions.
+- The toolkit highlights 27 core tools. The complete 73-tool inventory remains in native disclosures; extra tools render as text to limit repeated inline artwork. The résumé shows the core set.
+- The About replay describes static hosting and reads the commit marker. It makes no container, timer, uptime, or live health claim.
+- Repository freshness is per repository: a failed refresh is labelled cached or unavailable, with the last successful read distinguished from the attempted check. A stable tag is not deployment proof.
+
+These notes describe source changes. Current product availability, employment, and study progress still require their own evidence.

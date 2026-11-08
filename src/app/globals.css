@@ -236,40 +236,30 @@
   }
 }
 
-/* ---- Scroll reveal (ScrollReveal.tsx). Only active once JS adds .reveal-ready. */
-html.reveal-ready [data-reveal] {
-  opacity: 0;
-  transform: translateY(20px);
+/* Reveal is opt-in per observed item. Static and failed-script views stay visible. */
+html.reveal-ready .reveal-target {
+  opacity: 1;
+  transform: none;
   transition:
     opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
-html.reveal-ready [data-reveal].is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* A [data-stagger] container stays put; its children rise in one after another. */
-html.reveal-ready [data-reveal][data-stagger] {
-  opacity: 1;
-  transform: none;
-}
-
-html.reveal-ready [data-stagger] > * {
+html.reveal-ready .reveal-pending {
   opacity: 0;
   transform: translateY(16px);
-  transition:
-    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: calc(var(--n, 0) * 55ms);
 }
 
-html.reveal-ready .is-visible[data-stagger] > *,
-html.reveal-ready .is-visible [data-stagger] > * {
-  opacity: 1;
-  transform: none;
+/* Short viewports and reduced motion must never trade readable text for effects. */
+@media (max-height: 400px), (prefers-reduced-motion: reduce) {
+  html.reveal-ready .reveal-target,
+  html.reveal-ready .reveal-pending {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 [data-stagger] > :nth-child(2) { --n: 1; }
@@ -283,8 +273,8 @@ html.reveal-ready .is-visible [data-stagger] > * {
 [data-stagger] > :nth-child(n + 10) { --n: 9; }
 
 @media print {
-  html.reveal-ready [data-reveal],
-  html.reveal-ready [data-stagger] > * {
+  html.reveal-ready .reveal-target,
+  html.reveal-ready .reveal-pending {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
@@ -382,7 +372,7 @@ html.reveal-ready .is-visible [data-stagger] > * {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .mobile-nav:not([hidden]) {
+  #mobile-menu[data-enhanced="true"][open] .mobile-nav {
     animation: menu-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
@@ -554,27 +544,6 @@ html.reveal-ready .is-visible [data-stagger] > * {
 }
 
 /* ---- Live terminals (LiveTerminal.tsx, WhoamiPanel.tsx). */
-.terminal-live {
-  display: none;
-}
-
-/* Controls that need JavaScript (e.g. copy to clipboard) stay hidden without it. */
-.js-only {
-  display: none;
-}
-
-html.js .js-only {
-  display: inline-flex;
-}
-
-html.js .terminal-live {
-  display: block;
-}
-
-html.js .terminal-static {
-  display: none;
-}
-
 .terminal-cursor {
   display: inline-block;
   width: 0.55em;

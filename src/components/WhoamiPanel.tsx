@@ -20,14 +20,15 @@ function tehranTime(date: Date): string {
 }
 
 /** Live clock for Tehran; renders a placeholder until mounted (no hydration mismatch). */
-function LocalClock() {
+function LocalClock({ active }: { active: boolean }) {
   const [now, setNow] = useState<string | null>(null);
   useEffect(() => {
+    if (!active) return;
     const update = () => setNow(tehranTime(new Date()));
     update();
     const id = setInterval(update, 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [active]);
   return (
     <span dir="ltr" className="inline-block tabular-nums">
       {now ?? "--:--:--"} <span className="text-muted">IRST</span>
@@ -78,28 +79,32 @@ export function WhoamiPanel({ rows, localTimeLabel }: { rows: Row[]; localTimeLa
 
   return (
     <div ref={ref} className="rounded-lg border border-line-strong bg-card px-6 py-6 font-mono">
-      <p dir="ltr" className="text-sm text-mint">
+      <span className="sr-only">{COMMAND}</span>
+      <p dir="ltr" className="min-h-[1.5em] text-sm text-mint" aria-hidden="true">
         <span aria-hidden="true">$ </span>
         {showAll ? COMMAND : typedCommand}
         {commandTyping && !showAll ? <span className="terminal-cursor" /> : null}
       </p>
       <dl className="mt-6 space-y-[18px]">
         {typedRows.map((row) => (
-          <div key={row.label} className={showAll || row.started ? "" : "invisible"}>
-            <dt className="text-xs tracking-[0.06em] text-muted uppercase">{row.label}</dt>
-            <dd className="mt-1.5 font-sans text-[0.9375rem] text-ink">
+          <div key={row.label}>
+            <dt className={`text-xs tracking-[0.06em] text-muted uppercase ${showAll || row.started ? "" : "opacity-0"}`}>{row.label}</dt>
+            <dd className="mt-1.5 min-h-[1.5em] font-sans text-[0.9375rem] text-ink">
               <span className="sr-only">{row.value}</span>
-              <span aria-hidden="true">
-                {showAll ? row.value : row.typed}
-                {row.typing ? <span className="terminal-cursor" /> : null}
+              <span aria-hidden="true" className="grid">
+                <span className="invisible [grid-area:1/1]">{row.value}</span>
+                <span className="[grid-area:1/1]">
+                  {showAll ? row.value : row.typed}
+                  {row.typing ? <span className="terminal-cursor" /> : null}
+                </span>
               </span>
             </dd>
           </div>
         ))}
-        <div className={showAll || done ? "" : "invisible"}>
+        <div className={showAll || done ? "" : "opacity-0"}>
           <dt className="text-xs tracking-[0.06em] text-muted uppercase">{localTimeLabel}</dt>
           <dd className="mt-1.5 font-sans text-[0.9375rem] text-ink">
-            <LocalClock />
+            <LocalClock active={active} />
           </dd>
         </div>
       </dl>

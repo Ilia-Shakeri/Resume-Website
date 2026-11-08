@@ -1,12 +1,14 @@
 # GitHub inventory
 
+> Historical snapshot, not a current public-access guarantee. As of 8 Nov 2026, Dolphin source is private; public project cards omit its repository link. Current public build statistics cover Nerkhbaan and Stackplore only.
+
 Audit date: **13 Oct 2026**. Account: [`Ilia-Shakeri`](https://github.com/Ilia-Shakeri) (23 public repos per profile).
 
 ## How this was collected
 
 | Step | Method | Result |
 | --- | --- | --- |
-| Enumerate repos | Claude Code `list_repos` (authenticated, `has_more: false`) and GitHub search `user:Ilia-Shakeri` (100 per page, `total_count: 28`) | 28 owned repos + 1 collaborator repo (`DanaKarimi/HermesKontor`). The full list fit on one page. |
+| Enumerate repos | Repository connector `list_repos` (authenticated, `has_more: false`) and GitHub search `user:Ilia-Shakeri` (100 per page, `total_count: 28`) | 28 owned repos + 1 collaborator repo (`DanaKarimi/HermesKontor`). The full list fit on one page. |
 | Read public repos | Shallow `git clone` (blob size limit 200 KB) into a scratch directory, plus full history for Dolphin, Nerkhbaan, and Stackplore | 23 public repos read: README, manifests, Compose files, workflows, ops docs. |
 | Private repos | `git clone` refused (no credential for private repos in this session) | 5 private repos: **metadata only**, contents not read. |
 | Organizations | No organization repositories were returned by either listing. | None found. |

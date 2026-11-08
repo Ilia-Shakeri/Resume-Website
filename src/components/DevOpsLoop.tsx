@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useIsActive, usePrefersReducedMotion } from "@/lib/use-motion";
+import { useIsActive, useIsHydrated, usePrefersReducedMotion } from "@/lib/use-motion";
 
 // Figure-eight through the centre (260,150): the left lobe is "Dev", the right
 // lobe "Ops". Traversal: centre → top-left → left end → bottom-left → centre →
@@ -39,21 +39,20 @@ const packetBegin = (packet: number, lag = 0) => `${(-(packet * PULSE + DURATION
 export function DevOpsLoop({ title }: { title: string }) {
   const wrapper = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
+  const hydrated = useIsHydrated();
   const reduced = usePrefersReducedMotion();
   const active = useIsActive(wrapper);
+  const motionEnabled = hydrated && !reduced;
 
   useEffect(() => {
     const element = svg.current;
     if (!element) return;
-    if (reduced) {
-      element.pauseAnimations();
-      element.setCurrentTime(DURATION * 0.66);
-    } else if (active) {
+    if (motionEnabled && active) {
       element.unpauseAnimations();
     } else {
       element.pauseAnimations();
     }
-  }, [active, reduced]);
+  }, [active, motionEnabled]);
 
   return (
     <div ref={wrapper} dir="ltr" className="relative mx-auto w-full max-w-[540px]">
@@ -95,7 +94,8 @@ export function DevOpsLoop({ title }: { title: string }) {
           strokeOpacity="0.55"
           strokeWidth="1.5"
           strokeDasharray="2 10"
-          className="loop-flow"
+          className={motionEnabled ? "loop-flow" : undefined}
+          style={{ animationPlayState: active ? "running" : "paused" }}
         />
 
         <text x="150" y="156" textAnchor="middle" className="loop-lobe-label">
@@ -108,11 +108,13 @@ export function DevOpsLoop({ title }: { title: string }) {
         {STAGES.map((stage) => (
           <g key={stage.name}>
             <circle cx={stage.x} cy={stage.y} r="5" fill="none" stroke="#a8f0c8" strokeOpacity="0">
-              <animate attributeName="r" values="5;16;16" keyTimes="0;0.25;1" dur={`${PULSE}s`} begin={pulseBegin(stage.f)} repeatCount="indefinite" />
-              <animate attributeName="stroke-opacity" values="0.8;0;0" keyTimes="0;0.25;1" dur={`${PULSE}s`} begin={pulseBegin(stage.f)} repeatCount="indefinite" />
+              {motionEnabled ? <>
+                <animate attributeName="r" values="5;16;16" keyTimes="0;0.25;1" dur={`${PULSE}s`} begin={pulseBegin(stage.f)} repeatCount="indefinite" />
+                <animate attributeName="stroke-opacity" values="0.8;0;0" keyTimes="0;0.25;1" dur={`${PULSE}s`} begin={pulseBegin(stage.f)} repeatCount="indefinite" />
+              </> : null}
             </circle>
             <circle cx={stage.x} cy={stage.y} r="5" fill="#0b0e10" stroke="#84bc9c" strokeWidth="1.5">
-              <animate attributeName="fill" values="#a8f0c8;#0b0e10;#0b0e10" keyTimes="0;0.2;1" dur={`${PULSE}s`} begin={pulseBegin(stage.f)} repeatCount="indefinite" />
+              {motionEnabled ? <animate attributeName="fill" values="#a8f0c8;#0b0e10;#0b0e10" keyTimes="0;0.2;1" dur={`${PULSE}s`} begin={pulseBegin(stage.f)} repeatCount="indefinite" /> : null}
             </circle>
             <text
               x={stage.x}
@@ -121,7 +123,7 @@ export function DevOpsLoop({ title }: { title: string }) {
               className="loop-stage-label"
             >
               {stage.name.toUpperCase()}
-              <animate attributeName="fill" values="#a8f0c8;#828988;#828988" keyTimes="0;0.3;1" dur={`${PULSE}s`} begin={pulseBegin(stage.f)} repeatCount="indefinite" />
+              {motionEnabled ? <animate attributeName="fill" values="#a8f0c8;#828988;#828988" keyTimes="0;0.3;1" dur={`${PULSE}s`} begin={pulseBegin(stage.f)} repeatCount="indefinite" /> : null}
             </text>
           </g>
         ))}
@@ -129,23 +131,23 @@ export function DevOpsLoop({ title }: { title: string }) {
         {Array.from({ length: PACKETS }, (_, packet) => {
           const begin = packetBegin(packet);
           return (
-            <g key={packet}>
+            <g key={packet} transform={!motionEnabled ? `translate(${STAGES[packet === 0 ? 2 : 6].x},${STAGES[packet === 0 ? 2 : 6].y})` : undefined}>
               {[0.24, 0.16, 0.08].map((lag, index) => (
                 <circle key={lag} r={2.6 - index * 0.6} fill="#a8f0c8" opacity={0.25 + index * 0.15}>
-                  <animateMotion dur={`${DURATION}s`} begin={packetBegin(packet, lag)} repeatCount="indefinite" rotate="auto">
+                  {motionEnabled ? <animateMotion dur={`${DURATION}s`} begin={packetBegin(packet, lag)} repeatCount="indefinite" rotate="auto">
                     <mpath href="#devops-loop-path" />
-                  </animateMotion>
+                  </animateMotion> : null}
                 </circle>
               ))}
               <circle r="14" fill="url(#packet-glow)">
-                <animateMotion dur={`${DURATION}s`} begin={begin} repeatCount="indefinite">
+                {motionEnabled ? <animateMotion dur={`${DURATION}s`} begin={begin} repeatCount="indefinite">
                   <mpath href="#devops-loop-path" />
-                </animateMotion>
+                </animateMotion> : null}
               </circle>
               <circle r="4" fill="#e9fff2">
-                <animateMotion dur={`${DURATION}s`} begin={begin} repeatCount="indefinite">
+                {motionEnabled ? <animateMotion dur={`${DURATION}s`} begin={begin} repeatCount="indefinite">
                   <mpath href="#devops-loop-path" />
-                </animateMotion>
+                </animateMotion> : null}
               </circle>
             </g>
           );

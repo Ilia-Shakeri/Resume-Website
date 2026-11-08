@@ -21,7 +21,7 @@ export function Education({ content }: { content: Content }) {
                 {entry.institution ? <p className="mt-3 text-text">{entry.institution}</p> : null}
                 <p className="mt-2 text-sm text-muted">{entry.status}</p>
                 <p className="mt-5 border-t border-line pt-5 text-sm leading-[1.7] text-text">{entry.note}</p>
-                {entry.completed?.length ? <ModuleList label={ui.education.completedLabel} items={entry.completed} done /> : null}
+                {entry.covered?.length ? <ModuleList label={ui.education.coveredLabel} items={entry.covered} /> : null}
                 {entry.upcoming?.length ? <ModuleList label={ui.education.upcomingLabel} items={entry.upcoming} /> : null}
               </div>
             ))}
@@ -82,7 +82,7 @@ export function Education({ content }: { content: Content }) {
   );
 }
 
-function ModuleList({ label, items, done = false }: { label: string; items: string[]; done?: boolean }) {
+function ModuleList({ label, items }: { label: string; items: string[] }) {
   return (
     <div className="mt-4">
       <h4 className="text-xs text-muted">{label}</h4>
@@ -90,7 +90,7 @@ function ModuleList({ label, items, done = false }: { label: string; items: stri
         {items.map((item) => (
           <li
             key={item}
-            className={`rounded-full border px-2.5 py-1 text-xs leading-none ${done ? "border-mint/40 bg-mint-tint text-ink" : "border-line-strong text-text"}`}
+            className="rounded-full border border-line-strong px-2.5 py-1 text-xs leading-none text-text"
           >
             {item}
           </li>

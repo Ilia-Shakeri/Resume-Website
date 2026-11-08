@@ -18,10 +18,6 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.svg" },
 };
 
-// Runs before first paint: enables the animated versions of live elements
-// (html.js) and gives the Persian page the right document language/direction.
-const bootScript = `(function(d){d.classList.add('js');if(location.pathname.indexOf('/fa')===0){d.lang='fa';d.dir='rtl'}})(document.documentElement)`;
-
 export const viewport: Viewport = {
   themeColor: "#0b0e10",
   colorScheme: "dark",
@@ -29,10 +25,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
-      </head>
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <body>
         {children}
       </body>

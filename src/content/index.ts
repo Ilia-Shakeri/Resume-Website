@@ -7,6 +7,7 @@ import * as faProfile from "./fa/profile";
 import * as faProjects from "./fa/projects";
 import { ui as faUi } from "./fa/ui";
 import type { Locale } from "./types";
+import { withAssetPaths } from "@/lib/assets";
 
 export type { Locale } from "./types";
 export const locales: Locale[] = ["en", "fa"];
@@ -20,7 +21,7 @@ export type Content = (typeof content)["en"];
 
 /** All copy for one language. Both languages share the same shape. */
 export function getContent(locale: Locale): Content {
-  return content[locale];
+  return withAssetPaths(content[locale]);
 }
 
 export type PageKey = "home" | "about" | "projects" | "experience" | "contact";

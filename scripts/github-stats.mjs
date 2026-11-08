@@ -1,60 +1,59 @@
-// Refreshes src/content/github.json with each featured repository's latest
-// release tag and last activity, read from the GitHub REST API. The deploy
-// workflow runs this before every build (and on a schedule), so the figures on
-// /projects/ follow GitHub without a code change. If GitHub cannot be reached,
-// the last known values are kept and the build continues.
-import { readFileSync, writeFileSync } from "node:fs";
-
-const OWNER = "Ilia-Shakeri";
-const FILE = new URL("../src/content/github.json", import.meta.url);
-const previous = JSON.parse(readFileSync(FILE, "utf8"));
-const headers = {
-  Accept: "application/vnd.github+json",
-  "User-Agent": "iliashakeri.ir-build",
-  ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
-};
-
-async function api(path) {
-  const response = await fetch(`https://api.github.com${path}`, { headers, signal: AbortSignal.timeout(15000) });
-  if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
-  return response.json();
+// Public repository facts. Failed reads keep an explicit cached/unavailable state.
+import { readFile, writeFile, mkdir } from "node:fs/promises";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+const owner = "Ilia-Shakeri";
+const sourceFile = new URL("../src/content/github.json", import.meta.url);
+export function latestStable(tags) {
+  return tags.filter((tag) => /^v\d+\.\d+\.\d+$/.test(tag.name))
+    .sort((a, b) => {
+      const left = a.name.slice(1).split(".").map(Number), right = b.name.slice(1).split(".").map(Number);
+      return right[0] - left[0] || right[1] - left[1] || right[2] - left[2];
+    })[0];
 }
-
-/** Highest vMAJOR.MINOR.PATCH tag; other tags (release candidates, etc.) are ignored. */
-function latestSemver(tags) {
-  const parsed = tags
-    .map((tag) => ({ tag, parts: /^v(\d+)\.(\d+)\.(\d+)$/.exec(tag.name)?.slice(1).map(Number) }))
-    .filter((entry) => entry.parts);
-  parsed.sort((a, b) => b.parts[0] - a.parts[0] || b.parts[1] - a.parts[1] || b.parts[2] - a.parts[2]);
-  return parsed[0]?.tag;
-}
-
-const repos = { ...previous.repos };
-let refreshed = 0;
-for (const name of Object.keys(previous.repos)) {
-  try {
-    const repo = await api(`/repos/${OWNER}/${name}`);
-    const tags = [];
-    for (let page = 1; page <= 5; page += 1) {
-      const batch = await api(`/repos/${OWNER}/${name}/tags?per_page=100&page=${page}`);
-      tags.push(...batch);
-      if (batch.length < 100) break;
-    }
-    const tag = latestSemver(tags);
-    const tagCommit = tag ? await api(`/repos/${OWNER}/${name}/commits/${tag.commit.sha}`) : null;
-    repos[name] = {
-      url: repo.html_url,
-      latestTag: tag?.name ?? null,
-      latestTagDate: tagCommit?.commit.committer.date ?? null,
-      lastActivity: repo.pushed_at,
-    };
-    refreshed += 1;
-  } catch (error) {
-    console.warn(`github-stats: keeping previous data for ${name} (${error.message})`);
+export async function refreshGithub({ output = ".generated/github.json", fetcher = fetch, now = new Date().toISOString() } = {}) {
+  const committed = JSON.parse(await readFile(sourceFile, "utf8"));
+  let previous = committed;
+  try { previous = JSON.parse(await readFile(output, "utf8")); } catch { /* First build uses the committed public snapshot. */ }
+  async function api(endpoint) {
+    const response = await fetcher(`https://api.github.com${endpoint}`, {
+      headers: { Accept: "application/vnd.github+json", "User-Agent": "iliashakeri.ir-build" },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!response.ok) { const error = new Error(`HTTP ${response.status}`); error.status = response.status; throw error; }
+    return response.json();
   }
+  const entries = await Promise.all(Object.keys(committed.repos).map(async (name) => {
+    const prior = previous.repos[name] ?? committed.repos[name];
+    try {
+      const repo = await api(`/repos/${owner}/${name}`);
+      if (repo.private) throw Object.assign(new Error("Repository unavailable publicly"), { status: 404 });
+      const tags = [];
+      for (let page = 1; page <= 5; page++) {
+        const batch = await api(`/repos/${owner}/${name}/tags?per_page=100&page=${page}`);
+        tags.push(...batch);
+        if (batch.length < 100) break;
+      }
+      const stable = latestStable(tags);
+      const commit = stable ? await api(`/repos/${owner}/${name}/commits/${stable.commit.sha}`) : null;
+      const prerelease = tags.filter((tag) => /^v\d+\.\d+\.\d+-/.test(tag.name))
+        .sort((a, b) => b.name.localeCompare(a.name, "en", { numeric: true }))[0];
+      return [name, { url: repo.html_url, latestTag: stable?.name ?? null, latestTagDate: commit?.commit.committer.date ?? null,
+        latestPrerelease: prerelease?.name ?? null, lastActivity: repo.pushed_at, status: "current", checkedAt: now, lastSuccessfulAt: now }];
+    } catch (error) {
+      const unavailable = error.status === 404 || error.status === 451;
+      console.warn(`github-stats: ${name}: ${unavailable ? "public data unavailable" : "cached facts retained"} (${error.message})`);
+      return [name, { ...prior, ...(unavailable ? { latestTag: null, latestTagDate: null, latestPrerelease: null, lastActivity: null } : {}),
+        status: unavailable ? "unavailable" : "cached", checkedAt: now, lastSuccessfulAt: Object.hasOwn(prior, "lastSuccessfulAt") ? prior.lastSuccessfulAt : previous.fetchedAt ?? null }];
+    }
+  }));
+  const result = { fetchedAt: now, source: "public GitHub API", repos: Object.fromEntries(entries) };
+  await mkdir(path.dirname(path.resolve(output)), { recursive: true });
+  await writeFile(output, JSON.stringify(result, null, 2) + "\n");
+  console.log(`github-stats: ${entries.filter(([, repo]) => repo.status === "current").length}/${entries.length} public repositories refreshed`);
+  return result;
 }
-
-if (refreshed > 0) {
-  writeFileSync(FILE, `${JSON.stringify({ fetchedAt: new Date().toISOString(), source: "GitHub API", repos }, null, 2)}\n`);
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  const outputIndex = process.argv.indexOf("--output");
+  await refreshGithub({ output: outputIndex < 0 ? ".generated/github.json" : process.argv[outputIndex + 1] });
 }
-console.log(`github-stats: refreshed ${refreshed}/${Object.keys(repos).length} repositories`);

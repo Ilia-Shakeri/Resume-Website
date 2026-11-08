@@ -1,4 +1,5 @@
 import { ui } from "@/content/en/ui";
+import { assetPath } from "@/lib/assets";
 
 /**
  * Public origin of the deployed site. NEXT_PUBLIC_SITE_URL overrides it at
@@ -12,10 +13,10 @@ export const site = {
   title: ui.meta.title,
   description: ui.meta.description,
   resume: {
-    pdfPath: "/resume/ilia-shakeri-resume.pdf",
+    pdfPath: assetPath("/resume/ilia-shakeri-resume.pdf"),
     pdfFile: "public/resume/ilia-shakeri-resume.pdf",
     downloadName: "Ilia-Shakeri-Resume.pdf",
     printPath: "/resume/",
-    updated: { en: "October 2026", fa: "اکتبر ۲۰۲۶" },
+    updated: { en: "November 2026", fa: "نوامبر ۲۰۲۶" },
   },
 } as const;

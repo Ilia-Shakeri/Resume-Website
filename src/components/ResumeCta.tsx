@@ -1,7 +1,6 @@
 import { Icon } from "@/components/Icon";
 import { getContent, type Content, type Locale } from "@/content";
 import { site } from "@/lib/site";
-import { resumeFileSize } from "@/lib/resume-file";
 
 function ResumePreview({ sections }: { sections: readonly string[] }) {
   // The PDF is in English, so the preview always shows the English name.
@@ -30,7 +29,6 @@ function ResumePreview({ sections }: { sections: readonly string[] }) {
 
 export function ResumeCta({ content, locale }: { content: Content; locale: Locale }) {
   const { ui } = content;
-  const size = resumeFileSize();
 
   return (
     <section aria-labelledby="resume-title" id="resume" className="scroll-mt-20 pt-4 pb-16 lg:pb-24">
@@ -57,7 +55,7 @@ export function ResumeCta({ content, locale }: { content: Content; locale: Local
                 <Icon name="printer" />
               </a>
               <p className="font-mono text-xs leading-[1.7] tracking-[0.04em] uppercase">
-                PDF{size ? ` · ${size}` : ""}
+                PDF
                 <br />
                 {ui.resume.updated} {site.resume.updated[locale]}
               </p>

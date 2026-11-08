@@ -2,6 +2,7 @@ import { LiveTerminal, type TerminalLine } from "@/components/LiveTerminal";
 import { WhoamiPanel } from "@/components/WhoamiPanel";
 import type { Content } from "@/content";
 import { buildSha } from "@/lib/build-info";
+import { site } from "@/lib/site";
 
 export function About({ content }: { content: Content }) {
   const { profile, ui } = content;
@@ -13,16 +14,13 @@ export function About({ content }: { content: Content }) {
     { label: labels.focus, value: profile.focus },
     { label: labels.languages, value: profile.languages.join(" · ") },
   ];
-  // Commands from the real deployment of this site (see docs/deployment.md).
+  // The build marker is generated from this same commit during the static build.
+  const sha = buildSha();
   const terminal: TerminalLine[] = [
-    { kind: "cmd", text: "curl -s https://iliashakeri.ir/build.txt" },
-    { kind: "out", text: buildSha() },
-    { kind: "cmd", text: "docker compose ps --format '{{.Name}} {{.Status}}'" },
-    { kind: "out", text: "iliashakeri-web-1 Up (healthy)" },
-    { kind: "cmd", text: "systemctl is-active iliashakeri-update.timer" },
-    { kind: "ok", text: "active · pulls new builds every 2 min" },
-    { kind: "cmd", text: 'echo "$MOTTO"' },
-    { kind: "ok", text: "Built to ship. Built to stay up." },
+    { kind: "cmd", text: "git rev-parse HEAD" },
+    { kind: "out", text: sha },
+    { kind: "cmd", text: `curl -fsS ${site.url}/build.txt` },
+    { kind: "out", text: sha },
   ];
 
   return (
@@ -40,7 +38,8 @@ export function About({ content }: { content: Content }) {
             ))}
           </div>
           <figure className="mt-8">
-            <LiveTerminal title="iliashakeri.ir · deploy check" badge={ui.about.terminalBadge} lines={terminal} rows={4} />
+            <LiveTerminal title={ui.about.terminalTitle} badge={ui.about.terminalBadge} lines={terminal} rows={4} />
+            <p className="mt-2 text-xs text-mint">{ui.about.terminalOutput}</p>
             <figcaption className="mt-2 text-xs leading-relaxed text-muted">{ui.about.terminalCaption}</figcaption>
           </figure>
         </div>

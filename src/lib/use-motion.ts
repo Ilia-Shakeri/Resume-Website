@@ -1,27 +1,38 @@
 "use client";
 
-import { type RefObject, useEffect, useState } from "react";
+import { type RefObject, useEffect, useState, useSyncExternalStore } from "react";
+
+const subscribeToHydration = () => () => {};
+
+/** Enables controls only after their event handlers have mounted. */
+export function useIsHydrated(): boolean {
+  return useSyncExternalStore(subscribeToHydration, () => true, () => false);
+}
+
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+const subscribeToReducedMotion = (notify: () => void) => {
+  const query = window.matchMedia(reducedMotionQuery);
+  query.addEventListener("change", notify);
+  return () => query.removeEventListener("change", notify);
+};
 
 export function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-  return reduced;
+  return useSyncExternalStore(
+    subscribeToReducedMotion,
+    () => window.matchMedia(reducedMotionQuery).matches,
+    () => true,
+  );
 }
 
 /** True while the element is on screen and the tab is visible. */
 export function useIsActive(ref: RefObject<Element | null>): boolean {
+  const hydrated = useIsHydrated();
   const [onScreen, setOnScreen] = useState(false);
   const [tabVisible, setTabVisible] = useState(true);
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    if (!element || !("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), { threshold: 0.2 });
     observer.observe(element);
     return () => observer.disconnect();
@@ -34,5 +45,5 @@ export function useIsActive(ref: RefObject<Element | null>): boolean {
     return () => document.removeEventListener("visibilitychange", update);
   }, []);
 
-  return onScreen && tabVisible;
+  return (onScreen || (hydrated && !("IntersectionObserver" in window))) && tabVisible;
 }
