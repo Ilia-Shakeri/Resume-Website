@@ -46,7 +46,7 @@ export function FeaturedTeasers({ content, locale }: { content: Content; locale:
               <div className="mt-3">
                 <StagePill stage={project.stage} labels={ui.ventures.stage} />
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-text">{project.summary}</p>
+              <p className="mt-3 text-sm leading-relaxed text-text">{project.operationsSummary}</p>
               <dl className="mt-auto grid grid-cols-2 gap-x-4 gap-y-3 border-t border-line pt-4">
                 {project.facts.map((fact) => (
                   <div key={fact.label} className="flex min-w-0 flex-col-reverse">

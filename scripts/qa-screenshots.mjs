@@ -1,4 +1,4 @@
-// Browser QA against the static export: every page in both languages at three
+// Browser QA against the static export: every page in both languages at eight
 // widths (overflow, clipping, console errors, screenshots), link and heading
 // integrity, the language switch, mobile menu, reduced motion, and the
 // animated features. Output: qa-artifacts/ (git-ignored).
@@ -22,6 +22,23 @@ const check = (ok, message) => {
 const { server, url } = await startStaticServer("out");
 const browser = await launchBrowser();
 try {
+  // A recruiter can reach the localized evidence straight from the hero without scripts.
+  for (const prefix of ["", "/fa"]) {
+    const entry = await browser.newPage({ viewport: { width: 375, height: 812 }, javaScriptEnabled: false, reducedMotion: "reduce" });
+    await entry.goto(`${url}${prefix}/`, { waitUntil: "networkidle" });
+    const evidenceLink = entry.locator("main section").first().locator("a.btn-primary");
+    const destination = `${prefix}/experience/#work-samples`;
+    check(await evidenceLink.getAttribute("href") === destination, `${prefix || "/en"} hero points directly to localized work samples`);
+    await evidenceLink.click();
+    const title = entry.locator("#work-samples-title");
+    const inView = await title.evaluate((el) => {
+      const rect = el.getBoundingClientRect();
+      return rect.top >= 64 && rect.bottom <= window.innerHeight;
+    });
+    check(new URL(entry.url()).pathname + new URL(entry.url()).hash === destination && inView, `${prefix || "/en"} hero sample link lands on a visible heading without scripts`);
+    await entry.close();
+  }
+
   for (const path of paths) {
     for (const [width, height] of viewports) {
       // Full-page captures use reduced motion so scroll-revealed sections are all visible.

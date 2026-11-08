@@ -74,6 +74,8 @@ export type FeaturedProject = {
   stage: "production" | "development";
   status: string;
   summary: string;
+  /** Short operational contribution shown in the home preview and printable resume. */
+  operationsSummary: string;
   /** A dated result supported by the case-study evidence. */
   outcome: string;
   sourceVisibility?: "private";

@@ -4,7 +4,7 @@ import type { FeaturedProject, FeaturedProjectId, Project, ProjectId } from "../
 // نسخهٔ فارسی src/content/en/projects.ts. لوگوها، ابزارها، لینک‌ها و اعداد
 // از نسخهٔ انگلیسی می‌آیند تا دو نسخه هیچ‌وقت از هم جدا نشوند.
 
-type FeaturedCopy = Pick<FeaturedProject, "role" | "category" | "period" | "status" | "summary" | "outcome" | "highlights" | "facts" | "factsSource" | "links" | "architecture" | "caseStudy" | "limitations"> &
+type FeaturedCopy = Pick<FeaturedProject, "role" | "category" | "period" | "status" | "summary" | "operationsSummary" | "outcome" | "highlights" | "facts" | "factsSource" | "links" | "architecture" | "caseStudy" | "limitations"> &
   Partial<Pick<FeaturedProject, "name" | "localName" | "screenshots">>;
 
 const featuredText = {
@@ -17,6 +17,7 @@ const featuredText = {
     status: "ثبت پروداکشن و دست‌کم ۱۰ کاربر · اکتبر ۲۰۲۶",
     summary:
       "پلتفرم قیمت طلا، ارز و رمزارز با تاریخچه، هشدار قیمت و اپلیکیشن‌های وب، پنل مدیریت و دسکتاپ. هر قیمت منبع و زمان خودش را نشان می‌دهد و زمان انقضای مشخص دارد؛ بنابراین قیمت قدیمی هیچ‌وقت به‌جای قیمت روز نمایش داده نمی‌شود.",
+    operationsSummary: "دو نمونهٔ API روی Docker Compose، بررسی آمادگی سرویس، بازیابی آزمودهٔ بکاپ و ۱۵ جاب CI موفق.",
     outcome: "اکتبر ۲۰۲۶: هر ۲۷٬۰۰۰ درخواست در تست بار ایزولهٔ ۳۰ دقیقه‌ای موفق بود؛ p95 برابر ۳۲۳ میلی‌ثانیه ثبت شد.",
     highlights: [
       "ساخت کل محصول: API با FastAPI، لایهٔ داده با TimescaleDB و Redis، اپ وب و پنل مدیریت با React، اپ دسکتاپ با Electron و سرویس جانبی دریافت قیمت با Go.",
@@ -131,6 +132,7 @@ const featuredText = {
     status: "گزارش استفاده در دست‌کم دو شرکت · اکتبر ۲۰۲۶",
     summary:
       "یک CRM/ERP فارسی‌محور برای فروش، پیش‌فاکتور و فاکتور، پرداخت، انبار، تلفن و خدمات پس از فروش. یک کدبیس برای هر مشتری جداگانه مستقر می‌شود و هر نصب، مجموعه سرویس‌های مستقل خودش را روی Docker Compose دارد.",
+    operationsSummary: "پشتهٔ Compose جدا برای هر نصب، استقرار و بازگشت نسخه با اسکریپت و بکاپ‌های تأییدشده با بازیابی.",
     outcome: "اکتبر ۲۰۲۶: ثبت بیش از ۳٬۶۰۰ تست خودکار و ۲۳ تست مرورگر؛ استفاده در دست‌کم دو شرکت خوداظهاری بود.",
     highlights: [
       "هدایت مهندسی اپلیکیشن Django و PostgreSQL: ۴۶ قابلیت قابل فعال‌سازی، رابط راست‌به‌چپ و پنل با به‌روزرسانی لحظه‌ای.",
@@ -247,6 +249,7 @@ const featuredText = {
     status: "نسخهٔ پایدار ۱ موجود · پیش‌نمایش نسخهٔ ۲ در حال توسعه",
     summary:
       "یک محیط self-hosted برای عملیات DevOps که داده‌های Docker و Kubernetes را به بررسی رخداد وصل می‌کند. بک‌اند Go و رابط دوزبانهٔ آن را ساخته‌ام؛ پیش‌نمایش نسخهٔ ۲ گزارش رخداد با ارجاع به شواهد و دستیار اختیاری با مدل محلی دارد که فقط داده‌های مجاز و محدود را می‌خواند.",
+    operationsSummary: "محیط عملیات Go با جمع‌آوری محدود داده‌های Docker و Kubernetes؛ پیش‌نمایش نسخهٔ ۲ گزارش رخداد برای منبع انتخاب‌شده دارد.",
     outcome: "۸ نوامبر ۲۰۲۶: نسخهٔ پایدار 1.0.3 و پیش‌نمایش 2.0.0-alpha.6.3 منتشر شده‌اند. پیش‌نمایش تگ‌شده از گردش‌کارهای بررسی و انتشار روی میزبان عبور کرده است.",
     highlights: [
       "ساخت API با Go، ذخیره‌سازی PostgreSQL، جمع‌آوری‌کننده‌های محدود Docker و Kubernetes و رابط React فارسی و انگلیسی بر پایهٔ یک قرارداد OpenAPI.",

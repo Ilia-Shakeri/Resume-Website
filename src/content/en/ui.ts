@@ -27,7 +27,7 @@ export const ui = {
   },
   hero: {
     available: "Open to remote DevOps roles",
-    explore: "View projects",
+    workSamples: "DevOps work samples",
     resume: "Download résumé",
     contact: "Contact me",
     stackLabel: "Core stack",
@@ -105,8 +105,8 @@ export const ui = {
   },
   workSamples: {
     title: "DevOps work samples",
-    lead: "A public-project workflow, a reproducible lab, and a real recovery account. Each states what is verified and what is a suggested procedure.",
-    read: "Read sample",
+    lead: "Public CI, a tested Ansible lab, and a first-hand recovery account.",
+    read: "Details and evidence",
     evidence: "Evidence and files",
   },
   education: {

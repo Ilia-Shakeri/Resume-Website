@@ -9,6 +9,7 @@ const { toolkit, education, experience, profile, qualifications, resumeSummary, 
   getContent("en");
 const chatops = projects.find((project) => project.id === "chatops");
 const others = projects.filter((project) => project.id !== "chatops");
+const coreTools = new Set(toolkit.flatMap((group) => group.coreTools));
 
 function publicProjectUrl(href: string): string {
   return new URL(href, site.url).href;
@@ -60,7 +61,7 @@ export default function ResumePage() {
             <li>
               <a href={site.url} className="underline-offset-2 hover:underline">{new URL(site.url).host}</a>
               {" · "}
-              <a href={`${site.url}/experience/#work-samples`} className="underline-offset-2 hover:underline">Engineering samples</a>
+              <a href={`${site.url}/experience/#work-samples`} className="underline-offset-2 hover:underline">CI/CD · Ansible · Recovery</a>
             </li>
             <li>
               {profile.location} · {profile.availability}
@@ -118,7 +119,7 @@ export default function ResumePage() {
           ))}
         </section>
 
-        <section className="mt-5" aria-labelledby="r-projects">
+        <section className="mt-5 print:mt-0 print:break-before-page" aria-labelledby="r-projects">
           <Heading>
             <span id="r-projects">Selected projects</span>
           </Heading>
@@ -133,10 +134,10 @@ export default function ResumePage() {
                 </a>
               </div>
               <p className="mt-0.5">
-                {project.summary} <span className="text-[#4b5753]">Status: {project.status}.{project.sourceVisibility === "private" ? " Source code private; public case study linked above." : ""}</span>
+                {project.operationsSummary} <span className="text-[#4b5753]">Status: {project.status}.{project.sourceVisibility === "private" ? " Source code private; public case study linked above." : ""}</span>
               </p>
               <p className="mt-0.5 font-mono text-[0.6875rem] text-[#4b5753]">
-                {project.tools.map((tool) => tool.name).join(" · ")}
+                {project.tools.filter((tool) => coreTools.has(tool.name)).map((tool) => tool.name).join(" · ")}
               </p>
             </article>
           ))}

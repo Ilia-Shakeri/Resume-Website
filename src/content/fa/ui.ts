@@ -29,7 +29,7 @@ export const ui: UiStrings = {
   },
   hero: {
     available: "آمادهٔ همکاری دورکاری در DevOps",
-    explore: "مشاهدهٔ پروژه‌ها",
+    workSamples: "نمونه‌های عملی DevOps",
     resume: "دانلود رزومه",
     contact: "تماس با من",
     stackLabel: "ابزارهای اصلی",
@@ -107,8 +107,8 @@ export const ui: UiStrings = {
   },
   workSamples: {
     title: "نمونه‌های عملی DevOps",
-    lead: "گردش‌کار یک پروژهٔ عمومی، نمونهٔ آزمایشگاهی قابل اجرا و روایت بازیابی واقعی. مرز شواهد و روش پیشنهادی کنار هر نمونه روشن است.",
-    read: "خواندن نمونه",
+    lead: "CI عمومی، آزمایش آزمودهٔ Ansible و روایت بازیابی واقعی.",
+    read: "جزئیات و شواهد",
     evidence: "شواهد و فایل‌ها",
   },
   education: {

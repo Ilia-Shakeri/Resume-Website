@@ -21,6 +21,7 @@ export const featured: FeaturedProject[] = [
     repo: "Nerkhbaan",
     summary:
       "A price platform for gold, currencies, and crypto with history, alerts, and web, admin, and desktop apps. Every quote names its source and time and carries an explicit expiry, so an outdated price is never shown as current.",
+    operationsSummary: "Two API replicas on Docker Compose, readiness checks, a tested restore, and 15 successful CI jobs.",
     outcome: "October 2026: 27,000 of 27,000 requests passed a 30-minute isolated load test, with p95 latency of 323 ms.",
     highlights: [
       "Built the whole product: FastAPI API, TimescaleDB and Redis data layer, React web and admin apps, an Electron desktop app, and a Go feed sidecar.",
@@ -153,6 +154,7 @@ export const featured: FeaturedProject[] = [
     sourceVisibility: "private",
     summary:
       "A Persian-first CRM/ERP for sales, quotations and invoicing, payments, inventory, telephony, and after-sales. One codebase is deployed separately for each customer, and each installation runs as its own isolated Docker Compose stack.",
+    operationsSummary: "An isolated Compose stack per installation, scripted deploy and rollback, and backups verified by restoring them.",
     outcome: "October 2026: 3,600+ automated tests and 23 browser tests recorded; use at 2+ companies was self-reported.",
     highlights: [
       "Lead the engineering of the Django and PostgreSQL application: 46 feature flags, a right-to-left interface, and server-sent live updates.",
@@ -285,6 +287,7 @@ export const featured: FeaturedProject[] = [
     repo: "Stackplore",
     summary:
       "A self-hosted DevOps workspace that connects Docker and Kubernetes telemetry to incident investigation. I built its Go backend and bilingual interface; the version 2 preview adds evidence-linked incident reports and an opt-in local-model assistant with scoped, permission-checked reads.",
+    operationsSummary: "A Go workspace for bounded Docker and Kubernetes collection, with scoped incident reports in the version 2 preview.",
     outcome: "8 November 2026: stable 1.0.3 and preview 2.0.0-alpha.6.3 are published. The tagged preview passed its hosted verification and release workflows.",
     highlights: [
       "Built the Go API, PostgreSQL persistence, bounded Docker and Kubernetes collectors, and an English/Persian React interface around one OpenAPI contract.",

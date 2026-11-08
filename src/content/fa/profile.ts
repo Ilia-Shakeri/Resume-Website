@@ -9,7 +9,7 @@ export const profile: Profile = {
   headline: "مهندس DevOps",
   stack: ["Linux", "Docker", "Ansible", "CI/CD", "Python", "Go"],
   intro:
-    "سرورهای لینوکسی، استقرار با Docker، فرایندهای CI/CD، مانیتورینگ و بکاپ را مدیریت می‌کنم. در محیط‌های متصل به اینترنت و جدا از اینترنت کار می‌کنم؛ با Ansible برای امن‌سازی و Python و Go برای سرویس‌ها و ابزارهای مهندسی.",
+    "مسئول DevOps شرکت OTICAMP روی دو سرور فیزیکی و حدود ۴ تا ۵ VPS هستم؛ با لینوکس، Docker و امن‌سازی با Ansible در محیط‌های متصل و جدا از اینترنت. پس از حذف VPS اصلی توسط شرکت میزبان، سرویس‌های آن را از بکاپ بازیابی کردم.",
   study: "دانشجوی کارشناسی علوم کامپیوتر",
   location: "تهران، ایران",
   timeZone: "IRST · UTC+03:30",
@@ -167,4 +167,4 @@ export const qualifications: Qualification[] = [
   },
 ];
 
-export const resumeSummary: string = "مهندس DevOps با مسئولیت عملیات OTICAMP روی دو سرور فیزیکی و حدود ۴ تا ۵ VPS، پس از تحویل مسئولیت از همکار ارشد در پایان سه ماه نخست کار. لینوکس، Docker، امن‌سازی با Ansible، فرایندهای CI/CD با GitHub Actions، مانیتورینگ و بازیابی بکاپ در محیط‌های متصل و جدا از اینترنت. Python و Go برای ساخت سرویس‌ها و ابزارهای مهندسی.";
+export const resumeSummary: string = "مهندس DevOps با مسئولیت عملیات OTICAMP روی دو سرور فیزیکی و حدود ۴ تا ۵ VPS. لینوکس، Docker، امن‌سازی با Ansible، فرایندهای CI/CD با GitHub Actions، مانیتورینگ و بازیابی بکاپ در محیط‌های متصل و جدا از اینترنت. Python و Go برای ساخت سرویس‌ها و ابزارهای مهندسی.";

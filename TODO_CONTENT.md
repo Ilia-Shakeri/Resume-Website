@@ -83,9 +83,10 @@ Resolved in the follow-up reply:
 Still unknown; omit rather than block truthful copy:
 
 1. Exact service count and per-environment fleet split.
-2. Specific CI stages, checks, release gates and rollback procedure.
+2. Specific employer CI stages, checks, release gates and rollback procedure. The separate public-project CI sample has its own pinned source and receipt.
 3. Recovery date, duration, validation method and any measured loss window.
 4. Future Stackplore claims beyond the pinned preview need new evidence. The source/release review below is complete; no local Stackplore service, test or build is part of this résumé edit.
+5. Exact employer Ansible controls and their rollout, validation and rollback method. The new files-only portfolio lab does not establish those details; the shorter homepage/PDF copy adds none.
 
 Do not add exact fleet totals beyond the stated approximation, uptime, response-time reductions, backup recovery times, cloud scale, production Kubernetes, or a formal promotion from these statements alone.
 

@@ -74,8 +74,8 @@ export function Hero({ content, locale }: { content: Content; locale: Locale }) 
             </li>
           </ul>
           <div className="mt-7 flex flex-wrap gap-3">
-            <a href={pagePath(locale, "projects")} className="btn btn-primary">
-              {ui.hero.explore}
+            <a href={`${pagePath(locale, "experience")}#work-samples`} className="btn btn-primary">
+              {ui.hero.workSamples}
               <Icon name="arrow-right" className="rtl-flip" />
             </a>
             <a href={site.resume.pdfPath} download={site.resume.downloadName} className="btn btn-outline">

@@ -6,7 +6,7 @@ import { getDocument } from "pdfjs-dist/legacy/build/pdf.mjs";
 import { filesIn } from "./build-utils.mjs";
 const bytes = await readFile("out/resume/ilia-shakeri-resume.pdf");
 const pdf = await getDocument({ data: new Uint8Array(bytes), isEvalSupported: false, useSystemFonts: false }).promise;
-assert(pdf.numPages >= 1 && pdf.numPages <= 3, `Unexpected résumé length: ${pdf.numPages}`);
+assert.equal(pdf.numPages, 2, `Keep the two-page résumé layout; got ${pdf.numPages} pages`);
 const structure = await pdf.getMarkInfo();
 assert.equal(structure?.Marked, true, "Résumé must be tagged");
 const outline = await pdf.getOutline();
@@ -36,7 +36,7 @@ assert(firstPageLinks.some((href) => {
     return url.origin === portfolioOrigin && url.pathname === "/" && !url.hash;
   } catch { return false; }
 }), "PDF header needs a clickable portfolio home link");
-assert(links.includes(`${portfolioOrigin}/experience/#work-samples`), "PDF needs a direct link to the engineering samples");
+assert(firstPageLinks.includes(`${portfolioOrigin}/experience/#work-samples`), "PDF header needs a direct link to the engineering samples");
 assert(links.includes("https://iliashakeri.ir/projects/#dolphin-crm"));
 assert(!links.some((url) => /^https:\/\/github\.com\/Ilia-Shakeri\/Dolphin(?:\/|$)/.test(url)), "Private source must not be a public résumé link");
 const language = bytes.toString("latin1").match(/\/Lang\s*\(([^)]+)\)/)?.[1];

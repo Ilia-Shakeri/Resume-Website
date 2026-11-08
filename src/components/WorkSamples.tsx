@@ -20,7 +20,7 @@ export function WorkSamples({ content }: { content: Content }) {
               <p className="mt-3 max-w-[880px] text-sm leading-relaxed text-text">{sample.intro}</p>
               <details className="group mt-4 border-t border-line pt-2">
                 <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-sm text-mint [&::-webkit-details-marker]:hidden">
-                  <span>{ui.workSamples.read}: {sample.title}</span>
+                  <span>{ui.workSamples.read}<span className="sr-only">: {sample.title}</span></span>
                   <span aria-hidden="true" className="text-lg group-open:hidden">+</span>
                   <span aria-hidden="true" className="hidden text-lg group-open:inline">-</span>
                 </summary>

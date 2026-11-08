@@ -10,7 +10,7 @@ export const profile: Profile = {
   headline: "DevOps Engineer",
   stack: ["Linux", "Docker", "Ansible", "CI/CD", "Python", "Go"],
   intro:
-    "I manage Linux servers, Docker deployments, CI/CD, monitoring, and backups. My work spans connected and air-gapped environments, with Ansible for hardening and Python and Go for services and tooling.",
+    "At OTICAMP, I own DevOps across two physical servers and approximately 4–5 VPSs: Linux, Docker, and Ansible hardening in connected and air-gapped environments. I restored the primary VPS's services from backups after the hosting provider deleted the instance.",
   study: "Computer Science student (B.Sc.)",
   location: "Tehran, Iran",
   timeZone: "IRST · UTC+03:30",
@@ -178,4 +178,4 @@ export const qualifications: Qualification[] = [
 ];
 
 export const resumeSummary: string =
-  "DevOps engineer responsible for OTICAMP's operations across two physical servers and approximately 4–5 VPSs, after taking over from a senior engineer three months into the role. Linux, Docker, Ansible hardening, GitHub Actions CI/CD, monitoring, and backup recovery in connected and air-gapped environments. Python and Go for services and tooling.";
+  "DevOps engineer responsible for OTICAMP's operations across two physical servers and approximately 4–5 VPSs. Linux, Docker, Ansible hardening, GitHub Actions CI/CD, monitoring, and backup recovery in connected and air-gapped environments. Python and Go for services and tooling.";

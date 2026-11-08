@@ -35,6 +35,22 @@ Local receipts below describe the 8 Nov source review. Hosted acceptance is a se
 | PDF links and layout | Regenerated PDF retains readable layout, a visible website URL and a working direct work-samples link; artifact checks and visual review pass | Local pass: two tagged A4 pages, outline, first-page website link and direct sample link; both pages and social card visually reviewed |
 | Integrated source and release | Fresh lint, types, helper tests, build, artifact and browser gates; exact new commit passes CI and public-domain smoke after publishing | Local gates passed; release requires the matching published commit's CI and live-job receipts |
 
-The employer-deletion recovery remains a self-reported real event. The proposed checklist is future guidance. Neither is accepted as a measured restore drill, and the public Nerkhbaan restore receipt does not prove the employer incident's method or timing.
+The employer-deletion recovery remains a self-reported real event. The initial proposed checklist was future guidance; the later concise public sample omits it. Neither is accepted as a measured restore drill, and the public Nerkhbaan restore receipt does not prove the employer incident's method or timing.
 
 The local stale-receipt negative test also passed: a deliberately failed rerun replaced an old success with a failed state. The 11-file ZIP was read back and every entry matched the frozen source; no environment, cache, temporary data or receipt is included. Source checks, nine helper tests, the two-pass export, artifact checks and dependency audit passed locally. External links: 19 verified, zero broken, LinkedIn access-limited (999).
+
+## Homepage and PDF first-pass revision — 8 Nov 2026
+
+The earlier local receipts above cover the preceding work-sample addition. Fresh local receipts below cover this homepage intro, direct sample action, operational project summaries, concise sample copy and PDF label. The lab was rerun without source changes. Hosted acceptance is separate and requires the matching published commit's CI/live receipts.
+
+| Gate | Required evidence | Status |
+| --- | --- | --- |
+| Content and scope | Final EN/FA text uses only confirmed fleet/recovery facts and existing project evidence; no new employer controls, incident method, timing, loss result or seniority claim | Peer review passed; only established facts reused |
+| Homepage navigation and layout | Localized primary action reaches the correct locale's work-samples anchor and visible heading without scripts; longer proof-led intro and operational teasers fit desktop/mobile/short views; keyboard navigation works | Local pass: all four new hero checks, full 203-check browser suite, 80 viewport captures and reveal regressions |
+| Project and sample boundaries | Home/PDF use operationsSummary; full project summaries/case studies remain; dated production and preview context stays visible; concise samples preserve public CI, local lab and first-hand-account/separate-public-drill distinctions; disclosure names remain unique for screen readers | Peer review and browser checks passed |
+| PDF artifact and visual review | Fresh tagged PDF has exactly two readable pages, experience before the selected-project page break, existing core-tool rows, a visible website URL and the explicit CI/CD · Ansible · Recovery link on page one | Local pass: two tagged A4 pages, outline, first-page link annotations; both page renders and social card inspected |
+| Source and release | Fresh source, helper, build, artifact, browser and dependency gates; exact new commit's hosted CI and public-domain smoke after publication | Local lint, types, nine helper tests, two-pass build, artifacts and audit passed; matching hosted CI/live receipts required for release |
+
+Final acceptance needs the matching source and artifact receipts. New copy alone does not prove deeper host hardening or add evidence to the employer recovery account.
+
+Local receipts: `qa-artifacts/home-pdf-browser.log`, `qa-artifacts/artifact-check.json`, `qa-artifacts/recruiter-copy-2026-11-08/local/`, and `qa-artifacts/home-pdf-2026-11-08/ansible-baseline.json`. The fresh unchanged lab run passed with four guards, syntax, task-change counts 3/0/1/1/0, unchanged drift in check mode, repaired content/mode and offline unit validation; all 11 source hashes matched. External links: 19 verified, zero broken, LinkedIn access-limited (999).
