@@ -44,7 +44,7 @@ No credential is needed for public repository reads. A failure is labeled cached
 - npm run check:artifacts parses the generated PDF, checks tagging/outline/contact links/readable text/page count, and validates document languages and social-image dimensions.
 - npm run qa:screens captures all ten content pages at 320, 375, 390, 430, 768, 1024, 1440 and 1920 px. It checks axe, headings, overflow, links, native mobile navigation without scripts and with failed script downloads, keyboard focus, short viewport scrolling, download/resize behavior, filtering counts, clipboard errors, reduced motion and bilingual 404 recovery.
 - npm run check:links reports verified, broken and access-limited external links separately.
-- npm audit checks the locked dependency tree.
+- npm audit checks the locked dependency tree against the official registry selected in .npmrc. A scoped minimatch 11.0.1 override patches the lint parser's nested glob dependency ([advisory](https://github.com/advisories/GHSA-g3hv-75wg-m249)); remove it once the parser includes a patched release itself.
 - npm run check:live checks the public release marker and routes. Set EXPECTED_SHA to bind it to a specific commit; CI does this after main pushes.
 
 Receipts and screenshots are in ignored qa-artifacts/. CI uploads evidence named with the exact SHA. Local checks do not certify Safari/iOS, screen readers, or real Iranian network access.
