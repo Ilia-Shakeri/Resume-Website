@@ -54,3 +54,11 @@ The earlier local receipts above cover the preceding work-sample addition. Fresh
 Final acceptance needs the matching source and artifact receipts. New copy alone does not prove deeper host hardening or add evidence to the employer recovery account.
 
 Local receipts: `qa-artifacts/home-pdf-browser.log`, `qa-artifacts/artifact-check.json`, `qa-artifacts/recruiter-copy-2026-11-08/local/`, and `qa-artifacts/home-pdf-2026-11-08/ansible-baseline.json`. The fresh unchanged lab run passed with four guards, syntax, task-change counts 3/0/1/1/0, unchanged drift in check mode, repaired content/mode and offline unit validation; all 11 source hashes matched. External links: 19 verified, zero broken, LinkedIn access-limited (999).
+
+## Employer Ansible fact follow-up — reviewed 9 Nov 2026
+
+The EN/FA employment highlights changed after `44d9a9299f2133281e61332b974f23022f7a8a56` to include Ilia's new machine-count, operating-system and installation facts. Earlier passes do not accept this newer source. The existing lab and its receipts are unchanged; no new host-hardening test is claimed.
+
+Fresh local source/export, artifact, EN/FA rendering and two-page PDF visual gates passed on 9 Nov. Nine helper tests, dependency audit (zero findings), lint/types, the two-pass export, all 203 browser checks and reveal regressions passed. Both page renders and the social card were reviewed again; the approximately 10–15 Ansible scope and stated OS labels are readable on page one without adding a fleet total or implying new production controls. External links: 19 verified, zero broken, LinkedIn access-limited (999).
+
+Final local receipts: `qa-artifacts/home-pdf-final-browser.log`, `qa-artifacts/artifact-check.json`, and `qa-artifacts/recruiter-copy-2026-11-09/local/`. The unchanged local lab receipt above remains scoped to those same 11 sample files; no employer-hardening verification is claimed. Release acceptance requires the follow-up commit's matching hosted CI and public-domain live receipts.

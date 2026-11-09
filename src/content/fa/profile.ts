@@ -57,7 +57,7 @@ export const experience: ExperienceItem[] = [
       "بازیابی VPS اصلی و سرویس‌های آن از بکاپ، پس از حذف ماشین توسط شرکت میزبان.",
       "استقرار و ادارهٔ سرویس‌های شرکت، عمدتاً با Docker، در محیط‌های متصل و جدا از اینترنت؛ از جمله Jira، Confluence، GitLab و Matrix.",
       "نگهداری سرویس‌های Nextcloud، MinIO، n8n و Dekploy و مدیریت میزبانی با DirectAdmin و cPanel.",
-      "اجرای امن‌سازی با Ansible روی همهٔ ماشین‌های تحت مدیریت.",
+      "امن‌سازی حدود ۱۰ تا ۱۵ ماشین لینوکسی و نصب بسته‌ها و سرویس‌ها با Ansible روی Ubuntu 22/24، CentOS و AlmaLinux.",
       "مسئولیت بکاپ، مانیتورینگ و هشدار رخدادهای بحرانی؛ ادارهٔ Prometheus، Grafana، Zabbix، PRTG و OPNsense.",
       "ساخت و نگهداری پایپ‌لاین‌ها و ورک‌فلوهای CI/CD با GitHub Actions.",
     ],

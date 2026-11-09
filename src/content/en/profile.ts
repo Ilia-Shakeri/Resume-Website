@@ -64,7 +64,7 @@ export const experience: ExperienceItem[] = [
       "Recovered the primary VPS and its services from backups after the hosting provider deleted the instance.",
       "Operate company services primarily with Docker across connected and air-gapped environments, including Jira, Confluence, GitLab, and Matrix.",
       "Maintain Nextcloud, MinIO, n8n, and Dekploy services; administer DirectAdmin and cPanel hosting environments.",
-      "Apply Ansible hardening across all managed machines.",
+      "Used Ansible to harden approximately 10–15 Linux machines and install packages and services across Ubuntu 22/24, CentOS, and AlmaLinux.",
       "Own backups, monitoring, and critical-incident alerts; operate Prometheus, Grafana, Zabbix, PRTG, and OPNsense.",
       "Build and maintain CI/CD pipelines and workflows using GitHub Actions.",
     ],

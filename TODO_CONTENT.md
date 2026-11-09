@@ -64,7 +64,7 @@ Confirmed directly by Ilia:
 - At OTICAMP, began with a senior engineer's help; that engineer left after the first three months, after which Ilia took ownership of the company's DevOps work and server/VPS administration. Official title has always been DevOps Engineer; no formal Junior/Senior/Lead promotion is claimed.
 - Fleet: two physical servers and approximately four to five VPS. There are many services; exact service count is unknown.
 - Works with both Internet-connected and air-gapped environments.
-- Uses Ansible for hardening across all machines in the stated company scope. Most services run in Docker.
+- Uses Ansible for hardening and package/service installation on approximately 10–15 Linux machines: Ubuntu 22/24, CentOS and AlmaLinux, confirmed in the later follow-up. This Ansible scope is not an additional count to add to the physical-server/VPS figures. Most services run in Docker.
 - Owns backups, monitoring and critical/crisis alerts. Uses GitHub Actions for CI/CD pipelines/workflows; exact stages were not recalled and must be omitted.
 - Successfully restored the main VPS-hosted services from backups after unexpected deletion by the hosting provider. Keep public copy vendor-neutral; no recovery time, loss window, RPO/RTO or zero-data-loss claim was supplied.
 - Administers DirectAdmin and cPanel hosting.
@@ -86,7 +86,7 @@ Still unknown; omit rather than block truthful copy:
 2. Specific employer CI stages, checks, release gates and rollback procedure. The separate public-project CI sample has its own pinned source and receipt.
 3. Recovery date, duration, validation method and any measured loss window.
 4. Future Stackplore claims beyond the pinned preview need new evidence. The source/release review below is complete; no local Stackplore service, test or build is part of this résumé edit.
-5. Exact employer Ansible controls and their rollout, validation and rollback method. The new files-only portfolio lab does not establish those details; the shorter homepage/PDF copy adds none.
+5. Exact employer Ansible controls, package/service names and rollout, validation and rollback method. Machine scope and OS families are now confirmed; minor versions, CentOS edition and the relation to physical/VPS counts remain unknown. The existing files-only lab does not establish employer controls; no further sample was requested.
 
 Do not add exact fleet totals beyond the stated approximation, uptime, response-time reductions, backup recovery times, cloud scale, production Kubernetes, or a formal promotion from these statements alone.
 
