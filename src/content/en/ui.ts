@@ -26,7 +26,7 @@ export const ui = {
     fa: "فارسی",
   },
   hero: {
-    available: "Open to remote DevOps roles",
+    available: "Open to DevOps roles",
     workSamples: "DevOps work samples",
     resume: "Download résumé",
     contact: "Contact me",
@@ -40,7 +40,7 @@ export const ui = {
     featured: "Featured projects",
     allProjects: "All projects",
     ctaTitle: "Have a role or a project in mind?",
-    ctaBody: "I’m open to remote DevOps engineering roles.",
+    ctaBody: "I’m open to remote, hybrid or on-site work for the right DevOps role.",
     ctaButton: "Get in touch",
   },
   pages: {
@@ -133,7 +133,7 @@ export const ui = {
     copy: "Copy email",
     copied: "Copied",
     copyError: "Copy failed. Select the email and copy it.",
-    remote: "Remote work",
+    remote: "Work preferences",
   },
   footer: {
     backToTop: "Back to top",

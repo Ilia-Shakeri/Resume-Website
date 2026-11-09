@@ -62,3 +62,11 @@ The EN/FA employment highlights changed after `44d9a9299f2133281e61332b974f23022
 Fresh local source/export, artifact, EN/FA rendering and two-page PDF visual gates passed on 9 Nov. Nine helper tests, dependency audit (zero findings), lint/types, the two-pass export, all 203 browser checks and reveal regressions passed. Both page renders and the social card were reviewed again; the approximately 10–15 Ansible scope and stated OS labels are readable on page one without adding a fleet total or implying new production controls. External links: 19 verified, zero broken, LinkedIn access-limited (999).
 
 Final local receipts: `qa-artifacts/home-pdf-final-browser.log`, `qa-artifacts/artifact-check.json`, and `qa-artifacts/recruiter-copy-2026-11-09/local/`. The unchanged local lab receipt above remains scoped to those same 11 sample files; no employer-hardening verification is claimed. Release acceptance requires the follow-up commit's matching hosted CI and public-domain live receipts.
+
+## Friendly introduction and work preferences — 9 Nov 2026
+
+The new EN/FA homepage introduction and current work preferences passed local lint/types, the two-pass build, artifact checks, all 203 browser checks and reveal regressions. Both fresh A4 pages and the social card were visually reviewed: two pages, tagged PDF/outline, clear links, and the compact remote/hybrid/on-site header without overlap. External links: 19 verified, zero broken, LinkedIn access-limited (999). The dependency audit reported zero findings.
+
+An initial helper run had eight passes and one child-process timeout at the existing five-second bound. The isolated lifecycle test and complete nine-test retry then passed without source or timeout changes. The original failure is retained separately in `qa-artifacts/friendly-intro-test-retry.json`; the full passed run is in `qa-artifacts/friendly-intro-tests.log`. The cause of the initial timeout was not established.
+
+Additional receipts: `qa-artifacts/friendly-intro-browser.log` and `qa-artifacts/friendly-intro-2026-11-09/local/`. Employment/recovery evidence and lab source are unchanged. Acceptance of the public release requires the new commit's full hosted CI and same-commit live check, with an actual hosted PDF review.

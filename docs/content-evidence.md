@@ -376,3 +376,14 @@ Fresh local homepage, sample-copy and PDF results are recorded in `docs/verifica
 - Ilia declined a further sample; the existing tested files-only lab stays intact. Its checks are not a receipt of employer changes. No new playbook, production test, recovery detail, timing or RPO/RTO is added. The homepage intro and other employment facts are unchanged.
 
 Fresh local export/PDF and browser checks for this follow-up passed, as recorded in `docs/verification.md`. Exact-commit hosted CI/live receipts remain a separate release gate.
+
+## Homepage introduction and work preferences — 9 Nov 2026
+
+Ilia requested a friendly, semi-formal homepage introduction and confirmed remote work plus hybrid/on-site work for a suitable role. This supersedes the earlier remote-only preference and fleet/recovery-led hero wording.
+
+- The EN/FA intro now covers DevOps, Computer Science study, Linux/automation, Python/Go tools and services, and interests in DevOps and machine learning. An interest is not a new professional-experience or job-target claim.
+- Fleet and recovery detail is removed from the hero introduction only. The employment entry, résumé summary and work samples retain their established scope and evidence.
+- The hero banner is neutral about work mode. The home call to action and contact row name remote, hybrid and on-site work for the right role; the contact heading is generic. The PDF header uses the compact availability label “Remote, hybrid or on-site”, with equivalent Persian copy.
+- Remote work with teams in Iran and abroad remains available. Tehran location, existing overlap hours, engagement terms and two weeks' notice are unchanged. No relocation, commute range or new schedule is promised.
+
+Fresh local source, rendering and PDF gates passed for this copy revision, as recorded in `docs/verification.md`. Release acceptance still requires its matching hosted CI and public-domain receipts; earlier releases do not accept the changed text.

@@ -28,7 +28,7 @@ export const ui: UiStrings = {
     fa: "فارسی",
   },
   hero: {
-    available: "آمادهٔ همکاری دورکاری در DevOps",
+    available: "آمادهٔ همکاری در نقش DevOps",
     workSamples: "نمونه‌های عملی DevOps",
     resume: "دانلود رزومه",
     contact: "تماس با من",
@@ -42,7 +42,7 @@ export const ui: UiStrings = {
     featured: "پروژه‌های شاخص",
     allProjects: "همهٔ پروژه‌ها",
     ctaTitle: "موقعیت شغلی یا پروژه‌ای در نظر دارید؟",
-    ctaBody: "برای همکاری دورکاری در نقش مهندس DevOps آماده‌ام.",
+    ctaBody: "برای موقعیت مناسب DevOps، آمادهٔ همکاری دورکاری، هیبرید یا حضوری هستم.",
     ctaButton: "تماس با من",
   },
   pages: {
@@ -135,7 +135,7 @@ export const ui: UiStrings = {
     copy: "کپی ایمیل",
     copied: "کپی شد",
     copyError: "کپی نشد. ایمیل را انتخاب و کپی کنید.",
-    remote: "همکاری دورکاری",
+    remote: "شرایط همکاری",
   },
   footer: {
     backToTop: "بازگشت به بالا",

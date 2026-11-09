@@ -9,11 +9,11 @@ export const profile: Profile = {
   headline: "مهندس DevOps",
   stack: ["Linux", "Docker", "Ansible", "CI/CD", "Python", "Go"],
   intro:
-    "مسئول DevOps شرکت OTICAMP روی دو سرور فیزیکی و حدود ۴ تا ۵ VPS هستم؛ با لینوکس، Docker و امن‌سازی با Ansible در محیط‌های متصل و جدا از اینترنت. پس از حذف VPS اصلی توسط شرکت میزبان، سرویس‌های آن را از بکاپ بازیابی کردم.",
+    "من ایلیا هستم؛ مهندس DevOps و دانشجوی علوم کامپیوتر. بیشتر با لینوکس و اتوماسیون سر و کار دارم و با Python و Go ابزار و سرویس می‌سازم. DevOps و یادگیری ماشین دو حوزه‌ای هستن که بیشتر از همه بهشون علاقه دارم.",
   study: "دانشجوی کارشناسی علوم کامپیوتر",
   location: "تهران، ایران",
   timeZone: "IRST · UTC+03:30",
-  availability: "آمادهٔ همکاری دورکاری در نقش DevOps",
+  availability: "دورکاری، هیبرید یا حضوری",
   email: "iliashkr@gmail.com",
   github: { label: "github.com/Ilia-Shakeri", href: "https://github.com/Ilia-Shakeri" },
   linkedin: { label: "linkedin.com/in/ilia-shakeri", href: "https://www.linkedin.com/in/ilia-shakeri/" },
@@ -29,7 +29,7 @@ export const profile: Profile = {
     { title: "پایداری را قابل‌دیدن کن.", detail: "هلث‌چک، هشدار و شواهدی که بشود خواند." },
   ],
   remote: [
-    { label: "آمادهٔ همکاری با", value: "تیم‌های بین‌المللی و شرکت‌های داخل ایران، به‌صورت دورکاری" },
+    { label: "آمادهٔ همکاری با", value: "تیم‌های داخل و خارج از ایران به‌صورت دورکاری؛ هیبرید یا حضوری هم برای موقعیت مناسب" },
     { label: "منطقهٔ زمانی", value: "تهران، ⁦UTC+03:30⁩ (بدون ساعت تابستانی)" },
     { label: "هم‌پوشانی ساعت کاری", value: "هم‌ساعت با شرکت‌های ایرانی و دست‌کم ۴ ساعت با ساعت کاری اروپا؛ آشنا با کار ناهمزمان در تیم‌های ریموت" },
     { label: "نوع همکاری", value: "تمام‌وقت یا قراردادی" },

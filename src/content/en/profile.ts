@@ -10,11 +10,11 @@ export const profile: Profile = {
   headline: "DevOps Engineer",
   stack: ["Linux", "Docker", "Ansible", "CI/CD", "Python", "Go"],
   intro:
-    "At OTICAMP, I own DevOps across two physical servers and approximately 4–5 VPSs: Linux, Docker, and Ansible hardening in connected and air-gapped environments. I restored the primary VPS's services from backups after the hosting provider deleted the instance.",
+    "I'm Ilia, a DevOps engineer and Computer Science student. I work with Linux and automation, and build tools and services in Python and Go. DevOps and machine learning are my main interests.",
   study: "Computer Science student (B.Sc.)",
   location: "Tehran, Iran",
   timeZone: "IRST · UTC+03:30",
-  availability: "Open to remote DevOps roles",
+  availability: "Remote, hybrid or on-site",
   email: "iliashkr@gmail.com",
   github: { label: "github.com/Ilia-Shakeri", href: "https://github.com/Ilia-Shakeri" },
   linkedin: { label: "linkedin.com/in/ilia-shakeri", href: "https://www.linkedin.com/in/ilia-shakeri/" },
@@ -32,7 +32,7 @@ export const profile: Profile = {
   contactMessage:
     "Looking for a DevOps engineer for Linux operations, delivery pipelines, monitoring, and backups? I’d like to hear about your team and infrastructure.",
   remote: [
-    { label: "Open to", value: "Remote roles with international teams and with companies in Iran" },
+    { label: "Open to", value: "Remote with teams in Iran and abroad; hybrid or on-site for the right role" },
     { label: "Time zone", value: "Tehran, UTC+03:30 (no daylight saving)" },
     { label: "Overlap", value: "Same hours as Iran-based teams; 4+ hours with European working hours; comfortable with async teams" },
     { label: "Engagement", value: "Full-time or contract" },

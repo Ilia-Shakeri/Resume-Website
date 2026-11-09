@@ -51,7 +51,7 @@ Edit `src/content/en/*.ts` and `src/content/fa/*.ts`, then regenerate assets wit
 
 ## Review follow-up (8 Nov 2026)
 
-- Current OTICAMP employment and responsibility were reconfirmed on 8 Nov 2026 below. Reconfirm remote-work availability and study progress before changing their status.
+- Current OTICAMP employment and responsibility were reconfirmed on 8 Nov 2026 below. Work preferences were reconfirmed on 9 Nov 2026 below; study progress still needs confirmation before changing its status.
 - Product deployment and usage claims stay dated to October 2026 until fresh checks exist.
 - Dolphin source is private. Keep the public engineering case study as the portfolio evidence link; do not restore an inaccessible source-code button.
 - Keep the 73-tool site inventory, with the core set shown first. Add tools or change the core set only when supported by work or study evidence.
@@ -99,3 +99,9 @@ Do not add exact fleet totals beyond the stated approximation, uptime, response-
 - Keep stored telemetry distinct from optional, consented live log reads. Restrict the Kubernetes namespace claim to workloads; optional node observations can have cluster scope.
 - Leave broad runbook, retrieval-quality, pilot-capacity and stable-v2 readiness claims out until their own gates pass. Report hypotheses are not proven root causes; tagged builds are not production deployments.
 - Current copy remains a single DevOps-focused résumé/site. This review does not add an unrelated job-target résumé.
+
+## Homepage and work preferences confirmed — 9 Nov 2026
+
+- Use a friendly, semi-formal homepage introduction about DevOps, Computer Science study, Linux/automation, Python/Go work, and DevOps/machine-learning interests. Remove fleet/recovery detail from the hero only; retain the established experience and evidence elsewhere.
+- Remote work with teams in Iran and abroad remains available. Hybrid or on-site work is also acceptable for the right role. This supersedes the earlier remote-only preference; no relocation or new schedule is inferred.
+- Keep Tehran location, current overlap hours, full-time/contract terms and two weeks' notice. New rendering/PDF and exact-commit release checks remain pending.
